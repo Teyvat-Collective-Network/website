@@ -1,0 +1,71 @@
+html {
+  padding: 0px;
+  margin: 0px;
+  min-height: 100vh;
+
+  --col-light: #dfe6ed;
+  --col-mid: #90bcb3;
+  --col-dark: #207868;
+
+  --txt-main: #293845;
+  --txt-contrast: #4b5c6b;
+}
+
+div.light {
+  background-color: var(--col-light);
+}
+div.mid {
+  background-color: var(--col-mid);
+}
+div.dark {
+  background-color: var(--col-dark);
+}
+
+h1,h2,h3,h4,p {
+  margin: 0px;
+  padding: 0px;
+}
+h1 {
+  font-size: 32px;
+}
+h2 {
+  font-size: 32px;
+  font-weight: 400;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+a {
+  color: var(--txt-main);
+  text-decoration: none;
+  cursor: pointer;
+  transition: .15s;
+}
+a:hover {
+  color: var(--txt-contrast);
+}
+
+body {
+	max-width: 1280px;
+  margin: 0px auto;
+  padding: 0px 64px;
+	box-sizing: border-box;
+  background-color: #fff;
+  color: var(--txt-main);
+  font-family: 'Outfit';
+}
+
+
+@media screen and (max-width: 540px) {
+  body {
+    padding: 0px 32px;
+  }
+
+  h1,h2 { font-size: 24px; }
+  h3,h4 { font-size: 20px; }
+}
