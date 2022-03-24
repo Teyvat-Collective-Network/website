@@ -3,47 +3,19 @@
   import Partner from '../components/partner.svelte';
 
   let query = '';
-  let partners = [
-    {
-      "id": "1",
-      "invite": "invto1",
-      name: 'Jean Mains',
-      character: 'Jean',
-      "owner": "1",
-      "advisor": "2"
-    },
-    {
-      "id": "2",
-      "invite": "invto2",
-      name: 'Sayu Mains',
-      character: 'Sayu',
-      "owner": "2",
-      "advisor": null
-    },
-    {
-      "id": "3",
-      "invite": "invto3",
-      name: 'Venti Mains',
-      character: 'Venti',
-      "owner": null,
-      "advisor": null
-    },
-    {
-      "id": "4",
-      "invite": "invto4",
-      name: 'Kazuha Mains',
-      character: 'Kazuha',
-      "owner": null,
-      "advisor": null
-    }
-  ];
+  $: partners = [];
+
+  fetch('https://api.teyvatcollective.network/guilds')
+    .then(res => res.json())
+    .then(json => partners = Object.values(json));
+
   $: fuse = new Fuse(partners, { keys: ['name', 'character'] });
   $: filtered = query ? fuse.search(query).map(res => res.item) : partners;
 </script>
 
 
 <h1>Our Partners</h1>
-<h4>This currently uses test data,<br> until the TCN API is live.</h4>
+<h4>The API currently has partial data.</h4>
 
 <input type="text" bind:value={query} placeholder="Search..">
 
