@@ -43,7 +43,7 @@
     font-size: 16px;
   }
 
-  .fa-solid { transition: .2s; }
+  .fa-solid { transition: .15s; }
   .fa-solid.hover{ opacity: 0; }
   label:hover .fa-solid { opacity: 0; }
   label:hover .fa-solid.hover { opacity: 1; }
