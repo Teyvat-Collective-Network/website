@@ -13,8 +13,8 @@
 
 <style>
   .partner {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     padding: 16px;
     background-color: var(--col-light);
     text-align: center;

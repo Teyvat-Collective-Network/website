@@ -7,15 +7,17 @@
 
   fetch('https://api.teyvatcollective.network/guilds')
     .then(res => res.json())
-    .then(json => partners = Object.values(json));
+    .then(json => partners = Object.values(json).sort((a,b) => (a.character > b.character) ? 1 : ((b.character > a.character) ? -1 : 0)));
 
-  $: fuse = new Fuse(partners, { keys: ['name', 'character'] });
+  $: fuse = new Fuse(partners, {
+    keys: ['name', 'character'],
+    threshold: 0.25,
+  });
   $: filtered = query ? fuse.search(query).map(res => res.item) : partners;
 </script>
 
 
 <h1>Our Partners</h1>
-<h4>The API currently has partial data.</h4>
 
 <input type="text" bind:value={query} placeholder="Search..">
 
