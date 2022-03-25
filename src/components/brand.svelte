@@ -1,5 +1,5 @@
 <div>
-  <img src="logo.png" alt="TCN logo" height="128px" width="128px">
+  <img src="assets/logo.png" alt="TCN logo" height="128px" width="128px">
   <h1>Teyvat Collective Network</h1>
 </div>
 

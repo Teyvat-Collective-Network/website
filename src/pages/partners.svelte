@@ -34,6 +34,7 @@
   }
 
   input {
+    background-color: var(--bg-main);
     position: absolute;
     right: 0px;
     margin-top: -32px;
