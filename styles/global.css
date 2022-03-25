@@ -2,13 +2,6 @@ html {
   padding: 0px;
   margin: 0px;
   min-height: 100vh;
-
-  --col-light: #dfe6ed;
-  --col-mid: #90bcb3;
-  --col-dark: #207868;
-
-  --txt-main: #293845;
-  --txt-contrast: #4b5c6b;
 }
 
 div.light {
@@ -55,7 +48,7 @@ body {
   margin: 0px auto;
   padding: 0px 64px;
 	box-sizing: border-box;
-  background-color: #fff;
+  background-color: var(--bg-main);
   color: var(--txt-main);
   font-family: 'Outfit';
 }

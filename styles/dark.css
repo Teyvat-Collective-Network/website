@@ -1,0 +1,10 @@
+html {
+  --bg-main: #222;
+
+  --col-light: #252e2c;
+  --col-mid: #294d45;
+  --col-dark: #207868;
+
+  --txt-main: #fff;
+  --txt-contrast: #25695c;
+}
