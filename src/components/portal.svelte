@@ -11,7 +11,7 @@
   </div>
   <div class="card">
     <h4>Do you own a Discord server dedicated to a playable Genshin Impact character, and want to join the TCN? Apply here:</h4>
-    <a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSfHvphb8BDnKK2wp-D7qtEcmjWlypZZBIU6T8qGnnqwxyXgOQ/viewform">Apply to Join</a>
+    <a class="button" href="https://forms.teyvatcollective.network/#/form/626fd5c781d924afabadeb05" target="_blank">Apply to Join</a>
   </div>
 </div>
 

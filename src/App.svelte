@@ -9,6 +9,12 @@
 
 	$: window.location.hash = $page;
 
+	let partners = [];
+
+	fetch('https://api.teyvatcollective.network/guilds')
+    .then(res => res.json())
+    .then(json => partners = Object.values(json).sort((a,b) => (a.character > b.character) ? 1 : ((b.character > a.character) ? -1 : 0)));
+
 	const pages = {
 		home: Home,
 		partners: Partners,
@@ -17,9 +23,11 @@
 
 
 <Header/>
+
 <main>
-	<svelte:component this={pages[$page]}/>
+	<svelte:component this={pages[$page]} {partners}/>
 </main>
+
 <Footer/>
 
 

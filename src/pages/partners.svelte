@@ -3,11 +3,7 @@
   import Partner from '../components/partner.svelte';
 
   let query = '';
-  $: partners = [];
-
-  fetch('https://api.teyvatcollective.network/guilds')
-    .then(res => res.json())
-    .then(json => partners = Object.values(json).sort((a,b) => (a.character > b.character) ? 1 : ((b.character > a.character) ? -1 : 0)));
+  export let partners = [];
 
   $: fuse = new Fuse(partners, {
     keys: ['name', 'character'],
@@ -22,9 +18,16 @@
 <input type="text" bind:value={query} placeholder="Search..">
 
 <div class="list">
-  {#each filtered as partner }
-    <Partner {partner}/>
-  {/each}
+  {#if filtered.length}
+    {#each filtered as partner }
+      <Partner {partner}/>
+    {/each}
+  {:else if partners.length}
+    <h3>No Results</h3>
+  {:else}
+    <h3>Loading..</h3>
+  {/if}
+  
 </div>
 
 
