@@ -9,7 +9,7 @@
   <div class="links">
     <Link name="Home"/>
     <Link name="Partners"/>
-    <a class="button" href="https://forms.teyvatcollective.network/#/form/626fd5c781d924afabadeb05" target="_blank">Apply Now</a>
+    <a class="button" href="https://docs.google.com/forms/d/1BtV0mZvS9LX46rIhH-hVg1X8payfcswEfoHpeIejXl0" target="_blank">Apply Now</a>
   </div>
 </header>
 
