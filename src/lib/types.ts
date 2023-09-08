@@ -1,1 +1,1 @@
-export type User = { id: string; guilds: Record<string, string[]>; roles: string[] };
+export type User = { id: string; tag: string; guilds: Record<string, string[]>; roles: string[] };

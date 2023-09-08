@@ -1,11 +1,16 @@
 import { PUBLIC_API } from "$env/static/public";
 
-export default async function (token: string, route: string, options?: RequestInit) {
+export default async function (token: string | null, route: string, options?: RequestInit) {
     let request = route.startsWith("!");
     if (request) route = route.slice(1);
 
+    const [method, real] = route.split(/\s+/);
+
+    options ??= {};
+    options.method = method;
+    route = real;
+
     if (token) {
-        options ??= {};
         options.headers ??= {};
 
         if (Array.isArray(options.headers)) options.headers.push(["authorization", token]);

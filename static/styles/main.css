@@ -1,3 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&family=Share+Tech+Mono&display=swap");
+@import url("/styles/classes.css");
+@import url("/styles/hljs.css");
+
+:root {
+    font-family: "Rubik", sans-serif;
+    font-weight: 300;
+    font-size: 120%;
+}
+
+html,
 body {
-    background-color: rgb(var(--bg-4));
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    position: relative;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+}
+
+body {
+    line-height: 175%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.container {
+    padding: 0 calc(max(5%, 50% - 600px));
+}
+
+#main {
+    padding-bottom: 5%;
+}
+
+h1 {
+    font-size: 280%;
+}
+
+h2 {
+    font-size: 210%;
+}
+
+h3 {
+    font-size: 160%;
+}
+
+h4 {
+    font-size: 140%;
+}
+
+h5 {
+    font-size: 120%;
+}
+
+h6 {
+    font-size: 110%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 400;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    line-height: 100%;
+}
+
+b,
+strong {
+    font-weight: 600;
+}
+
+.left-align {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right-align {
+    text-align: right;
+}
+
+.prominent {
+    font-weight: 600;
+    background-color: #88888822;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+.mono {
+    font-family: "Share Tech Mono", monospace;
+}
+
+pre,
+code {
+    background-color: #28292d;
+    border-radius: 5px;
+    font-family: "Share Tech Mono", monospace;
+    font-size: 90%;
+}
+
+pre {
+    padding: 0.4em 0.8em;
+}
+
+code {
+    padding: 0.4em;
+}
+
+code.plain {
+    background-color: unset;
+}
+
+pre > code {
+    all: unset;
+}
+
+label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.row,
+.col {
+    display: flex;
+}
+
+.inline-row,
+.inline-col {
+    display: inline-flex;
+}
+
+.row,
+.inline-row {
+    flex-direction: row;
+}
+
+.col,
+.inline-col {
+    flex-direction: column;
+}
+
+.row:not(.no-center),
+.col:not(.no-center),
+.inline-row:not(.no-center),
+.inline-col:not(.no-center) {
+    align-items: center;
+}
+
+.panel {
+    background-color: rgb(var(--bg-3));
+    padding: 1em;
+    margin-bottom: 1.5em;
+    border-radius: 5px;
+}
+
+.panel.highlight {
+    background-color: rgb(var(--accent-less));
+}
+
+::-webkit-scrollbar {
+    height: 16px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--bg-2));
+    border: 4px solid rgb(var(--bg-1));
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(var(--bg-3));
+}
+
+span.mention {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.1em;
+    margin: 2px;
+
+    background-color: rgb(var(--blue-callout));
+    cursor: default;
+    padding: 0px 5px;
+    border-radius: 5px;
+    font-size: 90%;
+}
+
+span.mention.with-icon {
+    top: 5px;
+}
+
+span.mention:hover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    background-color: rgb(var(--invert-rgb));
+    opacity: 0.1;
+}
+
+a span.mention {
+    cursor: inherit;
+}
+
+a {
+    text-decoration: none;
 }

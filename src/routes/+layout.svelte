@@ -7,10 +7,4 @@
     dark_mode.set($page.data.dark_mode);
 </script>
 
-<head>
-    <link rel="stylesheet" type="text/css" href="/styles/{$dark_mode ? 'dark' : 'light'}.css" />
-    <link rel="stylesheet" type="text/css" href="/styles/classes.css" />
-    <link rel="stylesheet" type="text/css" href="/styles/main.css" />
-</head>
-
 <slot />

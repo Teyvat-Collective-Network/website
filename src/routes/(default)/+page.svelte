@@ -1,17 +1,92 @@
 <script lang="ts">
-    import { PUBLIC_COOKIE_DOMAIN } from "$env/static/public";
-    import { dark_mode, user } from "$lib/stores";
+    import { page } from "$app/stores";
+    import LinkButton from "$lib/components/LinkButton.svelte";
 </script>
 
-<button
-    on:click={() => {
-        document.cookie = `mode=${$dark_mode ? "light" : "dark"};max-age=31536000;samesite=lax;domain=${PUBLIC_COOKIE_DOMAIN};path=/`;
-        dark_mode.update((x) => !x);
-    }}>switch to {$dark_mode ? "light" : "dark"} mode</button
->
+<div class="container">
+    <div id="tiles">
+        <div id="top-left" class="panel">Welcome to the Teyvat Collective Network (TCN)!</div>
+        <div id="top-right" class="panel highlight">
+            The mission of the TCN is to unite all mains servers across Teyvat and provide support and promote collaboration between partners.
+        </div>
+        <div id="bottom-left" class="panel">
+            The TCN is a network of {$page.data.guildCount} high-quality Genshin Impact Discord server{$page.data.guildCount === 1 ? "" : "s"} that are dedicated
+            to fostering Mains-style fan communities.
+        </div>
+        <div id="bottom-right" class="panel">
+            Do you own a Discord server dedicated to a playable Genshin Impact character and want to join the TCN? Apply here!
+            <LinkButton id="join" href="/join">Apply To Join</LinkButton>
+        </div>
+    </div>
+</div>
 
-{#if !$user}
-    <a href="/login">log in</a>
-{:else}
-    <pre>{JSON.stringify($user)}</pre>
-{/if}
+<style lang="scss">
+    #tiles {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 1em;
+
+        & > .panel {
+            margin: 0;
+            padding: 1.5em;
+            display: flex;
+            align-items: center;
+
+            &:not(#bottom-right) {
+                flex-direction: row;
+            }
+        }
+    }
+
+    @media screen and (min-width: 1200px) {
+        #top-left {
+            grid-column: 1 / 5;
+        }
+
+        #top-right {
+            grid-column: 5 / 11;
+        }
+
+        #bottom-left {
+            grid-column: 1 / 6;
+        }
+
+        #bottom-right {
+            grid-column: 6 / 11;
+        }
+    }
+
+    @media screen and (max-width: 1199px) {
+        #tiles > .panel {
+            grid-column: 1 / 11;
+        }
+    }
+
+    #top-left {
+        font-size: 200%;
+        line-height: 120%;
+        font-weight: 600;
+    }
+
+    #top-right {
+        font-size: 150%;
+        line-height: 150%;
+        font-weight: 400;
+    }
+
+    #bottom-left {
+        font-size: 125%;
+        line-height: 175%;
+    }
+
+    #bottom-right {
+        font-size: 125%;
+        line-height: 175%;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    :global(#join) {
+        font-weight: 400;
+    }
+</style>
