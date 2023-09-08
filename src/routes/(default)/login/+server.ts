@@ -1,5 +1,5 @@
-import { AUTH_REDIRECT, DISCORD_ID } from "$env/static/private";
-import { PUBLIC_COOKIE_DOMAIN } from "$env/static/public";
+import { DISCORD_ID } from "$env/static/private";
+import { PUBLIC_COOKIE_DOMAIN, PUBLIC_DOMAIN } from "$env/static/public";
 import { redirect, type RequestHandler } from "@sveltejs/kit";
 import crypto from "crypto";
 
@@ -14,7 +14,7 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
             response_type: "code",
             client_id: DISCORD_ID,
             scope: "identify",
-            redirect_uri: AUTH_REDIRECT,
+            redirect_uri: `${PUBLIC_DOMAIN}/callback`,
             state,
         })}`,
     );
