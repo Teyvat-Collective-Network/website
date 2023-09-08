@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { PUBLIC_API, PUBLIC_COOKIE_DOMAIN } from "$env/static/public";
+    import { PUBLIC_COOKIE_DOMAIN } from "$env/static/public";
     import { dark_mode, user } from "$lib/stores";
 </script>
 
@@ -11,7 +11,7 @@
 >
 
 {#if !$user}
-    <a href="{PUBLIC_API}/auth/login">log in</a>
+    <a href="/login">log in</a>
 {:else}
     <pre>{JSON.stringify($user)}</pre>
 {/if}
