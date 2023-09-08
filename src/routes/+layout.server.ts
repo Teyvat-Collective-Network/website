@@ -1,16 +1,17 @@
-import { PUBLIC_API } from "$env/static/public";
+import api from "$lib/api.js";
 import type { ServerLoad } from "@sveltejs/kit";
 
-export const load: ServerLoad = async ({ request, cookies }) => {
+export const load: ServerLoad = async ({ cookies }) => {
     const data: any = {};
-    const token = request.headers.get("authorization") || cookies.get("token");
 
-    if (token) {
-        const req = await fetch(`${PUBLIC_API}/auth/user`);
+    data.token = cookies.get("token") as string;
+
+    if (data.token) {
+        const req = await api(data.token, `!/auth/me`);
         if (req.ok) data.user = await req.json();
     }
 
-    data.dark = cookies.get("mode") !== "light";
+    data.dark_mode = cookies.get("mode") !== "light";
 
     return data;
 };
