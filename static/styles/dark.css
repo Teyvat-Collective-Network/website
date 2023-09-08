@@ -1,0 +1,38 @@
+:root {
+    --bg-0: 20, 22, 25;
+    --bg-1: 33, 34, 37;
+    --bg-2: 40, 41, 45;
+    --bg-3: 48, 49, 54;
+    --bg-4: 55, 57, 63;
+
+    --text-1: 235, 233, 230;
+    --text-2: 153, 154, 158;
+    --text-accent: 66, 174, 155;
+    --text-invert: 20, 22, 25;
+
+    --accent: 50, 103, 93;
+    --accent-less: 37, 67, 62;
+    --accent-more: 77, 172, 155;
+    --accent-button: 50, 103, 93;
+
+    --red-text: 243, 91, 91;
+    --red-callout: 121, 54, 54;
+    --red-button: 197, 38, 38;
+
+    --green-text: 52, 184, 118;
+    --green-callout: 63, 118, 90;
+    --green-button: 6, 137, 70;
+
+    --blue-text: 31, 123, 215;
+    --blue-callout: 31, 60, 89;
+
+    --yellow-text: 242, 195, 30;
+    --yellow-callout: 139, 111, 14;
+
+    --pure-rgb: 10, 10, 10;
+    --invert-rgb: 240, 240, 240;
+}
+
+.light {
+    display: none;
+}
