@@ -71,6 +71,8 @@
         </button>
 
         <a href="/" class="t1">Home Page</a>
+        <a href="/about" class="t1">About Us</a>
+        <a href="/partners" class="t1">Partners</a>
 
         {#if $user}
             {#if Object.keys($user.guilds).length > 0}
@@ -109,10 +111,10 @@
 <style lang="scss">
     #bar,
     #spacer {
-        top: 0;
+        height: 80px;
         left: 0;
         right: 0;
-        height: 80px;
+        top: 0;
 
         @media screen and (min-width: 1360px) {
             display: none;
@@ -126,11 +128,11 @@
 
     svg {
         cursor: pointer;
+        height: 32px;
         outline: none;
+        padding: 24px;
         position: fixed;
         width: 32px;
-        height: 32px;
-        padding: 24px;
         z-index: 11;
     }
 
@@ -152,55 +154,55 @@
     }
 
     .open {
-        #top {
-            transform: rotateZ(45deg) scaleX(1.414);
+        #bot {
+            transform: rotateZ(-45deg) scaleX(1.414);
         }
 
         #mid {
-            transform: translateX(-50%);
             opacity: 0;
+            transform: translateX(-50%);
         }
 
-        #bot {
-            transform: rotateZ(-45deg) scaleX(1.414);
+        #top {
+            transform: rotateZ(45deg) scaleX(1.414);
         }
     }
 
     #sidebar {
-        position: fixed;
+        background-color: rgb(var(--bg-1));
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        background-color: rgb(var(--bg-1));
-        width: 25%;
         height: 100%;
-        z-index: 5;
+        justify-content: space-between;
+        position: fixed;
         transition: transform 250ms, opacity 250ms;
+        width: 25%;
+        z-index: 5;
 
         @media screen and (max-width: 1000px) {
             width: 75%;
         }
 
         &:not(.open) {
-            transform: translateX(-100%);
             opacity: 0%;
             pointer-events: none;
+            transform: translateX(-100%);
         }
 
         &.open {
-            transform: translateX(0);
             opacity: 100%;
+            transform: translateX(0);
         }
     }
 
     #backdrop {
-        position: fixed;
-        background-color: rgb(var(--pure-rgb), 40%);
         backdrop-filter: blur(2px);
-        width: 100%;
+        background-color: rgb(var(--pure-rgb), 40%);
         height: 100%;
-        z-index: 4;
+        position: fixed;
         transition: opacity 250ms;
+        width: 100%;
+        z-index: 4;
 
         &:not(.open) {
             opacity: 0%;
@@ -213,15 +215,15 @@
     }
 
     #contents {
-        overflow-y: scroll;
         display: flex;
         flex-direction: column;
+        overflow-y: scroll;
         padding-top: 92px;
     }
 
     #footer {
-        padding: 1em;
         font-weight: 400;
+        padding: 1em;
     }
 
     .t1 {
@@ -241,17 +243,17 @@
 
     a,
     button {
-        font-family: "Rubik", sans-serif;
+        align-items: center;
         background-color: transparent;
-        color: rgb(var(--text-accent));
-        text-decoration: none;
-        font-size: 90%;
         border: none;
-        outline: none;
+        color: rgb(var(--text-accent));
         display: flex;
         flex-direction: row;
-        align-items: center;
+        font-family: "Rubik", sans-serif;
+        font-size: 90%;
         gap: 0.5em;
+        outline: none;
+        text-decoration: none;
     }
 
     button {

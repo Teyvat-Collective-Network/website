@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&family=Share+Tech+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&family=Share+Tech+Mono&display=swap");
 @import url("/styles/classes.css");
 @import url("/styles/hljs.css");
 
 :root {
     font-family: "Rubik", sans-serif;
-    font-weight: 300;
     font-size: 120%;
+    font-weight: 300;
 }
 
 html,
@@ -15,15 +15,15 @@ body {
 }
 
 html {
-    position: relative;
     min-height: 100vh;
+    position: relative;
     scroll-behavior: smooth;
 }
 
 body {
-    line-height: 175%;
     display: flex;
     flex-direction: column;
+    line-height: 175%;
     margin: 0;
     min-height: 100vh;
 }
@@ -67,9 +67,9 @@ h4,
 h5,
 h6 {
     font-weight: 400;
-    margin-top: 1em;
-    margin-bottom: 1em;
     line-height: 100%;
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
 
 b,
@@ -90,10 +90,10 @@ strong {
 }
 
 .prominent {
-    font-weight: 600;
     background-color: #88888822;
-    padding: 1em;
     border-radius: 5px;
+    font-weight: 600;
+    padding: 1em;
 }
 
 .mono {
@@ -125,9 +125,9 @@ pre > code {
 }
 
 label {
+    align-items: center;
     display: flex;
     flex-direction: row;
-    align-items: center;
     gap: 0.5em;
 }
 
@@ -160,9 +160,9 @@ label {
 
 .panel {
     background-color: rgb(var(--bg-3));
-    padding: 1em;
-    margin-bottom: 1.5em;
     border-radius: 5px;
+    margin-bottom: 1.5em;
+    padding: 1em;
 }
 
 .panel.highlight {
@@ -179,8 +179,8 @@ label {
 
 ::-webkit-scrollbar-thumb {
     background-color: rgb(var(--bg-2));
-    border: 4px solid rgb(var(--bg-1));
     border-radius: 5px;
+    border: 4px solid rgb(var(--bg-1));
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -188,18 +188,17 @@ label {
 }
 
 span.mention {
-    position: relative;
+    align-items: center;
+    background-color: rgb(var(--blue-callout));
+    border-radius: 5px;
+    cursor: default;
     display: inline-flex;
     flex-direction: row;
-    align-items: center;
+    font-size: 90%;
     gap: 0.1em;
     margin: 2px;
-
-    background-color: rgb(var(--blue-callout));
-    cursor: default;
     padding: 0px 5px;
-    border-radius: 5px;
-    font-size: 90%;
+    position: relative;
 }
 
 span.mention.with-icon {
@@ -207,12 +206,12 @@ span.mention.with-icon {
 }
 
 span.mention:hover::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 5px;
     background-color: rgb(var(--invert-rgb));
+    border-radius: 5px;
+    content: "";
+    inset: 0;
     opacity: 0.1;
+    position: absolute;
 }
 
 a span.mention {
@@ -220,6 +219,114 @@ a span.mention {
 }
 
 a {
-    color: rgb(var(--blue-text));
+    color: rgb(var(--text-accent));
     text-decoration: none;
+}
+
+button {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    align-items: center;
+    all: unset;
+    cursor: default;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 0.2em 0.8em;
+    user-select: none;
+}
+
+a.button,
+button,
+input[type="submit"] {
+    background-color: rgb(var(--accent));
+    border-radius: 5px;
+    color: rgb(var(--text-primary));
+    transition: background-color 200ms;
+}
+
+a.button,
+input[type="submit"] {
+    padding: 0.5em 1em;
+}
+
+a.button:hover,
+button:not(:disabled):hover,
+input[type="submit"]:hover {
+    background-color: rgb(var(--accent-less));
+}
+
+button:disabled {
+    background-color: rgb(var(--bg-2));
+}
+
+input,
+textarea,
+select {
+    background-color: rgb(var(--bg-3));
+    border-radius: 5px;
+    border: none;
+    color: rgb(var(--text-primary));
+    outline: none;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea {
+    padding: 0.5em;
+    width: calc(100% - 1em);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    font-size: 90%;
+}
+
+textarea {
+    font-size: 100%;
+}
+
+input::placeholder {
+    color: rgb(var(--text-secondary));
+}
+
+select {
+    font-size: 90%;
+    padding: 0.5em;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    --bg: rgb(var(--bg-1));
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: rgb(var(--bg));
+    height: 1.4em;
+    width: 1.4em;
+}
+
+input[type="checkbox"] {
+    border-radius: 5px;
+}
+
+input[type="radio"] {
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:checked::before {
+    color: rgb(var(--text-accent));
+    content-visibility: visible;
+    content: "✓";
+    font-size: 120%;
+    font-weight: bold;
+    left: 3px;
+    position: relative;
+    top: -1px;
+}
+
+input[type="radio"]:checked {
+    background-color: rgb(var(--text-accent)) !important;
+    border: 4px solid rgb(var(--bg));
 }

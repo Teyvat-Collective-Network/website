@@ -15,10 +15,10 @@
     .container,
     #left,
     #links {
-        padding-top: 1em;
+        align-items: center;
         display: flex;
         flex-direction: row;
-        align-items: center;
+        padding-top: 1em;
     }
 
     #left,
@@ -38,18 +38,18 @@
     }
 
     #title {
-        font-weight: 500;
         font-size: 150%;
+        font-weight: 500;
     }
 
     a {
         font-weight: 400;
-        transition: border-bottom 200ms, color 200ms, background-color 200ms;
         text-decoration: none;
+        transition: border-bottom 200ms, color 200ms, background-color 200ms;
 
         &#join {
-            padding: 0.5em 1em;
             border-radius: 5px;
+            padding: 0.5em 1em;
 
             &:hover {
                 background-color: rgb(var(--accent-less));
@@ -60,8 +60,8 @@
             border-bottom: 3px solid transparent;
 
             &:hover {
-                color: rgb(var(--accent));
                 border-color: rgb(var(--accent));
+                color: rgb(var(--accent));
             }
         }
     }

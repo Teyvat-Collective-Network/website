@@ -3,7 +3,16 @@
     import Menu from "$lib/components/Menu.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
     import { dark_mode } from "$lib/stores";
+    import Icon from "./Icon.svelte";
+
+    let scroll: number = 0;
 </script>
+
+<svelte:window bind:scrollY={scroll} />
+
+<button id="top" on:click={() => scrollTo({ top: 0 })} style="opacity: {scroll ? 1 : 0}">
+    <Icon icon="expand_less" />
+</button>
 
 <html lang="en" class="bg-1 text-1">
     <head>
@@ -43,5 +52,26 @@
 <style lang="scss">
     #slot {
         margin-bottom: 2em;
+    }
+
+    #top {
+        aspect-ratio: 1 / 1;
+        background-color: rgb(var(--text-accent));
+        border-radius: 50%;
+        border: none;
+        bottom: 50px;
+        box-shadow: 2px 2px 10px rgb(var(--pure-rgb), 75%);
+        color: rgb(var(--pure-rgb));
+        outline: none;
+        padding: 10px;
+        position: fixed;
+        right: 50px;
+        transition: transform 50ms, box-shadow 50ms, opacity 200ms;
+        z-index: 1;
+
+        &:active {
+            box-shadow: 2px 2px 10px transparent;
+            transform: translate(2px, 2px);
+        }
     }
 </style>

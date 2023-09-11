@@ -23,14 +23,14 @@
 <style lang="scss">
     #tiles {
         display: grid;
-        grid-template-columns: repeat(10, 1fr);
         gap: 1em;
+        grid-template-columns: repeat(10, 1fr);
 
         & > .panel {
+            align-items: center;
+            display: flex;
             margin: 0;
             padding: 1.5em;
-            display: flex;
-            align-items: center;
 
             &:not(#bottom-right) {
                 flex-direction: row;
@@ -64,14 +64,14 @@
 
     #top-left {
         font-size: 200%;
-        line-height: 120%;
         font-weight: 600;
+        line-height: 120%;
     }
 
     #top-right {
         font-size: 150%;
-        line-height: 150%;
         font-weight: 400;
+        line-height: 150%;
     }
 
     #bottom-left {
@@ -80,10 +80,10 @@
     }
 
     #bottom-right {
-        font-size: 125%;
-        line-height: 175%;
         flex-direction: column;
+        font-size: 125%;
         gap: 1em;
+        line-height: 175%;
     }
 
     :global(#join) {
