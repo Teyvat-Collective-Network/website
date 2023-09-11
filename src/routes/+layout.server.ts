@@ -14,7 +14,7 @@ export const load: ServerLoad = async ({ cookies }) => {
             data.user = await req.json();
 
             try {
-                data.user = { ...data.user, ...(await di(`GET /user/${data.user!.id}`)) };
+                Object.assign(data.user!, await di(`GET /user/${data.user!.id}`));
             } catch {}
         }
     }

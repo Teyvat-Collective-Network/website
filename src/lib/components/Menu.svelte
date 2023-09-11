@@ -1,9 +1,10 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { selectall } from "$lib/html-utils";
-    import { council, dark_mode, observer, user } from "$lib/stores";
+    import { council, dark_mode, observer, token, user } from "$lib/stores";
     import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
+    import api from "$lib/api";
 
     let open = false;
     let href: string;
@@ -13,22 +14,28 @@
     let doc: Document | null = null;
 
     onMount(() => {
-        selectall<HTMLAnchorElement>("#contents > a").forEach((e) => (e.onclick = () => setTimeout(close)));
+        selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.onclick = () => setTimeout(close)));
 
         page.subscribe((x) => {
             href = x.url.href;
-            selectall<HTMLAnchorElement>("#contents > a").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
+            selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
+            if (selectall<HTMLAnchorElement>("#staff-area a").some((e) => e.href === href)) staff_open = true;
         });
 
         doc = document;
     });
 
     let index = 0;
-    $: open && (index = selectall<HTMLAnchorElement | HTMLButtonElement>("#contents > a, #contents > button").findIndex((e) => "href" in e && e.href === href));
-    $: selectall<HTMLAnchorElement | HTMLButtonElement>("#contents > a:not(.hidden), #contents > button:not(.hidden)")?.[index]?.focus();
+
+    $: open &&
+        (index = selectall<HTMLAnchorElement | HTMLButtonElement>("#sidebar-contents > a, #sidebar-contents > button").findIndex(
+            (e) => "href" in e && e.href === href,
+        ));
+
+    $: selectall<HTMLAnchorElement | HTMLButtonElement>("#sidebar-contents > a:not(.hidden), #sidebar-contents > button:not(.hidden)")?.[index]?.focus();
 
     let info_open = false;
-    let staff_open = true;
+    let staff_open = false;
 </script>
 
 <svelte:window
@@ -41,7 +48,7 @@
         } else if (open && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
             e.preventDefault();
 
-            const { length } = selectall("#contents > a:not(.hidden)");
+            const { length } = selectall("#sidebar-contents a:not(.hidden)");
 
             if (e.key === "ArrowUp") index = (index + length - 1) % length;
             else index = (index + 1) % length;
@@ -59,7 +66,7 @@
 <div id="spacer" />
 
 <div id="sidebar" class={open ? "open" : ""}>
-    <div id="contents">
+    <div id="sidebar-contents">
         <button
             class="t1"
             on:click={() => {
@@ -70,38 +77,66 @@
             Switch to {$dark_mode ? "Light" : "Dark"} Mode
         </button>
 
-        <a href="/" class="t1">Home Page</a>
-        <a href="/about" class="t1">About Us</a>
-        <a href="/partners" class="t1">Partners</a>
+        <a href="/" class="t1"><Icon icon="home" /> Home Page</a>
+        <a href="/about" class="t1"><Icon icon="info" /> About Us</a>
+        <a href="/partners" class="t1"><Icon icon="handshake" /> Partners</a>
 
         {#if $user}
-            {#if Object.keys($user.guilds).length > 0}
-                <a href="/">To-Do</a>
+            {#if $user.staff}
+                <button class="t1" on:click={() => (staff_open = !staff_open)}>
+                    <Icon icon={staff_open ? "expand_more" : "chevron_right"} />
+                    Staff Area
+                </button>
+
+                <div id="staff-area" class={staff_open ? "" : "hidden"}>
+                    {#if $user.observer}
+                        <a href="/admin/api-manager" class="t2">
+                            <Icon icon="dashboard" />
+                            API Manager
+                        </a>
+                    {/if}
+                </div>
             {/if}
 
             <button class="t1" on:click={() => fetch(`/logout`, { method: "post" }).then(() => location.reload())}>
-                Log Out
                 <Icon icon="logout" />
+                Log Out
+            </button>
+
+            <button
+                class="t1"
+                on:click={() => {
+                    let first = true;
+                    while (true) {
+                        const input = prompt(
+                            `${
+                                first ? "" : "Input does not match."
+                            } This will invalidate all of your API keys and log you out everywhere. If you are sure you want to do this, type your full Discord tag below.`,
+                        );
+
+                        first = false;
+
+                        if (!input) return;
+                        if (input !== $user?.tag) continue;
+
+                        api($token, "POST /auth/invalidate").then(() => location.reload());
+                        return;
+                    }
+                }}
+            >
+                <Icon icon="dangerous" />
+                Invalidate
             </button>
         {:else}
-            <a href="/login" class="t1">Log In <Icon icon="login" /></a>
+            <a href="/login" class="t1"><Icon icon="login" />Log In</a>
         {/if}
     </div>
     <div id="footer">
         {#if $user}
             <span class="text-2">Logged in as <span class="mention with-icon"><Icon icon="alternate_email" /> {$user.tag}</span></span>
             <br />
-            {#if $observer || $council}
-                <span class="text-2" style="border-left: 5px solid rgb(var(--accent)); padding-left: 1em">
-                    {#if $observer}
-                        You are a TCN observer.
-                    {:else}
-                        You are on the TCN council.
-                    {/if}
-                </span>
-                <br />
-            {/if}
         {/if}
+
         &copy; 2023 TCN Development Team
     </div>
 </div>
@@ -214,7 +249,7 @@
         }
     }
 
-    #contents {
+    #sidebar-contents {
         display: flex;
         flex-direction: column;
         overflow-y: scroll;
@@ -233,12 +268,12 @@
 
     .t2 {
         font-weight: 400;
-        padding-left: 2em;
+        padding-left: 2.5em;
     }
 
     .t3 {
         font-weight: 300;
-        padding-left: 3em;
+        padding-left: 4em;
     }
 
     a,
@@ -257,7 +292,7 @@
     }
 
     button {
-        padding: 5px 0;
+        padding: 0;
     }
 
     a:hover,
@@ -267,7 +302,7 @@
         background-color: #00000011;
     }
 
-    a.hidden {
+    .hidden {
         display: none;
     }
 </style>

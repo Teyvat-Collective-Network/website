@@ -50,8 +50,22 @@
 </html>
 
 <style lang="scss">
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+            transform: translateX(-1vw);
+        }
+
+        100% {
+        }
+    }
+
     #slot {
         margin-bottom: 2em;
+    }
+
+    :global(#slot > *) {
+        animation: 600ms fade-in;
     }
 
     #top {

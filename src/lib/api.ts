@@ -22,5 +22,12 @@ export default async function (token: string | null, route: string, options?: Re
     if (request) return req;
 
     if (!req.ok) throw req.status;
-    return await req.json();
+
+    const text = await req.text();
+
+    try {
+        return JSON.parse(text);
+    } catch {
+        return text;
+    }
 }

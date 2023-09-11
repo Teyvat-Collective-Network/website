@@ -3,8 +3,6 @@ import { PUBLIC_COOKIE_DOMAIN, PUBLIC_DOMAIN } from "$env/static/public";
 import { redirect, type RequestHandler } from "@sveltejs/kit";
 import crypto from "crypto";
 
-const key = crypto.createSecretKey(JWT_SECRET, "base64url");
-
 export const GET: RequestHandler = async ({ cookies, fetch, url }) => {
     const state = cookies.get("state");
     const target = cookies.get("redirect") ?? "/";
@@ -36,7 +34,7 @@ export const GET: RequestHandler = async ({ cookies, fetch, url }) => {
     const expires = now + 30 * 24 * 60 * 60 * 1000;
 
     const jwt = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.${Buffer.from(JSON.stringify({ id: user.id, created: now, expires }), "utf8").toString("base64url")}`;
-    const hash = crypto.createHmac("sha256", key).update(jwt, "utf8").digest("base64url");
+    const hash = crypto.createHmac("sha256", JWT_SECRET).update(jwt, "utf8").digest("base64url");
     cookies.set("token", `${jwt}.${hash}`, { domain: PUBLIC_COOKIE_DOMAIN, maxAge: 30 * 24 * 60 * 60 * 1000, path: "/", sameSite: "lax" });
 
     throw redirect(302, target);
