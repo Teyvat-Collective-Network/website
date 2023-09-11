@@ -220,5 +220,6 @@ a span.mention {
 }
 
 a {
+    color: rgb(var(--blue-text));
     text-decoration: none;
 }

@@ -15,7 +15,7 @@
         </div>
         <div id="bottom-right" class="panel">
             Do you own a Discord server dedicated to a playable Genshin Impact character and want to join the TCN? Apply here!
-            <LinkButton id="join" href="/join">Apply To Join</LinkButton>
+            <LinkButton id="join" to="/join">Apply To Join</LinkButton>
         </div>
     </div>
 </div>
