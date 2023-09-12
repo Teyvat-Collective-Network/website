@@ -25,6 +25,6 @@ export type Guild = {
     users: Record<string, { staff: boolean; roles: string[] }>;
 };
 
-export type Attribute = { type: string; id: string; name: string; emoji: string };
+export type Attribute = { name: string; emoji: string };
 
 export type Character = { id: string; name: string; short?: string; attributes: Record<string, string> };

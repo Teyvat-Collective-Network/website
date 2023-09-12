@@ -4,6 +4,6 @@
     export let open: boolean;
 </script>
 
-<button on:click={() => (open = !open)}>
+<button class="tp text-accent" on:click={() => (open = !open)}>
     <Icon icon={open ? "expand_more" : "chevron_right"} />
 </button>

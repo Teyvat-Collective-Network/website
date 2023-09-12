@@ -47,7 +47,7 @@
 }
 
 .accent-button {
-    background-color: rgb(var(--accent-button)) !important;
+    background-color: rgb(var(--accent-button));
 }
 
 .red-text {
@@ -59,7 +59,7 @@
 }
 
 .red-button {
-    background-color: rgb(var(--red-button)) !important;
+    background-color: rgb(var(--red-button));
 }
 
 .green-text {
@@ -71,7 +71,7 @@
 }
 
 .green-button {
-    background-color: rgb(var(--green-button)) !important;
+    background-color: rgb(var(--green-button));
 }
 
 .blue-text {
@@ -88,6 +88,10 @@
 
 .yellow-callout {
     background-color: rgb(var(--yellow-callout)) !important;
+}
+
+.tp {
+    background-color: transparent;
 }
 
 .gap-1 {
