@@ -20,13 +20,13 @@
     }
 </script>
 
-<div id="main" class="container">
+<div id="main" class="container gap-2">
     <h1>Our Partners</h1>
-    <div id="searchbar" class="wide">
+    <div id="searchbar" class="wide row no-wrap gap-2">
         <Icon icon="search" />
         <input type="text" bind:value={query} placeholder="Filter Servers" />
     </div>
-    <div class="external panel wide {fuzzy('genshin wizard', query) ? '' : 'hidden'}">
+    <div class="external panel wide row no-wrap gap-4 {fuzzy('genshin wizard', query) ? '' : 'hidden'}">
         <img
             src="https://genshinwizard.com/wp-content/uploads/2022/09/cropped-genshinwizard_logo-192x192.png"
             alt="Genshin Wizard Icon"
@@ -39,7 +39,7 @@
             <LinkButton to="https://genshinwizard.com" external>Website</LinkButton>
         </div>
     </div>
-    <div class="external panel wide {fuzzy('genshin impact tavern', query) ? '' : 'hidden'}">
+    <div class="external panel wide row no-wrap gap-4 {fuzzy('genshin impact tavern', query) ? '' : 'hidden'}">
         <img src="https://i.imgur.com/pwzRnxW.png" alt="Genshin Impact Tavern Icon" width="192" height="192" />
         <div>
             <h3>Genshin Impact Tavern</h3>
@@ -69,7 +69,6 @@
 <style lang="scss">
     #main {
         display: grid;
-        gap: 20px;
         grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     }
 
@@ -79,10 +78,6 @@
     }
 
     #searchbar {
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
         margin-bottom: 40px;
     }
 
@@ -91,10 +86,6 @@
     }
 
     .external {
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        gap: 40px;
         padding: 20px 40px;
 
         & > div {

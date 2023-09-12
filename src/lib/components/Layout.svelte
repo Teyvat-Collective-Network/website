@@ -33,7 +33,7 @@
 
         <link rel="shortcut icon" type="image/png" href="/favicon.png" />
 
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link rel="stylesheet" type="text/css" href="/styles/{$dark_mode ? 'dark' : 'light'}.css" />
         <link rel="stylesheet" type="text/css" href="/styles/main.css" />
 

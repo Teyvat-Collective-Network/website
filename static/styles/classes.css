@@ -1,91 +1,111 @@
 .bg-0 {
-    background-color: rgb(var(--bg-0));
+    background-color: rgb(var(--bg-0)) !important;
 }
 
 .bg-1 {
-    background-color: rgb(var(--bg-1));
+    background-color: rgb(var(--bg-1)) !important;
 }
 
 .bg-2 {
-    background-color: rgb(var(--bg-2));
+    background-color: rgb(var(--bg-2)) !important;
 }
 
 .bg-3 {
-    background-color: rgb(var(--bg-3));
+    background-color: rgb(var(--bg-3)) !important;
 }
 
 .bg-4 {
-    background-color: rgb(var(--bg-4));
+    background-color: rgb(var(--bg-4)) !important;
 }
 
 .text-1 {
-    color: rgb(var(--text-1));
+    color: rgb(var(--text-1)) !important;
 }
 
 .text-2 {
-    color: rgb(var(--text-2));
+    color: rgb(var(--text-2)) !important;
 }
 
 .text-accent {
-    color: rgb(var(--text-accent));
+    color: rgb(var(--text-accent)) !important;
 }
 
 .text-invert {
-    color: rgb(var(--text-invert));
+    color: rgb(var(--text-invert)) !important;
 }
 
 .accent {
-    background-color: rgb(var(--accent));
+    background-color: rgb(var(--accent)) !important;
 }
 
 .accent-less {
-    background-color: rgb(var(--accent-less));
+    background-color: rgb(var(--accent-less)) !important;
 }
 
 .accent-more {
-    background-color: rgb(var(--accent-more));
+    background-color: rgb(var(--accent-more)) !important;
 }
 
 .accent-button {
-    background-color: rgb(var(--accent-button));
+    background-color: rgb(var(--accent-button)) !important;
 }
 
 .red-text {
-    color: rgb(var(--red-text));
+    color: rgb(var(--red-text)) !important;
 }
 
 .red-callout {
-    background-color: rgb(var(--red-callout));
+    background-color: rgb(var(--red-callout)) !important;
 }
 
 .red-button {
-    background-color: rgb(var(--red-button));
+    background-color: rgb(var(--red-button)) !important;
 }
 
 .green-text {
-    color: rgb(var(--green-text));
+    color: rgb(var(--green-text)) !important;
 }
 
 .green-callout {
-    background-color: rgb(var(--green-callout));
+    background-color: rgb(var(--green-callout)) !important;
 }
 
 .green-button {
-    background-color: rgb(var(--green-button));
+    background-color: rgb(var(--green-button)) !important;
 }
 
 .blue-text {
-    color: rgb(var(--blue-text));
+    color: rgb(var(--blue-text)) !important;
 }
 
 .blue-callout {
-    background-color: rgb(var(--blue-callout));
+    background-color: rgb(var(--blue-callout)) !important;
 }
 
 .yellow-text {
-    color: rgb(var(--yellow-text));
+    color: rgb(var(--yellow-text)) !important;
 }
 
 .yellow-callout {
-    background-color: rgb(var(--yellow-callout));
+    background-color: rgb(var(--yellow-callout)) !important;
+}
+
+.gap-1 {
+    gap: 10px;
+}
+
+.gap-2 {
+    gap: 20px;
+}
+
+.gap-3 {
+    gap: 30px;
+}
+
+.gap-4 {
+    gap: 40px;
+}
+
+.round {
+    border-radius: 5px;
 }

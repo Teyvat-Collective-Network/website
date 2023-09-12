@@ -1,6 +1,6 @@
 import { PUBLIC_API } from "$env/static/public";
 
-export default async function (token: string | null, route: string, options?: RequestInit) {
+export default async function (token: string | null, route: string, body?: any, options?: RequestInit) {
     let request = route.startsWith("!");
     if (request) route = route.slice(1);
 
@@ -17,6 +17,8 @@ export default async function (token: string | null, route: string, options?: Re
         else if (options.headers instanceof Headers) options.headers.append("authorization", token);
         else options.headers.authorization = token;
     }
+
+    if (body) options.body = JSON.stringify(body);
 
     const req = await fetch(`${PUBLIC_API}${route}`, options);
     if (request) return req;

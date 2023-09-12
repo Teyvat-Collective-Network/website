@@ -5,7 +5,7 @@
 {#if done}
     <slot />
 {:else}
-    <div id="loading" class="row">
+    <div id="loading" class="row gap-1">
         <svg width="40px" height="40px" viewBox="0 0 100 100">
             <circle id="outer" cx="50" cy="50" r="45" stroke="rgb(var(--text-accent))" fill="transparent" stroke-width="5px" />
             <circle id="inner" cx="50" cy="50" r="35" stroke="rgb(var(--text-accent), 60%)" fill="transparent" stroke-width="5px" />
@@ -36,7 +36,6 @@
     }
 
     #loading {
-        gap: 10px;
         font-size: 120%;
     }
 </style>

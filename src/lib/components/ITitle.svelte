@@ -7,16 +7,7 @@
     export let icon_color: string = "inherit";
 </script>
 
-<svelte:element this={e} class="item">
+<svelte:element this={e} class="row gap-1">
     <Icon {icon} style="color: {icon_color}" />
     {text}
 </svelte:element>
-
-<style lang="scss">
-    .item {
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-    }
-</style>
