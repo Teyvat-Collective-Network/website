@@ -90,10 +90,8 @@
 
                 <div id="staff-area" class={staff_open ? "" : "hidden"}>
                     {#if $user.observer}
-                        <a href="/admin/api-manager" class="t2">
-                            <Icon icon="dashboard" />
-                            API Manager
-                        </a>
+                        <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
+                        <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
                     {/if}
                 </div>
             {/if}

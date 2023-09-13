@@ -15,23 +15,29 @@
 
 <svelte:window on:keydown={(e) => e.key === "Escape" && close()} />
 
-<div class="modal {open ? '' : 'closed'}" style="background-color: {background_color}">
-    <slot />
+<div id="modal" class={open ? "" : "closed"} style="background-color: {background_color}">
+    <div id="content" class="container">
+        <slot />
+    </div>
 </div>
 
 <div role="none" class="overlay {open ? '' : 'closed'}" style="background-color: {overlay_color}" on:click={close} />
 
 <style lang="scss">
-    .modal {
+    #content {
+        min-width: fit-content;
+    }
+
+    #modal {
         border-radius: 5px;
         left: 20%;
         max-height: 50%;
-        overflow-y: scroll;
-        padding: 2% 5%;
+        overflow: scroll;
+        padding: 2% 0;
         position: fixed;
         right: 20%;
         top: 20%;
-        transition: 200ms ease-in-out;
+        transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
         z-index: 300;
 
         &.closed {
@@ -42,7 +48,7 @@
     }
 
     @media screen and (max-width: 1000px) {
-        .modal {
+        #modal {
             left: 5%;
             right: 5%;
         }

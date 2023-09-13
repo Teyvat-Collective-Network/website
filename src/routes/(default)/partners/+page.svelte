@@ -53,14 +53,10 @@
     </div>
     {#each $page.data.partners as { id, name, mascot, invite }}
         <div class="panel {fuzzy(name, query) || fuzzy(mascot, query) ? '' : 'hidden'}">
-            <div class="partner">
-                <div class="top">
-                    <img src="/images/characters/{mascot}.png" alt="{name} Icon" width="150px" height="150px" />
-                    <Link to="/server/{id}"><b>{name}</b></Link>
-                </div>
-                <div class="row">
-                    <LinkButton to="https://discord.gg/{invite}" external>Join</LinkButton>
-                </div>
+            <div class="col">
+                <img src="/files/{mascot}.png" alt="{name} Icon" width="150px" height="150px" />
+                <Link to="/server/{id}"><h4>{name}</h4></Link>
+                <LinkButton to="https://discord.gg/{invite}" external>Join</LinkButton>
             </div>
         </div>
     {/each}
