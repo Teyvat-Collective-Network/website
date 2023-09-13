@@ -16,6 +16,7 @@
     import Link from "$lib/components/Link.svelte";
     import Loading from "$lib/components/Loading.svelte";
     import Modal from "$lib/components/Modal.svelte";
+    import Show from "$lib/components/Show.svelte";
     import TextBadge from "$lib/components/TextBadge.svelte";
     import UserId from "$lib/components/UserId.svelte";
     import { token, user } from "$lib/stores";
@@ -43,6 +44,7 @@
         attributes: "GET /attributes",
         characters: "GET /characters",
     };
+
     const open: Record<string, boolean> = { stats: true };
 
     async function reload(block: keyof typeof blocks & keyof typeof routes) {
@@ -341,7 +343,7 @@
     <h1>API Manager</h1>
     <div class="panel">
         <h2 class="row gap-1"><Expand bind:open={open.stats} /> Stats <button on:click={() => reload("stats")}><Icon icon="refresh" /></button></h2>
-        {#if open.stats}
+        <Show when={open.stats}>
             <Loading done={blocks.stats}>
                 <ul>
                     <li><b>Guilds:</b> <code>{blocks.stats.guildCount}</code></li>
@@ -349,14 +351,14 @@
                     <li><b>Uptime:</b> <code>{blocks.stats.uptime}</code> (since {new Date(blocks.stats.startup).toLocaleString()})</li>
                 </ul>
             </Loading>
-        {/if}
+        </Show>
     </div>
     <div id="user" class="panel">
         <h2 class="row gap-1">
             <Expand bind:open={open.user} /> User <button on:click={reloadUser}><Icon icon="refresh" /></button>
             <button on:click={loadUser}><Icon icon="edit" /></button>
         </h2>
-        {#if open.user}
+        <Show when={open.user}>
             <Loading done={blocks.user}>
                 {#if blocks.user.id === $user?.id}
                     <Callout><p>This is your own account.</p></Callout>
@@ -398,7 +400,9 @@
                             <Loading done={guild}>
                                 <p class="row gap-1">
                                     <span>
-                                        <a href="#guild-{guildId}" on:click={() => (open.guilds = true)}><b>{guild?.name}</b></a> &mdash;
+                                        <Link to="#guild-{guildId}" on:click={() => ((open.guilds = true), (open[`guilds_${guildId}`] = true))}>
+                                            <b>{guild?.name}</b>
+                                        </Link> &mdash;
                                         <code>{guildId}</code>
                                     </span>
                                     {#if props.owner}<Badge icon="badge" title={roleMap.owner?.description}>Server Owner</Badge>{/if}
@@ -445,11 +449,11 @@
                 {/if}
                 <button class="void" on:click={() => (addUserGuild = true)}><Badge icon="add">Add Guild</Badge></button>
             </Loading>
-        {/if}
+        </Show>
     </div>
     <div class="panel">
         <h2 class="row gap-1"><Expand bind:open={open.guilds} /> Guilds <button on:click={() => reload("guilds")}><Icon icon="refresh" /></button></h2>
-        {#if open.guilds}
+        <Show when={open.guilds}>
             <Loading done={blocks.guilds}>
                 {#each blocks.guilds as guild}
                     <div class="panel bg-4">
@@ -457,7 +461,7 @@
                             <Expand bind:open={open[`guilds_${guild.id}`]} />
                             {guild.name} <span style="opacity: 60%">({blocks.characters?.[guild.mascot].name})</span>
                         </h3>
-                        {#if open[`guilds_${guild.id}`]}
+                        <Show when={open[`guilds_${guild.id}`]}>
                             <ul class="space">
                                 <li>
                                     <span class="row gap-1">
@@ -471,9 +475,9 @@
                                     <span class="row gap-1">
                                         <span>
                                             <b>Owner:</b>
-                                            <a href="#user" on:click={() => ((userId = guild.owner), reloadUser(), (open.user = true))}>
+                                            <Link to="#user" on:click={() => ((userId = guild.owner), reloadUser(), (open.user = true))}>
                                                 <UserId id={guild.owner} />
-                                            </a>
+                                            </Link>
                                             &mdash; <code>{guild.owner}</code>
                                         </span>
                                         <button class="void" on:click={() => transfer("owner", guild)}>
@@ -491,9 +495,9 @@
                                         <span>
                                             <b>Advisor:</b>
                                             {#if guild.advisor}
-                                                <a href="#user" on:click={() => ((userId = guild.advisor || ""), reloadUser(), (open.user = true))}>
+                                                <Link to="#user" on:click={() => ((userId = guild.advisor || ""), reloadUser(), (open.user = true))}>
                                                     <UserId id={guild.advisor} />
-                                                </a>
+                                                </Link>
                                                 &mdash; <code>{guild.advisor}</code>
                                             {:else}
                                                 (none)
@@ -548,20 +552,20 @@
                                     <b>Staff:</b>
                                     <ul>
                                         {#each Object.keys(guild.users) as id}
-                                            <li><a href="#user" on:click={() => ((userId = id), reloadUser(), (open.user = true))}><UserId {id} /></a></li>
+                                            <li><Link to="#user" on:click={() => ((userId = id), reloadUser(), (open.user = true))}><UserId {id} /></Link></li>
                                         {/each}
                                     </ul>
                                 </li>
                             </ul>
-                        {/if}
+                        </Show>
                     </div>
                 {/each}
             </Loading>
-        {/if}
+        </Show>
     </div>
     <div class="panel">
         <h2 class="row gap-1"><Expand bind:open={open.roles} /> Roles <button on:click={() => reload("roles")}><Icon icon="refresh" /></button></h2>
-        {#if open.roles}
+        <Show when={open.roles}>
             <Loading done={blocks.roles}>
                 <div style="display: grid; grid-template-columns: auto 1fr auto auto auto; gap: 10px 25px">
                     <span><b>ID</b></span>
@@ -586,13 +590,13 @@
                 </div>
                 <p><button on:click={() => (createRole = true)}><Icon icon="add" /></button></p>
             </Loading>
-        {/if}
+        </Show>
     </div>
     <div class="panel">
         <h2 class="row gap-1">
             <Expand bind:open={open.attributes} /> Attributes <button on:click={() => reload("attributes")}><Icon icon="refresh" /></button>
         </h2>
-        {#if open.attributes}
+        <Show when={open.attributes}>
             <Loading done={blocks.attributes}>
                 <div style="display: grid; grid-template-columns: auto 1fr 1fr auto auto; gap: 10px 25px">
                     {#each [...new Set(Object.keys(blocks.attributes))].sort() as type}
@@ -621,13 +625,13 @@
                 <br />
                 <button on:click={() => ((editAttributeObj = {}), (editAttributeMode = "new"))}><Icon icon="add" /></button>
             </Loading>
-        {/if}
+        </Show>
     </div>
     <div class="panel">
         <h2 class="row gap-1">
             <Expand bind:open={open.characters} /> Characters <button on:click={() => reload("characters")}><Icon icon="refresh" /></button>
         </h2>
-        {#if open.characters}
+        <Show when={open.characters}>
             <Loading done={blocks.characters}>
                 <div style="display: grid; grid-template-columns: auto auto auto 1fr auto auto; gap: 10px 25px">
                     <span><b>ID</b></span>
@@ -657,7 +661,7 @@
                 <br />
                 <button on:click={() => createCharacter()}><Icon icon="add" /></button>
             </Loading>
-        {/if}
+        </Show>
     </div>
 </div>
 

@@ -1,3 +1,5 @@
+<svelte:options customElement="call-out" />
+
 <script lang="ts" context="module">
     const styles = {
         green: { icon: "check", color: "rgb(var(--green-callout))" },

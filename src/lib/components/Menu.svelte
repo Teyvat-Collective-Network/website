@@ -1,10 +1,11 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import api from "$lib/api";
     import { selectall } from "$lib/html-utils";
-    import { council, dark_mode, observer, token, user } from "$lib/stores";
+    import { dark_mode, token, user } from "$lib/stores";
     import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
-    import api from "$lib/api";
+    import { getTag } from "$lib/utils";
 
     let open = false;
     let href: string;
@@ -80,6 +81,7 @@
         <a href="/" class="t1"><Icon icon="home" /> Home Page</a>
         <a href="/about" class="t1"><Icon icon="info" /> About Us</a>
         <a href="/partners" class="t1"><Icon icon="handshake" /> Partners</a>
+        <a href="/calendar" class="t1"><Icon icon="calendar_month" /> Calendar</a>
 
         {#if $user}
             {#if $user.staff}
@@ -131,7 +133,9 @@
     </div>
     <div id="footer">
         {#if $user}
-            <span class="text-2">Logged in as <span class="mention with-icon"><Icon icon="alternate_email" /> {$user.tag}</span></span>
+            <span class="text-2">
+                Logged in as <span class="mention with-icon"><Icon icon="alternate_email" /> {#await getTag($user.id) then tag} {tag} {/await}</span>
+            </span>
             <br />
         {/if}
 

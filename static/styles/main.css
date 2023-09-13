@@ -223,11 +223,6 @@ a span.mention {
     cursor: inherit;
 }
 
-a {
-    color: rgb(var(--text-accent));
-    text-decoration: none;
-}
-
 button {
     -moz-user-select: none;
     -webkit-user-select: none;

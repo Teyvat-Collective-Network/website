@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Link from "./Link.svelte";
+
     export let to: string;
     export let external: boolean = false;
 
@@ -6,11 +8,13 @@
     export { other_classes as classes };
 </script>
 
-<a {...$$props} href={to} {...external ? { target: "_blank", rel: "noreferrer" } : {}} class="text-1 accent-button {other_classes}"><slot /></a>
+<Link {...$$props} {to} {external} class="link-button {other_classes}"><slot /></Link>
 
 <style lang="scss">
-    a {
+    :global(.link-button) {
+        background-color: rgb(var(--accent-button));
         border-radius: 5px;
+        color: rgb(var(--text-1));
         font-weight: 400;
         padding: 0.5em 1.5em;
     }

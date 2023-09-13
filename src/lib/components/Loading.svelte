@@ -1,5 +1,6 @@
 <script lang="ts">
     export let done: any = false;
+    export let text = "Loading...";
 </script>
 
 {#if done}
@@ -10,7 +11,7 @@
             <circle id="outer" cx="50" cy="50" r="45" stroke="rgb(var(--text-accent))" fill="transparent" stroke-width="5px" />
             <circle id="inner" cx="50" cy="50" r="35" stroke="rgb(var(--text-accent), 60%)" fill="transparent" stroke-width="5px" />
         </svg>
-        <span>Loading...</span>
+        <span>{@html text}</span>
     </div>
 {/if}
 

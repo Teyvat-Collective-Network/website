@@ -1,5 +1,6 @@
 <script lang="ts">
     import ITitle from "$lib/components/ITitle.svelte";
+    import Link from "$lib/components/Link.svelte";
     import Linkable from "$lib/components/Linkable.svelte";
 </script>
 
@@ -22,7 +23,7 @@
         <div class="panel">
             <ITitle e="h3" icon="business" text="Individual Servers" />
             <p>These are the individual servers of the TCN, each a mains server dedicated to a specific character.</p>
-            <p>Find a list of TCN servers <a href="/partners">here</a>.</p>
+            <p>Find a list of TCN servers <Link to="/partners">here</Link>.</p>
             <hr />
 
             <ITitle e="h3" icon="hub" text="The Hub" />
@@ -30,7 +31,7 @@
                 This is the official public server for the TCN, where you can contact observers and other server staff and ask questions or give feedback about
                 the TCN.
             </p>
-            <p><a href="https://discord.gg/FG2wpbywSx">Join the Hub!</a></p>
+            <p><Link to="https://discord.gg/FG2wpbywSx">Join the Hub!</Link></p>
             <hr />
 
             <ITitle e="h3" icon="high_quality" text="HQ" />
@@ -76,9 +77,8 @@
             <ITitle e="h3" icon="emergency_share" text="Banshares" />
             <p>
                 You gain access to TCN Banshares, which are a system we have that lets you receive or automatically ban problematic users ahead of time so you
-                don't have to deal with them the hard way. All of our banshares are manually reviewed by our observers. See the <a
-                    href="http://localhost:5173/info/banshares">banshare info page</a
-                > for more information.
+                don't have to deal with them the hard way. All of our banshares are manually reviewed by our observers. See the
+                <Link to="/info/banshares">banshare info page</Link> for more information.
             </p>
         </div>
         <Linkable id="core-values" e="h2">Our Core Values</Linkable>

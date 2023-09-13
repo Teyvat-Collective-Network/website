@@ -94,6 +94,10 @@
     background-color: transparent;
 }
 
+.gap-05 {
+    gap: 5px;
+}
+
 .gap-1 {
     gap: 10px;
 }
@@ -112,4 +116,8 @@
 
 .round {
     border-radius: 5px;
+}
+
+.unset {
+    all: unset;
 }
