@@ -1,8 +1,11 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import Callout from "$lib/components/Callout.svelte";
     import Icon from "$lib/components/Icon.svelte";
     import Link from "$lib/components/Link.svelte";
     import LinkButton from "$lib/components/LinkButton.svelte";
+    import OneTimeMessage from "$lib/components/OneTimeMessage.svelte";
+    import { onMount } from "svelte";
 
     let query = "";
 
@@ -18,10 +21,26 @@
 
         return true;
     }
+
+    let dismiss: any;
 </script>
 
 <div id="main" class="container gap-2">
     <h1>Our Partners</h1>
+    <OneTimeMessage id="not-unique" bind:dismiss>
+        <div class="wide">
+            <Callout style="info">
+                <p>
+                    Already see your server's character here? Don't worry &mdash; we don't require servers to represent unique characters, so feel free to
+                    apply!
+                </p>
+                <p>
+                    <button on:click={dismiss}>Dismiss</button>
+                </p>
+            </Callout>
+            <br />
+        </div>
+    </OneTimeMessage>
     <div id="searchbar" class="wide row no-wrap gap-2">
         <Icon icon="search" />
         <input type="text" bind:value={query} placeholder="Filter Servers" />

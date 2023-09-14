@@ -3,9 +3,14 @@
     import Menu from "$lib/components/Menu.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
     import { dark_mode } from "$lib/stores";
+    import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
+    import Show from "./Show.svelte";
 
     let scroll: number = 0;
+    let show = false;
+
+    onMount(() => (show = true));
 </script>
 
 <svelte:window bind:scrollY={scroll} />
@@ -41,11 +46,13 @@
     </head>
 
     <body>
-        <Menu />
-        <Navbar />
-        <div id="slot">
-            <slot />
-        </div>
+        <Show when={show}>
+            <Menu />
+            <Navbar />
+            <div id="slot">
+                <slot />
+            </div>
+        </Show>
     </body>
 </html>
 

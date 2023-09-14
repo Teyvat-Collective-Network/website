@@ -6,13 +6,14 @@
     import { getTag } from "$lib/utils";
     import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
+    import Show from "./Show.svelte";
 
     let open = false;
     let href: string;
 
     const close = () => (open = false);
 
-    let doc: Document | null = null;
+    let doc: any = null;
 
     onMount(() => {
         selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.onclick = () => setTimeout(close)));
@@ -20,7 +21,7 @@
         page.subscribe((x) => {
             href = x.url.href;
             selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
-            if (selectall<HTMLAnchorElement>("#staff-area a").some((e) => e.href === href)) staff_open = true;
+            for (const id of ["info-pages", "staff-area"]) if (selectall<HTMLAnchorElement>(`#${id} a`).some((e) => e.href === href)) staff_open = true;
         });
 
         doc = document;
@@ -28,6 +29,8 @@
 
     let info_open = false;
     let staff_open = false;
+
+    dark_mode.subscribe((x) => doc && (doc.cookie = `mode=${x ? "dark" : "light"}; expires=${new Date(Date.now() + 100 * 365 * 24 * 60 * 60 * 1000)}; path=/`));
 </script>
 
 <svelte:window
@@ -62,10 +65,22 @@
             Switch to {$dark_mode ? "Light" : "Dark"} Mode
         </button>
 
-        <a href="/" class="t1"><Icon icon="home" /> Home Page</a>
+        <a href="/" class="t1"><Icon icon="home" /> Home</a>
         <a href="/about" class="t1"><Icon icon="info" /> About Us</a>
         <a href="/partners" class="t1"><Icon icon="handshake" /> Partners</a>
+        <a href="/join" class="t1"><Icon icon="meeting_room" /> Join</a>
+        <a href="/info/constitution" class="t1"><Icon icon="account_balance" /> Constitution</a>
         <a href="/calendar" class="t1"><Icon icon="calendar_month" /> Calendar</a>
+        <a href="/contact" class="t1"><Icon icon="call" /> Contact Us</a>
+
+        <button class="t1" on:click={() => (info_open = !info_open)}>
+            <Icon icon={info_open ? "expand_more" : "chevron_right"} />
+            Info Pages
+        </button>
+
+        <Show when={info_open}>
+            <div id="info-pages" />
+        </Show>
 
         {#if $user}
             {#if $user.staff}
@@ -74,12 +89,14 @@
                     Staff Area
                 </button>
 
-                <div id="staff-area" hidden={!staff_open}>
-                    {#if $user.observer}
-                        <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
-                        <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
-                    {/if}
-                </div>
+                <Show when={staff_open}>
+                    <div id="staff-area">
+                        {#if $user.observer}
+                            <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
+                            <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
+                        {/if}
+                    </div>
+                </Show>
             {/if}
 
             <button class="t1" on:click={() => fetch(`/logout`, { method: "post" }).then(() => location.reload())}>

@@ -195,6 +195,43 @@
         await commit(`PATCH /guilds/${guild.id}`, { invite: code });
     }
 
+    async function deleteGuild(guild: Guild) {
+        if (!confirm(`Are you sure you want to remove ${guild.name} from the network?`)) return;
+
+        await commit(`DELETE /guilds/${guild.id}`);
+    }
+
+    async function addGuild() {
+        const id = prompt("Enter the ID of the guild to add.");
+        if (!id) return;
+        if (!id.match(/^\d{17,20}$/)) return alert("The guild ID must be a snowflake.");
+
+        const name = prompt("Enter the name of the guild.");
+        if (!name) return;
+        if (name.length > 32) return alert("The guild ID is too long.");
+
+        const owner = prompt("Enter the ID of the guild's owner.");
+        if (!owner) return;
+        if (!owner.match(/^\d{17,20}$/)) return alert("The owner ID must be a snowflake.");
+
+        const advisor = prompt("Enter the ID of the guild's advisor or skip.") || null;
+        if (advisor && !advisor.match(/^\d{17,20}$/)) return alert("The advisor ID must be a snowflake");
+
+        const mascot = prompt("Enter the ID of the guild's mascot.");
+        if (!mascot) return alert("The mascot is required.");
+
+        while (true) {
+            const invite = prompt("Enter an invite pointing to this server.");
+            if (!invite) return alert("The invite is required.");
+
+            const req = await api($token, `!POST /guilds/${id}`, { name, mascot, invite, owner, advisor, delegated: false });
+            const data = await req.json();
+            if (req.status === 400 && data.code === 4101) {
+                alert(data.message);
+            }
+        }
+    }
+
     async function editRoleDescription(role: Role) {
         const description = prompt(`Enter the new description for ${role.id}.`);
         if (!description) return;
@@ -557,9 +594,11 @@
                                     </ul>
                                 </li>
                             </ul>
+                            <button class="red-button" on:click={() => deleteGuild(guild)}><Icon icon="delete" /></button>
                         </Show>
                     </div>
                 {/each}
+                <button on:click={() => addGuild()}><Icon icon="add" /></button>
             </Loading>
         </Show>
     </div>
