@@ -2,6 +2,7 @@
     import { createEventDispatcher } from "svelte";
 
     export let open: any = false;
+    export let button = false;
     export let background_color: string = "rgb(var(--bg-3))";
     export let overlay_color: string = "rgb(var(--pure-rgb), 60%)";
 
@@ -20,6 +21,12 @@
         <slot />
     </div>
 </div>
+
+{#if button}
+    <button on:click={() => (open = true)}>
+        <slot name="button" />
+    </button>
+{/if}
 
 <div role="none" class="overlay {open ? '' : 'closed'}" style="background-color: {overlay_color}" on:click={close} />
 

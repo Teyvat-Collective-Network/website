@@ -1,10 +1,10 @@
 <script lang="ts">
     import { user } from "$lib/stores";
     import type { CalendarEvent } from "$lib/types";
+    import A from "./A.svelte";
     import Callout from "./Callout.svelte";
     import Icon from "./Icon.svelte";
     import Invite from "./Invite.svelte";
-    import Link from "./Link.svelte";
     import Modal from "./Modal.svelte";
 
     export let event: CalendarEvent;
@@ -15,7 +15,7 @@
     <h2 class="row gap-1">
         {event.title}
         {#if $user?.observer || $user?.id === event.owner}
-            <Link to="/calendar/edit/{event.id}"><Icon icon="edit" /></Link>
+            <A to="/calendar/edit/{event.id}"><Icon icon="edit" /></A>
         {/if}
     </h2>
 

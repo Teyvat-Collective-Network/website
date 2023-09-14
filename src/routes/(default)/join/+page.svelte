@@ -1,8 +1,8 @@
 <script lang="ts">
+    import A from "$lib/components/A.svelte";
     import Callout from "$lib/components/Callout.svelte";
     import ITitle from "$lib/components/ITitle.svelte";
     import Image from "$lib/components/Image.svelte";
-    import Link from "$lib/components/Link.svelte";
     import LinkButton from "$lib/components/LinkButton.svelte";
     import Linkable from "$lib/components/Linkable.svelte";
     import OneTimeMessage from "$lib/components/OneTimeMessage.svelte";
@@ -22,7 +22,7 @@
         <p>
             Only character mains servers (servers dedicated to a specific Genshin Impact character with resources and channels for that character) may join the
             TCN, but we have no limit on the number of servers for the same character that may join. Your server will undergo a review process, which you can
-            read more about <Link to="/observation-faq">here</Link>.
+            read more about <A to="/observation-faq">here</A>.
         </p>
         <LinkButton to="/apply">Apply Here!</LinkButton>
         <Linkable id="induction-process" e="h2">Induction Process</Linkable>
@@ -31,20 +31,20 @@
             <Image src="https://i.imgur.com/DcJdQ9F.png" alt="Induction Workflow" width="60%" class="light" />
         </div>
         <div class="panel">
-            <ITitle e="h3" icon="edit" text="Preparation" />
+            <ITitle e="h3" icon="edit">Preparation</ITitle>
             <p>Ensure your server is well-structured, your staff teams are in order, and you are ready to be observed!</p>
             <hr />
-            <ITitle e="h3" icon="checklist" text="Application" />
+            <ITitle e="h3" icon="checklist">Application</ITitle>
             <p>
-                Once you are ready, fill out the application form <Link to="/apply">here</Link>! A period of 3 days is always given for the council member to
-                raise any objections to applicant servers.
+                Once you are ready, fill out the application form <A to="/apply">here</A>! A period of 3 days is always given for the council member to raise
+                any objections to applicant servers.
             </p>
             <p>
                 Afterwards, an observer will be assigned and reach out to you. If there are delays for any reason, we will inform you and give you a transparent
                 timeline.
             </p>
             <hr />
-            <ITitle e="h3" icon="visibility" text="Observation" />
+            <ITitle e="h3" icon="visibility">Observation</ITitle>
             <p>
                 For a 28-day period, an observer will oversee all operations in your server. This is to ensure your server meets our quality expectations for
                 organization and a safe environment.
@@ -54,7 +54,7 @@
                 your server.
             </p>
             <hr />
-            <ITitle e="h3" icon="how_to_vote" text="Decision" />
+            <ITitle e="h3" icon="how_to_vote">Decision</ITitle>
             <p>
                 The council will vote based on the report and decide whether to induct or reject your server. In rare cases, we may decide that more time is
                 needed to make a decision and extend the observation by another 28 days, which will be carried out by a new observer.
@@ -64,7 +64,7 @@
                 been confirmed.
             </p>
             <hr />
-            <ITitle e="h3" icon="handshake" text="Join the TCN" />
+            <ITitle e="h3" icon="handshake">Join the TCN</ITitle>
             <p>
                 If you reach this step, congratulations! You are now a member of the <b>Teyvat Collective Network</b>.
             </p>
@@ -73,7 +73,7 @@
                 help you with the few things we do require if you need any help.
             </p>
             <hr />
-            <ITitle e="h3" icon="close" text="Rejection" />
+            <ITitle e="h3" icon="close">Rejection</ITitle>
             <p>
                 If you reach this step, you may be able to join at a later date. We will give you more information when we reject you. If possible, we will tell
                 you why, though sometimes servers have staff/owners that are too problematic and we will not even inform them why.
@@ -109,19 +109,19 @@
             sometimes we keep the reason private and may not reconsider.
         </p>
         <div class="panel">
-            <ITitle e="h3" icon="report_problem" text="Problematic Behavior" />
+            <ITitle e="h3" icon="report_problem">Problematic Behavior</ITitle>
             <p>
                 Problematic behavior from the community that is unchecked or from the staff themselves (inciting raids, permitting toxicity, etc.), including if
                 the staff are causing trouble in other servers and this is known by management and nothing is done.
             </p>
             <hr />
-            <ITitle e="h3" icon="remove_moderator" text="Insufficient Moderation" />
+            <ITitle e="h3" icon="remove_moderator">Insufficient Moderation</ITitle>
             <p>
                 Insufficient moderation (lack of staff or lack of activity from staff). We are not looking for mods to be talking in chat every day, just that
                 rules are enforced and mods are watching chat and responding to pings enough that the server remains a safe environment.
             </p>
             <hr />
-            <ITitle e="h3" icon="account_tree" text="Inadequate Structure" />
+            <ITitle e="h3" icon="account_tree">Inadequate Structure</ITitle>
             <p>
                 Inadequate server structure (broken permissions, lack of moderation logs, lack of tools for moderators, etc.). If we believe you have potential
                 but need help with your structure or moderation policies or workflows, we may offer to help and induct you even if there are problems, if you

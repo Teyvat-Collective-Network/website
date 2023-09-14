@@ -27,9 +27,10 @@
         on:keydown={() => (open = true)}
         style="max-width: 100%"
     />
-    <div role="none" class="lightbox {open ? 'open' : ''}" on:click={() => (open = false)} on:keydown={() => (open = false)}>
-        <img {src} {alt} class={transparent ? "transparent" : ""} style="max-width: 75%; max-height: 75%" />
-    </div>
+</div>
+
+<div role="none" class="lightbox {open ? 'open' : ''}" on:click={() => (open = false)} on:keydown={() => (open = false)}>
+    <img {src} {alt} class={transparent ? "transparent" : ""} style="max-width: 75%; max-height: 75%" />
 </div>
 
 <style lang="scss">

@@ -1,11 +1,10 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import A from "$lib/components/A.svelte";
     import Callout from "$lib/components/Callout.svelte";
     import Icon from "$lib/components/Icon.svelte";
-    import Link from "$lib/components/Link.svelte";
     import LinkButton from "$lib/components/LinkButton.svelte";
     import OneTimeMessage from "$lib/components/OneTimeMessage.svelte";
-    import { onMount } from "svelte";
 
     let query = "";
 
@@ -74,7 +73,7 @@
         <div class="panel {fuzzy(name, query) || fuzzy(mascot, query) ? '' : 'hidden'}">
             <div class="col">
                 <img src="/files/{mascot}.png" alt="{name} Icon" width="150px" height="150px" />
-                <Link to="/server/{id}"><h4>{name}</h4></Link>
+                <A to="/server/{id}"><h4>{name}</h4></A>
                 <LinkButton to="https://discord.gg/{invite}" external>Join</LinkButton>
             </div>
         </div>

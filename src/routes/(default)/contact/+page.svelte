@@ -1,7 +1,7 @@
 <script lang="ts">
     import api from "$lib/api";
+    import A from "$lib/components/A.svelte";
     import Invite from "$lib/components/Invite.svelte";
-    import Link from "$lib/components/Link.svelte";
     import Linkable from "$lib/components/Linkable.svelte";
     import Loading from "$lib/components/Loading.svelte";
     import { token } from "$lib/stores";
@@ -26,7 +26,7 @@
     <Loading done={observers}>
         <ul>
             {#each observers as user}
-                <li><Link to="/user/{user.id}">{user.tag}</Link> &mdash; <code>{user.id}</code></li>
+                <li><A to="/user/{user.id}">{user.tag}</A> &mdash; <code>{user.id}</code></li>
             {/each}
         </ul>
     </Loading>

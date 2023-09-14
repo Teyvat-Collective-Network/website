@@ -9,11 +9,11 @@
 
 <script lang="ts">
     import api from "$lib/api";
+    import A from "$lib/components/A.svelte";
     import Badge from "$lib/components/Badge.svelte";
     import Callout from "$lib/components/Callout.svelte";
     import Expand from "$lib/components/Expand.svelte";
     import Icon from "$lib/components/Icon.svelte";
-    import Link from "$lib/components/Link.svelte";
     import Loading from "$lib/components/Loading.svelte";
     import Modal from "$lib/components/Modal.svelte";
     import Show from "$lib/components/Show.svelte";
@@ -437,9 +437,9 @@
                             <Loading done={guild}>
                                 <p class="row gap-1">
                                     <span>
-                                        <Link to="#guild-{guildId}" on:click={() => ((open.guilds = true), (open[`guilds_${guildId}`] = true))}>
+                                        <A to="#guild-{guildId}" on:click={() => ((open.guilds = true), (open[`guilds_${guildId}`] = true))}>
                                             <b>{guild?.name}</b>
-                                        </Link> &mdash;
+                                        </A> &mdash;
                                         <code>{guildId}</code>
                                     </span>
                                     {#if props.owner}<Badge icon="badge" title={roleMap.owner?.description}>Server Owner</Badge>{/if}
@@ -512,9 +512,9 @@
                                     <span class="row gap-1">
                                         <span>
                                             <b>Owner:</b>
-                                            <Link to="#user" on:click={() => ((userId = guild.owner), reloadUser(), (open.user = true))}>
+                                            <A to="#user" on:click={() => ((userId = guild.owner), reloadUser(), (open.user = true))}>
                                                 <UserId id={guild.owner} />
-                                            </Link>
+                                            </A>
                                             &mdash; <code>{guild.owner}</code>
                                         </span>
                                         <button class="void" on:click={() => transfer("owner", guild)}>
@@ -532,9 +532,9 @@
                                         <span>
                                             <b>Advisor:</b>
                                             {#if guild.advisor}
-                                                <Link to="#user" on:click={() => ((userId = guild.advisor || ""), reloadUser(), (open.user = true))}>
+                                                <A to="#user" on:click={() => ((userId = guild.advisor || ""), reloadUser(), (open.user = true))}>
                                                     <UserId id={guild.advisor} />
-                                                </Link>
+                                                </A>
                                                 &mdash; <code>{guild.advisor}</code>
                                             {:else}
                                                 (none)
@@ -578,7 +578,7 @@
                                     <span class="row gap-1">
                                         <span>
                                             <b>Invite:</b>
-                                            <Link to="https://discord.gg/{guild.invite}" external>discord.gg/{guild.invite}</Link>
+                                            <A to="https://discord.gg/{guild.invite}" external>discord.gg/{guild.invite}</A>
                                         </span>
                                         <button class="void" on:click={() => switchInvite(guild)}>
                                             <Badge icon="link">Switch</Badge>
@@ -589,7 +589,7 @@
                                     <b>Staff:</b>
                                     <ul>
                                         {#each Object.keys(guild.users) as id}
-                                            <li><Link to="#user" on:click={() => ((userId = id), reloadUser(), (open.user = true))}><UserId {id} /></Link></li>
+                                            <li><A to="#user" on:click={() => ((userId = id), reloadUser(), (open.user = true))}><UserId {id} /></A></li>
                                         {/each}
                                     </ul>
                                 </li>

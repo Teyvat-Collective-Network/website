@@ -25,3 +25,10 @@ export async function getTag(id: string): Promise<string | null> {
     waiting[id] ??= [];
     return new Promise((r) => waiting[id].push(r));
 }
+
+export function listJoin(items: any[], separator = "and"): string {
+    if (items.length === 0) return "";
+    if (items.length === 1) return `${items[0]}`;
+    if (items.length === 2) return `${items[0]} ${separator} ${items[1]}`;
+    return `${items.slice(0, -1).join(", ")}, ${separator} ${items.at(-1)}`;
+}

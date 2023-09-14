@@ -2,11 +2,11 @@
     import { beforeNavigate, goto } from "$app/navigation";
     import { page } from "$app/stores";
     import api from "$lib/api";
+    import A from "$lib/components/A.svelte";
     import Callout from "$lib/components/Callout.svelte";
     import DatetimeEditor from "$lib/components/DatetimeEditor.svelte";
     import EventModal from "$lib/components/EventModal.svelte";
     import Icon from "$lib/components/Icon.svelte";
-    import Link from "$lib/components/Link.svelte";
     import TextBadge from "$lib/components/TextBadge.svelte";
     import Textarea from "$lib/components/Textarea.svelte";
     import UserId from "$lib/components/UserId.svelte";
@@ -107,12 +107,12 @@
 
 <div class="container">
     <h2>{isNew ? "Creating" : "Editing"} Event</h2>
-    <Link to="/calendar" class="row"><Icon icon="chevron_left" /> Return to Calendar</Link>
+    <A to="/calendar" class="row"><Icon icon="chevron_left" /> Return to Calendar</A>
     <br />
 
     {#if !isNew && $user?.id !== event.owner}
         <Callout style="info">
-            <p>You are editing <Link to="/user/{event.owner}" external><b><UserId id={event.owner} /></b></Link>'s event.</p>
+            <p>You are editing <A to="/user/{event.owner}" external><b><UserId id={event.owner} /></b></A>'s event.</p>
         </Callout>
         <br />
     {/if}

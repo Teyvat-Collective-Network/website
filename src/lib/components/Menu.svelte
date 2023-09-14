@@ -1,3 +1,13 @@
+<script lang="ts" context="module">
+    const routeMap: Record<string, string> = {
+        "/info/other-bots/daedalus": "/info/other-bots",
+        "/info/discord/permission-list": "/info/discord",
+        "/info/discord/permissions": "/info/discord",
+        "/info/discord/webhooks": "/info/discord",
+        "/info/discord/embeds": "/info/discord",
+    };
+</script>
+
 <script lang="ts">
     import { page } from "$app/stores";
     import api from "$lib/api";
@@ -7,6 +17,7 @@
     import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
     import Show from "./Show.svelte";
+    import Mention from "./Mention.svelte";
 
     let open = false;
     let href: string;
@@ -19,16 +30,17 @@
         selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.onclick = () => setTimeout(close)));
 
         page.subscribe((x) => {
-            href = x.url.href;
+            href = `${x.url.origin}${routeMap[x.url.pathname] ?? x.url.pathname}`;
+            href = routeMap[href] ?? href;
+
             selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
-            for (const id of ["info-pages", "staff-area"]) if (selectall<HTMLAnchorElement>(`#${id} a`).some((e) => e.href === href)) staff_open = true;
+            for (const id of ["info-pages", "staff-area"]) if (selectall<HTMLAnchorElement>(`#${id} a`).some((e) => e.href === href)) openSections[id] = true;
         });
 
         doc = document;
     });
 
-    let info_open = false;
-    let staff_open = false;
+    const openSections: Record<string, boolean> = {};
 
     dark_mode.subscribe((x) => doc && (doc.cookie = `mode=${x ? "dark" : "light"}; expires=${new Date(Date.now() + 100 * 365 * 24 * 60 * 60 * 1000)}; path=/`));
 </script>
@@ -73,23 +85,33 @@
         <a href="/calendar" class="t1"><Icon icon="calendar_month" /> Calendar</a>
         <a href="/contact" class="t1"><Icon icon="call" /> Contact Us</a>
 
-        <button class="t1" on:click={() => (info_open = !info_open)}>
-            <Icon icon={info_open ? "expand_more" : "chevron_right"} />
+        <button class="t1" on:click={() => (openSections["info-pages"] = !openSections["info-pages"])}>
+            <Icon icon={openSections["info-pages"] ? "expand_more" : "chevron_right"} />
             Info Pages
         </button>
 
-        <Show when={info_open}>
-            <div id="info-pages" />
+        <Show when={openSections["info-pages"]}>
+            <div id="info-pages">
+                <a href="/info/quickstart" class="t2"><Icon icon="developer_guide" /> Quickstart</a>
+                <div>
+                    <a href="/info/partner-list" class="t3"><Icon icon="list" /> Partner List &amp; Autosync</a>
+                    <a href="/info/banshares" class="t3"><Icon icon="cell_tower" /> Banshares</a>
+                    <a href="/info/global" class="t3"><Icon icon="language" /> Global Chat</a>
+                    <a href="/info/staff-link" class="t3"><Icon icon="link" /> Staff Link</a>
+                    <a href="/info/other-bots" class="t3"><Icon icon="robot_2" /> Other Bots</a>
+                </div>
+                <a href="/info/discord" class="t2"><Icon icon="help" /> Discord Help</a>
+            </div>
         </Show>
 
         {#if $user}
             {#if $user.staff}
-                <button class="t1" on:click={() => (staff_open = !staff_open)}>
-                    <Icon icon={staff_open ? "expand_more" : "chevron_right"} />
+                <button class="t1" on:click={() => (openSections["staff-area"] = !openSections["staff-area"])}>
+                    <Icon icon={openSections["staff-area"] ? "expand_more" : "chevron_right"} />
                     Staff Area
                 </button>
 
-                <Show when={staff_open}>
+                <Show when={openSections["staff-area"]}>
                     <div id="staff-area">
                         {#if $user.observer}
                             <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
@@ -135,7 +157,7 @@
     <div id="footer">
         {#if $user}
             <span class="text-2">
-                Logged in as <span class="mention with-icon"><Icon icon="alternate_email" /> {#await getTag($user.id) then tag} {tag} {/await}</span>
+                Logged in as <Mention>{#await getTag($user.id) then tag} {tag} {/await}</Mention>
             </span>
             <br />
         {/if}

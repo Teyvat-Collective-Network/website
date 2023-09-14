@@ -6,18 +6,31 @@
     import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
     import Show from "./Show.svelte";
+    import { page } from "$app/stores";
+    import { select } from "$lib/html-utils";
 
     let scroll: number = 0;
     let show = false;
+    let opaque = false;
 
-    onMount(() => (show = true));
+    onMount(() => {
+        show = true;
+
+        setTimeout(() => {
+            const { hash } = new URL(location.href);
+
+            if (hash)
+                scrollTo({
+                    top: select(hash).getBoundingClientRect().top - select("body").getBoundingClientRect().top - window.innerHeight / 2,
+                    behavior: "instant",
+                });
+
+            opaque = true;
+        }, 100);
+    });
 </script>
 
 <svelte:window bind:scrollY={scroll} />
-
-<button id="top" on:click={() => scrollTo({ top: 0 })} style="opacity: {scroll ? 1 : 0}">
-    <Icon icon="expand_less" />
-</button>
 
 <html lang="en" class="bg-1 text-1">
     <head>
@@ -46,6 +59,9 @@
     </head>
 
     <body>
+        <button id="top" on:click={() => scrollTo({ top: 0 })} style="opacity: {scroll ? 1 : 0}">
+            <Icon icon="expand_less" />
+        </button>
         <Show when={show}>
             <Menu />
             <Navbar />
@@ -60,11 +76,15 @@
     @keyframes fade-in {
         0% {
             opacity: 0;
-            transform: translateX(-1vw);
+            transform: translateX(-0.5vw);
         }
 
         100% {
         }
+    }
+
+    body {
+        animation: 0s 100ms fade-in backwards;
     }
 
     #slot {
@@ -72,7 +92,7 @@
     }
 
     :global(#slot > *) {
-        animation: 600ms fade-in;
+        animation: 600ms 100ms fade-in backwards;
     }
 
     #top {

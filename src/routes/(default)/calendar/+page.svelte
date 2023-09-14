@@ -5,12 +5,9 @@
 
 <script lang="ts">
     import { page } from "$app/stores";
-    import Callout from "$lib/components/Callout.svelte";
+    import A from "$lib/components/A.svelte";
     import EventModal from "$lib/components/EventModal.svelte";
     import Icon from "$lib/components/Icon.svelte";
-    import Invite from "$lib/components/Invite.svelte";
-    import Link from "$lib/components/Link.svelte";
-    import Modal from "$lib/components/Modal.svelte";
     import { user } from "$lib/stores";
     import type { CalendarEvent } from "$lib/types";
 
@@ -63,7 +60,7 @@
     <h3 class="row gap-1">
         Events &amp; Other Dates
         {#if $user?.council}
-            <Link to="/calendar/edit/new"><Icon icon="add" /></Link>
+            <A to="/calendar/edit/new"><Icon icon="add" /></A>
         {/if}
     </h3>
 

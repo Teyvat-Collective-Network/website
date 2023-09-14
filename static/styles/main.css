@@ -69,8 +69,8 @@ h5,
 h6 {
     font-weight: 400;
     line-height: 100%;
-    margin-bottom: 1em;
-    margin-top: 1em;
+    margin-bottom: 1.5em;
+    margin-top: 1.5em;
 }
 
 b,
@@ -107,6 +107,7 @@ code {
     border-radius: 5px;
     font-family: "Share Tech Mono", monospace;
     font-size: 90%;
+    overflow-x: scroll;
 }
 
 pre {
@@ -208,6 +209,7 @@ span.mention {
 }
 
 span.mention.with-icon {
+    margin-top: -6.5px;
     top: 6.5px;
 }
 

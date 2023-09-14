@@ -4,7 +4,7 @@
     const styles = {
         green: { icon: "check", color: "rgb(var(--green-callout))" },
         info: { icon: "info", color: "rgb(var(--blue-callout))" },
-        warn: { icon: "info", color: "rgb(var(--yellow-callout))" },
+        warn: { icon: "warning", color: "rgb(var(--yellow-callout))" },
         red: { icon: "report", color: "rgb(var(--red-callout))" },
     };
 </script>
