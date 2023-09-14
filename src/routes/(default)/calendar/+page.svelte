@@ -6,6 +6,7 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import Callout from "$lib/components/Callout.svelte";
+    import EventModal from "$lib/components/EventModal.svelte";
     import Icon from "$lib/components/Icon.svelte";
     import Invite from "$lib/components/Invite.svelte";
     import Link from "$lib/components/Link.svelte";
@@ -76,35 +77,7 @@
                         <button class="event row round" style="left: {x * 55}px; width: {55 * y - 15}px" on:click={() => (open = event.id)}>
                             <div style="padding-left: calc({sx}px - {x * 55 + 20}px)">{event.title}</div>
                         </button>
-
-                        <Modal
-                            open={open === event.id}
-                            on:close={() => (open = -1)}
-                            background_color="rgb(var(--bg-1))"
-                            overlay_color="rgb(var(--pure-rgb), 80%)"
-                        >
-                            <h2 class="row gap-1">
-                                {event.title}
-                                {#if $user?.observer || $user?.id === event.owner}
-                                    <Link to="/calendar/edit/{event.id}"><Icon icon="edit" /></Link>
-                                {/if}
-                            </h2>
-
-                            {#if event.body === ""}
-                                <Callout style="red"><p>Rendering markdown failed.</p></Callout>
-                                <br />
-                            {:else}
-                                {@html event.body}
-                            {/if}
-
-                            {#if event.invites.length > 0}
-                                <div class="row no-center gap-1">
-                                    {#each event.invites as invite}
-                                        <Invite {invite} />
-                                    {/each}
-                                </div>
-                            {/if}
-                        </Modal>
+                        <EventModal {event} open={open === event.id} on:close={() => (open = -1)} />
                     {/each}
                 </div>
             {/each}
@@ -202,7 +175,7 @@
     }
 
     .timeline {
-        background-color: rgb(var(--accent-rgb), 75%);
+        background-color: rgb(var(--accent), 75%);
         width: 3px;
         z-index: 2;
 

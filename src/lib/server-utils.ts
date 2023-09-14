@@ -7,7 +7,10 @@ declare const HTMLRewriter: any;
 
 const rewriter = new HTMLRewriter().on("*", {
     async element(element: any) {
-        console.log(element.tagName);
+        const classes = element.getAttribute("class")?.split(" ") ?? [];
+        classes.push("md");
+
+        element.setAttribute("class", classes.join(" "));
     },
 });
 
@@ -17,6 +20,5 @@ export async function mdToHtml(content: string): Promise<string> {
         .use(remarkRehype as any)
         .use(rehypeStringify)
         .process(content);
-
     return await rewriter.transform(new Response(file?.value ?? "")).text();
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
     export let value: string;
-    const _ = value;
+    const _ = value || "";
 
     let other_classes = "";
 
@@ -9,7 +9,10 @@
     let item: any;
 
     function update() {
-        value = item.innerHTML.replaceAll("<div>", "\n").replaceAll("<br>", "").replaceAll("</div>", "").replaceAll("&nbsp;", " ");
+        value = new DOMParser().parseFromString(
+            item.innerHTML.replaceAll("<div>", "\n").replaceAll("<br>", "").replaceAll("</div>", "").replaceAll("&nbsp;", " "),
+            "text/html",
+        ).documentElement.textContent!;
     }
 </script>
 

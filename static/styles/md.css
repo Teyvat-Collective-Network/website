@@ -1,0 +1,28 @@
+h1.md {
+    font-size: 175%;
+}
+
+h2.md {
+    font-size: 160%;
+}
+
+h3.md {
+    font-size: 150%;
+}
+
+h4.md {
+    font-size: 140%;
+}
+
+h5.md {
+    font-size: 125%;
+}
+
+h6.md {
+    font-size: 110%;
+}
+
+a.md {
+    color: rgb(var(--text-accent));
+    text-decoration: none;
+}

@@ -3,9 +3,9 @@
     import api from "$lib/api";
     import { selectall } from "$lib/html-utils";
     import { dark_mode, token, user } from "$lib/stores";
+    import { getTag } from "$lib/utils";
     import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
-    import { getTag } from "$lib/utils";
 
     let open = false;
     let href: string;
@@ -26,15 +26,6 @@
         doc = document;
     });
 
-    let index = 0;
-
-    $: open &&
-        (index = selectall<HTMLAnchorElement | HTMLButtonElement>("#sidebar-contents > a, #sidebar-contents > button").findIndex(
-            (e) => "href" in e && e.href === href,
-        ));
-
-    $: selectall<HTMLAnchorElement | HTMLButtonElement>("#sidebar-contents > a:not(.hidden), #sidebar-contents > button:not(.hidden)")?.[index]?.focus();
-
     let info_open = false;
     let staff_open = false;
 </script>
@@ -46,13 +37,6 @@
             open = !open;
         } else if (e.key === "Escape") {
             open = false;
-        } else if (open && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
-            e.preventDefault();
-
-            const { length } = selectall("#sidebar-contents a:not(.hidden)");
-
-            if (e.key === "ArrowUp") index = (index + length - 1) % length;
-            else index = (index + 1) % length;
         }
     }}
 />
@@ -90,7 +74,7 @@
                     Staff Area
                 </button>
 
-                <div id="staff-area" class={staff_open ? "" : "hidden"}>
+                <div id="staff-area" hidden={!staff_open}>
                     {#if $user.observer}
                         <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
                         <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
@@ -302,9 +286,5 @@
     button:hover,
     button:focus {
         background-color: #00000011;
-    }
-
-    .hidden {
-        display: none;
     }
 </style>
