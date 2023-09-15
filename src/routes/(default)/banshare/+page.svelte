@@ -52,9 +52,15 @@
             done = true;
         }
     }
+
+    export let form: any;
 </script>
 
 <form method="post">
+    {#if form?.error}
+        <Callout style="red"><p>{form.error}</p></Callout>
+        <br />
+    {/if}
     <div class="panel">
         <h4>ID(s) of the offender(s)</h4>
         <p>Whitespace-separated list of IDs:</p>
