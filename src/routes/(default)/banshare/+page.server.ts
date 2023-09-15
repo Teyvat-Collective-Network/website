@@ -31,14 +31,17 @@ export const actions: Actions = {
         const severity = data.get("severity") as string;
         const urgent = data.has("urgent");
 
+        const values = { ids, reason, evidence, server, severity, urgent };
+
         const action = (data.get("submit") as string) ?? "Submit";
 
         const skipValidation = action !== "Submit";
         const skipChecks = action === "Submit Without Checks";
 
-        const req = await api(token, `POST /banshares`, { ids, reason, evidence, server, severity, urgent, skipValidation, skipChecks });
-        console.log(req.status, await req.json());
+        const req = await api(token, `!POST /banshares`, { ...values, skipValidation, skipChecks });
+        const res = await req.json();
 
+        if (!req.ok) return fail(req.status, { error: res.message, ...values });
         return { success: true };
     },
 };
