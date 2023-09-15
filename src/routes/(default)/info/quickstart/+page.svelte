@@ -1,15 +1,14 @@
 <script lang="ts">
-    import Callout from "$lib/components/Callout.svelte";
-    import Icon from "$lib/components/Icon.svelte";
     import A from "$lib/components/A.svelte";
+    import Callout from "$lib/components/Callout.svelte";
     import Linkable from "$lib/components/Linkable.svelte";
+    import Mention from "$lib/components/Mention.svelte";
     import Navigation from "$lib/components/Navigation.svelte";
     import UserId from "$lib/components/UserId.svelte";
-    import Mention from "$lib/components/Mention.svelte";
 </script>
 
 <div class="container">
-    <Navigation last={["/info/constitution", "TCN Constitution"]} next={["/info/discord", "Discord Help"]}>
+    <Navigation last={["/info/constitution", "TCN Constitution"]}>
         <h1>Quickstart</h1>
         <Linkable e="h2" id="required">Required</Linkable>
         <Linkable e="h3" id="partner-list">Partner List</Linkable>

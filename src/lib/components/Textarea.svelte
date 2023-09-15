@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
     export let value: string;
     const _ = value || "";
 
@@ -14,6 +16,14 @@
             "text/html",
         ).documentElement.textContent!;
     }
+
+    onMount(() =>
+        item.addEventListener("paste", (e: any) => {
+            e.preventDefault();
+            const text = e.clipboardData.getData("text/plain");
+            document.execCommand("insertHTML", false, text);
+        }),
+    );
 </script>
 
 <svelte:window on:keydown={update} on:keyup={update} on:mousedown={update} />
@@ -25,7 +35,7 @@
         background-color: rgb(var(--bg-3));
         border-radius: 5px;
         border: none;
-        font-family: "Share Tech Mono", monospace;
+        font-family: "Atkinson Hyperlegible", sans-serif;
         line-height: 120%;
         outline: none;
         padding: 5px;

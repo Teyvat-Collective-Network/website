@@ -98,7 +98,7 @@ strong {
 }
 
 .mono {
-    font-family: "Share Tech Mono", monospace;
+    font-family: "Share Tech Mono", monospace !important;
 }
 
 pre,
@@ -346,4 +346,8 @@ button.void {
 
 .space > li {
     margin-bottom: 10px;
+}
+
+.error {
+    outline: 2px solid rgb(var(--red-text)) !important;
 }

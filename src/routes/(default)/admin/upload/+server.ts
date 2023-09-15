@@ -1,8 +1,8 @@
 import api from "$lib/api.js";
+import { responseToReadable } from "$lib/server-utils.js";
 import type { Cookies, RequestHandler } from "@sveltejs/kit";
+import { createWriteStream } from "fs";
 import { unlink } from "fs/promises";
-
-declare const Bun: any;
 
 export async function _pre(cookies: Cookies): Promise<Response | undefined> {
     const token = cookies.get("token");
@@ -26,9 +26,17 @@ export const POST: RequestHandler = async ({ cookies, url }) => {
     if (file.includes("/")) return new Response("", { status: 403 });
 
     try {
-        await Bun.write(`files/${file}`, await fetch(src));
-        return new Response("", { status: 204 });
-    } catch {
+        const req = await fetch(src);
+
+        await new Promise((r) =>
+            responseToReadable(req)
+                .pipe(createWriteStream(`files/${file}`))
+                .once("finish", r),
+        );
+
+        return new Response("", { status: 201 });
+    } catch (error) {
+        console.error(error);
         return new Response("", { status: 500 });
     }
 };

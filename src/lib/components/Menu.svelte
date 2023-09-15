@@ -34,7 +34,8 @@
             href = routeMap[href] ?? href;
 
             selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
-            for (const id of ["info-pages", "staff-area"]) if (selectall<HTMLAnchorElement>(`#${id} a`).some((e) => e.href === href)) openSections[id] = true;
+            for (const id of ["info-pages", "staff-area", "miscellaneous"])
+                if (selectall<HTMLAnchorElement>(`#${id} a`).some((e) => e.href === href)) openSections[id] = true;
         });
 
         doc = document;
@@ -43,6 +44,11 @@
     const openSections: Record<string, boolean> = {};
 
     dark_mode.subscribe((x) => doc && (doc.cookie = `mode=${x ? "dark" : "light"}; expires=${new Date(Date.now() + 100 * 365 * 24 * 60 * 60 * 1000)}; path=/`));
+
+    $: open &&
+        selectall<HTMLAnchorElement>("#sidebar-contents a")
+            .find((e) => e.href === href)
+            ?.scrollIntoView({ block: "nearest" });
 </script>
 
 <svelte:window
@@ -56,11 +62,13 @@
     }}
 />
 
-<svg role="none" viewBox="0 0 100 100" class={open ? "open" : ""} on:click={() => (open = !open)}>
-    <rect id="top" x="10" y="10" width="80" height="10" />
-    <rect id="mid" x="10" y="45" width="80" height="10" />
-    <rect id="bot" x="10" y="80" width="80" height="10" />
-</svg>
+<div id="toggle">
+    <svg role="none" viewBox="0 0 100 100" class={open ? "open" : ""} on:click={() => (open = !open)}>
+        <rect id="top" x="10" y="10" width="80" height="10" />
+        <rect id="mid" x="10" y="45" width="80" height="10" />
+        <rect id="bot" x="10" y="80" width="80" height="10" />
+    </svg>
+</div>
 
 <div id="bar" class="bg-0" />
 <div id="spacer" />
@@ -101,6 +109,18 @@
                     <a href="/info/other-bots" class="t3"><Icon icon="robot_2" /> Other Bots</a>
                 </div>
                 <a href="/info/discord" class="t2"><Icon icon="help" /> Discord Help</a>
+
+                <button class="t2" on:click={() => (openSections["miscellaneous"] = !openSections["miscellaneous"])}>
+                    <Icon icon={openSections["miscellaneous"] ? "expand_more" : "chevron_right"} />
+                    Miscellaneous
+                </button>
+
+                <Show when={openSections["miscellaneous"]}>
+                    <div id="miscellaneous">
+                        <a href="/info/glossary" class="t3"><Icon icon="dictionary" /> Glossary</a>
+                        <a href="/info/exit-procedure" class="t3"><Icon icon="door_back" /> Exit Procedure</a>
+                    </div>
+                </Show>
             </div>
         </Show>
 
@@ -113,6 +133,7 @@
 
                 <Show when={openSections["staff-area"]}>
                     <div id="staff-area">
+                        <a href="/banshare" class="t2"><Icon icon="ios_share" /> Submit a Banshare</a>
                         {#if $user.observer}
                             <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
                             <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
@@ -161,7 +182,6 @@
             </span>
             <br />
         {/if}
-
         &copy; 2023 TCN Development Team
     </div>
 </div>
@@ -186,14 +206,23 @@
         z-index: 10;
     }
 
+    #toggle {
+        border-bottom-right-radius: 5px;
+        height: 80px;
+        position: fixed;
+        z-index: 11;
+
+        @media screen and (min-width: 1360px) {
+            background-color: rgb(var(--bg-1));
+        }
+    }
+
     svg {
         cursor: pointer;
         height: 32px;
         outline: none;
         padding: 24px;
-        position: fixed;
         width: 32px;
-        z-index: 11;
     }
 
     rect {
@@ -235,6 +264,7 @@
         height: 100%;
         justify-content: space-between;
         position: fixed;
+        top: 0;
         transition: transform 250ms, opacity 250ms;
         width: 25%;
         z-index: 5;
@@ -277,8 +307,10 @@
     #sidebar-contents {
         display: flex;
         flex-direction: column;
+        height: 100%;
         overflow-y: scroll;
-        padding-top: 92px;
+        padding-top: 80px;
+        position: relative;
     }
 
     #footer {

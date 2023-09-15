@@ -6,7 +6,7 @@
 </script>
 
 <div class="container">
-    <Navigation last={["/info/quickstart", "Quickstart"]} next={["/info/miscellaneous", "Miscellaneous"]}>
+    <Navigation last={["/info/quickstart", "Quickstart"]}>
         <h1>Discord Help</h1>
         <Linkable e="h2" id="permissions">Discord Permissions</Linkable>
         <p>
@@ -25,7 +25,7 @@
         <Linkable e="h2" id="webhooks-embeds">Webhooks &amp; Embeds</Linkable>
         <p>
             This is a guide on how to use embeds and webhooks in Discord. This guide features <A to="https://discohook.org" external>Discohook</A>,
-            <A to="https://discord.club">Embed Generator</A>, and <A to="/embeds">our own tool</A>.
+            <A to="https://message.style">Embed Generator</A>, and <A to="/tools/embeds">our own tool</A>.
         </p>
         <p>Webhooks are resources that you can create in a text channel that anyone with the URL can use to post messages to the channel.</p>
         <p>Embeds are a way to organize information and add styling to your resources.</p>

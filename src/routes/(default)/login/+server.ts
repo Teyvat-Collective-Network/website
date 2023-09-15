@@ -3,8 +3,9 @@ import { PUBLIC_COOKIE_DOMAIN, PUBLIC_DOMAIN } from "$env/static/public";
 import { redirect, type RequestHandler } from "@sveltejs/kit";
 import crypto from "crypto";
 
-export const GET: RequestHandler = async ({ cookies, url }) => {
+export const GET: RequestHandler = async ({ cookies, setHeaders, url }) => {
     const state = crypto.randomBytes(32).toString("hex");
+
     cookies.set("state", state, { domain: PUBLIC_COOKIE_DOMAIN, path: "/", sameSite: "lax" });
     cookies.set("redirect", url.searchParams.get("redirect") ?? "/", { domain: PUBLIC_COOKIE_DOMAIN, path: "/", sameSite: "lax" });
 

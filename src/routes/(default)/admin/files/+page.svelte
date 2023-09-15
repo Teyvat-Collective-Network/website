@@ -49,8 +49,9 @@
         loaded[file] = true;
     }
 
-    async function edit(file?: string | null) {
+    async function edit(file: string | null, create = false) {
         if (!file) return;
+        if (create && files.includes(file)) return alert("There is already a file with that name.");
 
         const url = prompt(`Input a URL. The contents of '${file}' will be set by fetching this URL.`);
         if (!url) return;
@@ -89,9 +90,9 @@
                 <code>{file}</code>
             </div>
 
-            {#if loaded[file]}
-                {@const ex = ext(file)}
-                <Modal open={open === file} on:close={() => (open = "")}>
+            <Modal open={open === file} on:close={() => (open = "")}>
+                {#if loaded[file]}
+                    {@const ex = ext(file)}
                     <Loading done={loaded[file]}>
                         {#if data[file] === 0}
                             <Callout style="red">
@@ -107,11 +108,11 @@
                             <pre>{JSON.stringify(data[file], undefined, 4)}</pre>
                         {/if}
                     </Loading>
-                </Modal>
-            {/if}
+                {/if}
+            </Modal>
         {/each}
         <div>
-            <button class="green-button" on:click={() => edit(prompt("Enter the filename of the file to create."))}><Icon icon="add" /></button>
+            <button class="green-button" on:click={() => edit(prompt("Enter the filename of the file to create."), true)}><Icon icon="add" /></button>
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 <svelte:options customElement="tcn-link" />
 
 <script lang="ts">
-    export let to: string;
+    export let to: string = "javascript:void(0)";
     export let external: boolean = false;
 
     let other_classes = "";
