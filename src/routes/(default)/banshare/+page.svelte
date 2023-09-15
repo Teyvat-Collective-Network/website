@@ -7,27 +7,27 @@
     import Modal from "$lib/components/Modal.svelte";
     import Show from "$lib/components/Show.svelte";
     import Textarea from "$lib/components/Textarea.svelte";
-    import { select } from "$lib/html-utils";
     import { token, user } from "$lib/stores";
-    import { onMount } from "svelte";
 
-    let ids = "";
+    export let form: any;
+
+    let ids: string = form?.ids ?? "";
     let idList: string[] = [];
     let valid = false;
     $: valid = !!ids.match(/^\s*(\d{17,20}\s+)*\d{17,20}\s*$/);
     $: idList = valid ? ids.trim().split(/\s+/) : [];
 
-    let reason = "";
+    let reason: string = form?.reason ?? "";
     let trimmedReason = "";
     $: trimmedReason = reason.trim();
 
-    let evidence = "";
+    let evidence: string = form?.evidence ?? "";
     let trimmedEvidence = "";
     $: trimmedEvidence = evidence.trim();
 
-    let server = "";
-    let severity = "";
-    let urgent = false;
+    let server: string = form?.server ?? "";
+    let severity: string = form?.severity ?? "";
+    let urgent = !!form?.urgent;
 
     let open = false;
 
@@ -52,13 +52,20 @@
             done = true;
         }
     }
-
-    export let form: any;
 </script>
 
 <form method="post">
     {#if form?.error}
         <Callout style="red"><p>{form.error}</p></Callout>
+        <br />
+    {/if}
+    {#if form?.success}
+        <Callout style="green">
+            <p class="row gap-1">
+                <span>Thank you for submitting a banshare. We will review it as soon as possible. </span>
+                <A on:click={() => (form.success = false)}>Dismiss</A>
+            </p>
+        </Callout>
         <br />
     {/if}
     <div class="panel">

@@ -1,12 +1,28 @@
 import api from "$lib/api.js";
-import { user } from "$lib/stores.js";
-import type { Guild } from "$lib/types.js";
+import di from "$lib/di.js";
 import { fail, type Actions } from "@sveltejs/kit";
 
+function compare(a: string, b: string): number {
+    if (!a.match(/^\d+$/))
+        if (!b.match(/^\d+$/)) return a.localeCompare(b);
+        else return -1;
+    else if (!b.match(/^\d+$/)) return 1;
+
+    const diff = BigInt(a) - BigInt(b);
+    return diff > 0 ? 1 : diff < 0 ? -1 : 0;
+}
+
+const severities: Record<string, string> = {
+    P0: "P0 (Critical)",
+    P1: "P1 (Medium)",
+    P2: "P2 (Low)",
+    DM: "DM Scam",
+};
+
 export const actions: Actions = {
-    async default({ request, locals, fetch }) {
+    async default({ request, locals: { token, user }, fetch }) {
         const data = await request.formData();
-        if (!locals.user) return fail(500, { error: "Not Authenticated." });
+        if (!user) return fail(500, { error: "Not Authenticated." });
 
         const ids = (data.get("ids") as string).trim();
         const reason = (data.get("reason") as string).trim();
@@ -17,27 +33,12 @@ export const actions: Actions = {
 
         const action = (data.get("submit") as string) ?? "Submit";
 
-        const values = { ids, reason, evidence, server, severity, urgent };
+        const skipValidation = action !== "Submit";
+        const skipChecks = action === "Submit Without Checks";
 
-        const abort = (code: number, message: string) => fail(code, { error: message, ...values });
+        const req = await api(token, `POST /banshares`, { ids, reason, evidence, server, severity, urgent, skipValidation, skipChecks });
+        console.log(req.status, await req.json());
 
-        if (ids.length === 0) return abort(400, "You must enter at least one user to banshare.");
-
-        if (!reason) return abort(400, "You must enter a reason.");
-        if (!evidence) return abort(400, "You must enter some evidence.");
-        if (!server) return abort(400, "You must select a server.");
-        if (!severity) return abort(400, "You must select the severity.");
-
-        if (!severity.match(/^P[0-2]|DM$/)) return abort(400, "Invalid severity (P0-2, DM).");
-
-        if (reason.length > 498) return abort(400, "Maximum reason length is 498 characters.");
-        if (evidence.length > 1000) return abort(400, "Maximum evidence length is 1000 characters.");
-
-        const guild = locals.user.guilds[server];
-        if (!guild) return abort(400, "Invalid server selected.");
-        if (!guild.owner && !guild.advisor && (!guild.staff || !guild.roles.includes("banshares")))
-            return abort(400, "You are not authorized to submit banshares from the selected server.");
-
-        const { name } = await api(locals.token, `GET /guilds/${server}`);
+        return { success: true };
     },
 };
