@@ -39,5 +39,6 @@
         line-height: 120%;
         outline: none;
         padding: 5px;
+        word-wrap: break-word;
     }
 </style>

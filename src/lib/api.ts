@@ -8,7 +8,6 @@ export default async function (token: string | null, route: string, body?: any, 
 
     options ??= {};
     options.method = method;
-    route = real;
 
     if (token) {
         options.headers ??= {};
@@ -20,7 +19,7 @@ export default async function (token: string | null, route: string, body?: any, 
 
     if (body) options.body = JSON.stringify(body);
 
-    const req = await fetch(`${PUBLIC_API}${route}`, options);
+    const req = await fetch(`${PUBLIC_API}${real}`, options);
     if (request) return req;
 
     if (!req.ok) throw req.status;

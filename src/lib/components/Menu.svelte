@@ -178,7 +178,7 @@
     <div id="footer">
         {#if $user}
             <span class="text-2">
-                Logged in as <Mention>{#await getTag($user.id) then tag} {tag} {/await}</Mention>
+                Logged in as <Mention>{$user.tag}</Mention>
             </span>
             <br />
         {/if}

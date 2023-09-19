@@ -1,23 +1,5 @@
 import api from "$lib/api.js";
-import di from "$lib/di.js";
 import { fail, type Actions } from "@sveltejs/kit";
-
-function compare(a: string, b: string): number {
-    if (!a.match(/^\d+$/))
-        if (!b.match(/^\d+$/)) return a.localeCompare(b);
-        else return -1;
-    else if (!b.match(/^\d+$/)) return 1;
-
-    const diff = BigInt(a) - BigInt(b);
-    return diff > 0 ? 1 : diff < 0 ? -1 : 0;
-}
-
-const severities: Record<string, string> = {
-    P0: "P0 (Critical)",
-    P1: "P1 (Medium)",
-    P2: "P2 (Low)",
-    DM: "DM Scam",
-};
 
 export const actions: Actions = {
     async default({ request, locals: { token, user }, fetch }) {

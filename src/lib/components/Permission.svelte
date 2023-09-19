@@ -19,7 +19,7 @@
     <Linkable e="h5" id={code} class="row gap-1">
         <span>{@html name} (<code>{code}</code>)</span>
         <Show when={open}>
-            &mdash; <code>1 &lt;&lt; {bit} = {2 ** bit}</code>
+            &mdash; <code>1 &lt;&lt; {bit} = {1 << bit}</code>
         </Show>
     </Linkable>
     <Show when={open}>

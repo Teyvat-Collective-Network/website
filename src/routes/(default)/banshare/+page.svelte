@@ -56,14 +56,19 @@
 
 <form method="post">
     {#if form?.error}
-        <Callout style="red"><p>{form.error}</p></Callout>
+        <Callout style="red">
+            <p class="row gap-1">
+                <span>{@html form.error}</span>
+                <button class="bg-4" on:click={() => (form.error = "")}>Dismiss</button>
+            </p>
+        </Callout>
         <br />
     {/if}
     {#if form?.success}
         <Callout style="green">
             <p class="row gap-1">
                 <span>Thank you for submitting a banshare. We will review it as soon as possible. </span>
-                <A on:click={() => (form.success = false)}>Dismiss</A>
+                <button class="bg-4" on:click={() => (form.success = false)}>Dismiss</button>
             </p>
         </Callout>
         <br />
@@ -74,7 +79,7 @@
         <input required name="ids" type="text" class="bg-2 mono {valid ? '' : 'error'}" bind:value={ids} />
         <Show when={valid}>
             <br />
-            <button on:click={check_ids}>Check IDs</button>
+            <button type="button" on:click={check_ids}>Check IDs</button>
         </Show>
         <h4>Reason</h4>
         <p>
@@ -124,7 +129,7 @@
     <div class="panel">
         <h4>Severity</h4>
         <p>
-            The severity is used to determine autobanning. P0 indicates the greatest threat. Refer to the <A to="/info/banshares#severity">info paeg</A> for more
+            The severity is used to determine autobanning. P0 indicates the greatest threat. Refer to the <A to="/info/banshares#severity">info page</A> for more
             information.
         </p>
         <select required name="severity" class="bg-2" bind:value={severity}>
