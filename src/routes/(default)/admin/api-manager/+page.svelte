@@ -500,6 +500,7 @@
                         </h3>
                         <Show when={open[`guilds_${guild.id}`]}>
                             <ul class="space">
+                                <li><b>ID:</b> <code>{guild.id}</code></li>
                                 <li>
                                     <span class="row gap-1">
                                         <span><b>Name:</b> {guild.name}</span>
@@ -722,7 +723,10 @@
     <p class="row gap-1">
         {#each blocks.guilds ?? [] as guild}
             {#if blocks.user && !(guild.id in blocks.user.guilds)}
-                <button class="void" on:click={() => (blocks.user.guilds[guild.id] = { owner: false, advisor: false, voter: false, staff: false, roles: [] })}>
+                <button
+                    class="void"
+                    on:click={() => (blocks.user.guilds[guild.id] = { owner: false, advisor: false, voter: false, staff: false, council: false, roles: [] })}
+                >
                     <Badge icon="add">{guild.name}</Badge>
                 </button>
             {/if}

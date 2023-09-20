@@ -1,7 +1,7 @@
 export type User = {
     id: string;
     tag: string;
-    guilds: Record<string, { owner: boolean; advisor: boolean; voter: boolean; staff: boolean; roles: string[] }>;
+    guilds: Record<string, { owner: boolean; advisor: boolean; voter: boolean; staff: boolean; council: boolean; roles: string[] }>;
     roles: string[];
     observer: boolean;
     owner: boolean;
