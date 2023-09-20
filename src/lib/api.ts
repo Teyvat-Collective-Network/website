@@ -22,7 +22,10 @@ export default async function (token: string | null, route: string, body?: any, 
     const req = await fetch(`${PUBLIC_API}${real}`, options);
     if (request) return req;
 
-    if (!req.ok) throw req.status;
+    if (!req.ok) {
+        console.error(route, await req.json());
+        throw req.status;
+    }
 
     const text = await req.text();
 

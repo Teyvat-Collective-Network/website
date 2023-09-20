@@ -13,6 +13,10 @@ export default async function (route: string, options?: RequestInit) {
     const req = await fetch(`${DISCORD_INTERFACE}${route}`, options);
     if (request) return req;
 
-    if (!req.ok) throw req.status;
+    if (!req.ok) {
+        console.error(route, await req.json());
+        throw req.status;
+    }
+
     return await req.json();
 }
