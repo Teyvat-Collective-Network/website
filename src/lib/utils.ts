@@ -32,3 +32,17 @@ export function listJoin(items: any[], separator = "and"): string {
     if (items.length === 2) return `${items[0]} ${separator} ${items[1]}`;
     return `${items.slice(0, -1).join(", ")}, ${separator} ${items.at(-1)}`;
 }
+
+export function without<T>(array: T[], index: number): T[] {
+    return [...array.slice(0, index), ...array.slice(index + 1)];
+}
+
+export function swap<T>(array: T[], i: number, j: number): T[] {
+    return [
+        ...array.slice(0, Math.min(i, j)),
+        array[Math.max(i, j)],
+        ...array.slice(Math.min(i, j) + 1, Math.max(i, j)),
+        array[Math.min(i, j)],
+        ...array.slice(Math.max(i, j) + 1),
+    ];
+}

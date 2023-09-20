@@ -2,12 +2,11 @@
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import Menu from "$lib/components/Menu.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
+    import { select } from "$lib/html-utils";
     import { dark_mode } from "$lib/stores";
     import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
     import Show from "./Show.svelte";
-    import { page } from "$app/stores";
-    import { select } from "$lib/html-utils";
 
     let scroll: number = 0;
     let show = false;

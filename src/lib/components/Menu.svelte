@@ -34,7 +34,7 @@
             href = routeMap[href] ?? href;
 
             selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
-            for (const id of ["info-pages", "staff-area", "miscellaneous"])
+            for (const id of ["info-pages", "staff-area", "miscellaneous", "voting"])
                 if (selectall<HTMLAnchorElement>(`#${id} a`).some((e) => e.href === href)) openSections[id] = true;
         });
 
@@ -134,6 +134,9 @@
                 <Show when={openSections["staff-area"]}>
                     <div id="staff-area">
                         <a href="/banshare" class="t2"><Icon icon="ios_share" /> Submit a Banshare</a>
+                        {#if $user.council}
+                            <a href="/vote" class="t2"><Icon icon="how_to_vote" /> Voting Center</a>
+                        {/if}
                         {#if $user.observer}
                             <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
                             <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
