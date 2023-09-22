@@ -13,11 +13,10 @@
     import api from "$lib/api";
     import { selectall } from "$lib/html-utils";
     import { dark_mode, token, user } from "$lib/stores";
-    import { getTag } from "$lib/utils";
     import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
-    import Show from "./Show.svelte";
     import Mention from "./Mention.svelte";
+    import Show from "./Show.svelte";
 
     let open = false;
     let href: string;

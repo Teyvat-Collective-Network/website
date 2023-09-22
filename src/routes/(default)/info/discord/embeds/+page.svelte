@@ -21,7 +21,7 @@
         <p>
             Discord does not make it obvious that this feature exists, but you can show a specific date to a user both in absolute and relative time. Absolute
             time will appear in the user's local timezone. The format is <code>&lt;t:timestamp:format&gt;</code>. You can use
-            <A to="/tools/timestamps">our tool</A> to generate these.
+            <A to="https://discord-timestamp-generator.vercel.app/" external>this tool</A> to generate these.
         </p>
         <Linkable e="h2" id="limits">Embed Limits</Linkable>
         <p>Discord places the following limits on embeds:</p>

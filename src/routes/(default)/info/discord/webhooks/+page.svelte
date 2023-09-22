@@ -59,7 +59,7 @@
         <Callout style="red">
             <p>
                 <b>Careful!</b> Discohook's share links expire after one week. If you want to keep a permanent link, copy-paste the link from the browser bar
-                and shorten it using something like the <A to="/tools/url-shortener">TCN URL Shortener</A>.
+                and shorten it using something like <A to="https://tinyurl.com" external>TinyURL</A>.
             </p>
         </Callout>
         <Linkable e="h3" id="embed-generator">Embed Generator</Linkable>
@@ -68,12 +68,6 @@
         <div class="row gap-1"><Icon icon="clear" class="red-text" /> New Forum Posts</div>
         <div class="row gap-1"><Icon icon="check" class="green-text" /> Post To Threads</div>
         <div class="row gap-1"><Icon icon="check" class="green-text" /> Components (Buttons &amp; Select Menus)</div>
-        <Linkable e="h3" id="tcn-embeds">TCN Embeds</Linkable>
-        <A to="/tools/embeds">{PUBLIC_DOMAIN}/embeds</A>
-        <p>TCN Embeds has its own documentation in the landing page.</p>
-        <div class="row gap-1"><Icon icon="check" class="green-text" /> New Forum Posts</div>
-        <div class="row gap-1"><Icon icon="check" class="green-text" /> Post To Threads</div>
-        <div class="row gap-1"><Icon icon="remove" class="yellow-text" /> Components (Buttons &amp; Select Menus)</div>
         <Linkable e="h2" id="developers">For Developers</Linkable>
         <p>
             A webhook is just an endpoint to which you can send data to make the webhook perform certain actions. You can find full documentation on the

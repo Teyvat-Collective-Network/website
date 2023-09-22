@@ -24,8 +24,8 @@
         </ul>
         <Linkable e="h2" id="webhooks-embeds">Webhooks &amp; Embeds</Linkable>
         <p>
-            This is a guide on how to use embeds and webhooks in Discord. This guide features <A to="https://discohook.org" external>Discohook</A>,
-            <A to="https://message.style">Embed Generator</A>, and <A to="/tools/embeds">our own tool</A>.
+            This is a guide on how to use embeds and webhooks in Discord. This guide features <A to="https://discohook.org" external>Discohook</A> and
+            <A to="https://message.style">Embed Generator</A>.
         </p>
         <p>Webhooks are resources that you can create in a text channel that anyone with the URL can use to post messages to the channel.</p>
         <p>Embeds are a way to organize information and add styling to your resources.</p>
