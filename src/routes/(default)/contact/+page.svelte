@@ -12,7 +12,7 @@
 
     onMount(async () => {
         const users = (await api($token, `GET /users`)).filter((user: User) => user.observer);
-        for (const user of users) user.tag = await api($token, `GET /tag/${user.id}`);
+        for (const user of users) user.tag = await (await fetch(`/api/tag/${user.id}`)).text();
         observers = users;
     });
 </script>

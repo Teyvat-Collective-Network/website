@@ -1,6 +1,8 @@
 import api from "$lib/api.js";
-import di from "$lib/di.js";
+import bot from "$lib/bot.js";
 import type { Handle } from "@sveltejs/kit";
+
+process.on("uncaughtException", console.error);
 
 export const handle: Handle = async ({ event, resolve }) => {
     const { locals, cookies } = event;
@@ -8,13 +10,13 @@ export const handle: Handle = async ({ event, resolve }) => {
     locals.token = cookies.get("token")!;
 
     if (locals.token) {
-        const req = await api(locals.token, `!GET /auth/me`);
+        const req = await api(locals.token, `!GET /users/me`);
 
         if (req.ok) {
             locals.user = await req.json();
 
             try {
-                Object.assign(locals.user, await di(`GET /user/${locals.user.id}`));
+                Object.assign(locals.user, await bot(`GET /user/${locals.user.id}`));
             } catch {}
         }
     }

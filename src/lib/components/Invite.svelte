@@ -13,7 +13,8 @@
     let done = false;
 
     onMount(async () => {
-        const req = await api($token, `!GET /invite/${encodeURIComponent(invite)}`);
+        const req = await fetch(`/api/invite/${encodeURIComponent(invite)}`);
+
         if (!req.ok) return;
         const data = await req.json();
 

@@ -1,0 +1,9 @@
+import bot from "$lib/bot.js";
+import type { RequestHandler } from "@sveltejs/kit";
+
+export const GET: RequestHandler = async ({ params: { id } }) => {
+    const req = await bot(`!GET /tag/${id}`);
+
+    if (!req.ok) return new Response("");
+    return new Response(await req.json());
+};

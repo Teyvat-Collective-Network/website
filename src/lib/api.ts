@@ -12,9 +12,9 @@ export default async function (token: string | null, route: string, body?: any, 
     if (token) {
         options.headers ??= {};
 
-        if (Array.isArray(options.headers)) options.headers.push(["authorization", token]);
-        else if (options.headers instanceof Headers) options.headers.append("authorization", token);
-        else options.headers.authorization = token;
+        if (Array.isArray(options.headers)) options.headers.push(["authorization", `Bearer ${token}`]);
+        else if (options.headers instanceof Headers) options.headers.append("authorization", `Bearer ${token}`);
+        else options.headers.authorization = `Bearer ${token}`;
     }
 
     if (body) options.body = JSON.stringify(body);

@@ -1,7 +1,6 @@
 <script>
     import { page } from "$app/stores";
     import A from "$lib/components/A.svelte";
-    import Icon from "$lib/components/Icon.svelte";
     import Layout from "$lib/components/Layout.svelte";
     import LinkButton from "$lib/components/LinkButton.svelte";
     import Mention from "$lib/components/Mention.svelte";

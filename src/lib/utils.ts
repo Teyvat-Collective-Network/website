@@ -14,7 +14,9 @@ export async function getTag(id: string): Promise<string | null> {
     if (!loading.has(id)) {
         loading.add(id);
 
-        tags[id] = await api(key, `GET /tag/${id}`);
+        const req = await fetch(`/api/tag/${id}`);
+        tags[id] = await req.text();
+
         waiting[id]?.forEach((r) => r(tags[id]));
 
         delete waiting[id];

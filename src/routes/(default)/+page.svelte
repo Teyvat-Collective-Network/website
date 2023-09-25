@@ -1,7 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import LinkButton from "$lib/components/LinkButton.svelte";
-    import { user } from "$lib/stores";
 </script>
 
 <div class="container">
@@ -11,8 +10,7 @@
             The mission of the TCN is to unite all mains servers across Teyvat and provide support and promote collaboration between partners.
         </div>
         <div id="bottom-left" class="panel">
-            The TCN is a network of {$page.data.guildCount} high-quality Genshin Impact Discord server{$page.data.guildCount === 1 ? "" : "s"} that are dedicated
-            to fostering Mains-style fan communities.
+            The TCN is a network of {$page.data.guilds} high-quality Genshin Impact Discord servers that are dedicated to fostering Mains-style fan communities.
         </div>
         <div id="bottom-right" class="panel">
             Do you own a Discord server dedicated to a playable Genshin Impact character and want to join the TCN? Apply here!

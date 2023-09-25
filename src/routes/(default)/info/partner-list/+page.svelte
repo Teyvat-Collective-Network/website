@@ -26,7 +26,7 @@
             </p>
             <ul>
                 <li>Post it from <A to="https://embeds.leaf.moe/TCN_partners">embeds.leaf.moe</A>.</li>
-                <li>Use <code>/partners</code> on the TCN bot.</li>
+                <li>Use <code>/partner-list view</code> on the TCN bot.</li>
                 <li>Set up <A to="#autosync">autosync</A>.</li>
             </ul>
         </Callout>
@@ -64,12 +64,12 @@
                 and network-wide events are held such as: tournaments, scavenger hunts, and other fun events, community nights, giveaways, and patch preview
                 livestreams.
             </p>
-            <button on:click={() => (open.general = !open.general)}><Icon icon="markdown" /></button>
+            <button class="row" on:click={() => (open.general = !open.general)}><Icon icon="markdown" /> {open.general ? "Hide" : "Show"} Markdown</button>
             <Show when={open.general}>
                 <pre id="desc-general">_"In Teyvat, the stars in the sky will always have a place for you."_
 
 A network of high-quality Genshin Impact character-mains style servers that focus on creating fan communities. Within the network, individual and network-wide events are held such as: tournaments, scavenger hunts, and other fun events, community nights, giveaways, and patch preview livestreams.</pre>
-                <button on:click={() => copy("desc-general")}><Icon icon="content_copy" /></button>
+                <button class="row" on:click={() => copy("desc-general")}><Icon icon="content_copy" /> Copy</button>
             </Show>
             <hr />
             <ITitle e="h4" icon="hub">TCN Hub</ITitle>
@@ -77,11 +77,11 @@ A network of high-quality Genshin Impact character-mains style servers that focu
                 Join us in the official TCN Hub to ask questions about the network, talk to other network members, get information on the network and how to
                 apply, and contact observers (admins)! <A to="https://discord.gg/FG2wpbywSx">https://discord.gg/FG2wpbywSx</A>
             </p>
-            <button on:click={() => (open.hub = !open.hub)}><Icon icon="markdown" /></button>
+            <button class="row" on:click={() => (open.hub = !open.hub)}><Icon icon="markdown" /> {open.hub ? "Hide" : "Show"} Markdown</button>
             <Show when={open.hub}>
                 <pre
                     id="desc-hub">Join us in the official TCN Hub to ask questions about the network, talk to other network members, get information on the network and how to apply, and contact observers (admins)! https://discord.gg/FG2wpbywSx</pre>
-                <button on:click={() => copy("desc-hub")}><Icon icon="content_copy" /></button>
+                <button class="row" on:click={() => copy("desc-hub")}><Icon icon="content_copy" /> Copy</button>
             </Show>
             <hr />
             <ITitle e="h4" icon="auto_fix_high">Genshin Wizard</ITitle>
@@ -89,11 +89,11 @@ A network of high-quality Genshin Impact character-mains style servers that focu
                 The TCN is partnered with <A to="https://genshinwizard.com">Genshin Wizard</A>, a multipurpose Genshin Impact Discord bot with a wide array of
                 features to let you view your in-game stats, flex your builds, view build guides and hundreds of high-quality infographics, and more!
             </p>
-            <button on:click={() => (open.wizard = !open.wizard)}><Icon icon="markdown" /></button>
+            <button class="row" on:click={() => (open.wizard = !open.wizard)}><Icon icon="markdown" /> {open.wizard ? "Hide" : "Show"} Markdown</button>
             <Show when={open.wizard}>
                 <pre
                     id="desc-wizard">The TCN is partnered with [Genshin Wizard](https://genshinwizard.com), a multipurpose Genshin Impact Discord bot with a wide array of features to let you view your in-game stats, flex your builds, view build guides and hundreds of high-quality infographics, and more!</pre>
-                <button on:click={() => copy("desc-wizard")}><Icon icon="content_copy" /></button>
+                <button class="row" on:click={() => copy("desc-wizard")}><Icon icon="content_copy" /> Copy</button>
             </Show>
             <hr />
             <ITitle e="h4" icon="sports_bar">Genshin Impact Tavern</ITitle>
@@ -105,11 +105,11 @@ A network of high-quality Genshin Impact character-mains style servers that focu
                 Tournament!
                 <i>Genshin Impact Tavern is an officially endorsed server.</i>
             </p>
-            <button on:click={() => (open.tavern = !open.tavern)}><Icon icon="markdown" /></button>
+            <button class="row" on:click={() => (open.tavern = !open.tavern)}><Icon icon="markdown" /> {open.tavern ? "Hide" : "Show"} Markdown</button>
             <Show when={open.tavern}>
                 <pre
                     id="desc-tavern">The TCN is partnered with [Genshin Impact Tavern](https://discord.gg/genshinimpacttavern), a multifaceted Discord Community Server hosting a custom bot designed to emulate an "RPG-like" experience. This includes the earning of Mora (Server digital currency), a Vision, farming for weapons and upgrades with continuously expanding systems related to each. Mora can be redeemed to make use of several server functions, including redemption for Official Merchandise. Genshin Impact Tavern is also the proud host of the Cat's Tail Gathering TCG Tournament! _Genshin Impact Tavern is an officially endorsed server._</pre>
-                <button on:click={() => copy("desc-tavern")}><Icon icon="content_copy" /></button>
+                <button class="row" on:click={() => copy("desc-tavern")}><Icon icon="content_copy" /> Copy</button>
             </Show>
         </div>
         <Linkable e="h2" id="autosync">Autosync</Linkable>

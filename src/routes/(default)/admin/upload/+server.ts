@@ -9,7 +9,7 @@ export async function _pre(cookies: Cookies): Promise<Response | undefined> {
 
     if (!token) return new Response("", { status: 401 });
 
-    const req = await api(token, "!GET /auth/me");
+    const req = await api(token, "!GET /users/me");
     if (!req.ok) return new Response("", { status: 401 });
 
     const res = await req.json();
