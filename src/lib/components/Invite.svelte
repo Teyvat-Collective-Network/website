@@ -1,6 +1,7 @@
 <script lang="ts">
     import api from "$lib/api";
     import { token } from "$lib/stores";
+    import { debounce } from "$lib/utils";
     import { onMount } from "svelte";
     import LinkButton from "./LinkButton.svelte";
     import Loading from "./Loading.svelte";
@@ -12,7 +13,9 @@
 
     let done = false;
 
-    onMount(async () => {
+    async function load() {
+        done = false;
+
         const req = await fetch(`/api/invite/${encodeURIComponent(invite)}`);
 
         if (!req.ok) return;
@@ -28,7 +31,11 @@
         title ||= data.guild.name;
 
         done = true;
-    });
+    }
+
+    onMount(load);
+
+    $: invite, debounce(load)();
 </script>
 
 <Loading {done} text="<tcn-link to='https://discord.gg/{invite}'>discord.gg/{invite}</tcn-link>">

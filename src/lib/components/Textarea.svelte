@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
 
     export let value: string;
+    export let name: string = "";
     const _ = value || "";
 
     let other_classes = "";
@@ -29,6 +30,10 @@
 <svelte:window on:keydown={update} on:keyup={update} on:mousedown={update} />
 
 <div bind:this={item} {...$$props} class={other_classes} contenteditable>{_}</div>
+
+{#if name}
+    <textarea {name} hidden bind:value />
+{/if}
 
 <style lang="scss">
     div {

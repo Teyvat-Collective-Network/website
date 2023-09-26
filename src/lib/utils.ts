@@ -1,4 +1,3 @@
-import api from "./api.js";
 import { token } from "./stores.js";
 
 const tags: Record<string, string | null> = {};
@@ -47,4 +46,13 @@ export function swap<T>(array: T[], i: number, j: number): T[] {
         array[Math.min(i, j)],
         ...array.slice(Math.max(i, j) + 1),
     ];
+}
+
+export function debounce<T extends any[], U>(fn: (...args: T) => U, timeout: number = 500): (...args: T) => void {
+    let timer: NodeJS.Timeout;
+
+    return (...args: T) => {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), timeout);
+    };
 }
