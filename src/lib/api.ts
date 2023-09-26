@@ -12,12 +12,20 @@ export default async function (token: string | null, route: string, body?: any, 
     if (token) {
         options.headers ??= {};
 
-        if (Array.isArray(options.headers)) options.headers.push(["authorization", `Bearer ${token}`]);
-        else if (options.headers instanceof Headers) options.headers.append("authorization", `Bearer ${token}`);
-        else options.headers.authorization = `Bearer ${token}`;
+        if (Array.isArray(options.headers)) options.headers.push(["Authorization", `Bearer ${token}`]);
+        else if (options.headers instanceof Headers) options.headers.append("Authorization", `Bearer ${token}`);
+        else options.headers.Authorization = `Bearer ${token}`;
     }
 
-    if (body) options.body = JSON.stringify(body);
+    if (body) {
+        options.headers ??= {};
+
+        if (Array.isArray(options.headers)) options.headers.push(["Content-Type", "application/json"]);
+        else if (options.headers instanceof Headers) options.headers.append("Content-Type", "application/json");
+        else options.headers["Content-Type"] = "application/json";
+
+        options.body = JSON.stringify(body);
+    }
 
     const req = await fetch(`${PUBLIC_API}${real}`, options);
     if (request) return req;
