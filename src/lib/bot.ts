@@ -4,6 +4,8 @@ export default async function (route: string, options?: RequestInit) {
     let request = route.startsWith("!");
     if (request) route = route.slice(1);
 
+    console.log(`=> BOT: ${route}`);
+
     const [method, real] = route.split(/\s+/);
 
     options ??= {};

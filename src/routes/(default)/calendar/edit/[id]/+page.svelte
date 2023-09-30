@@ -25,7 +25,7 @@
             try {
                 const {
                     guild: { id, name },
-                }: any = await (await fetch(`/api/invite/${encodeURIComponent(code)}`)).json();
+                }: any = await (await fetch(`/api/invites/${encodeURIComponent(code)}`)).json();
 
                 guilds.add(id);
                 ids[code] = id;
@@ -43,7 +43,7 @@
         const invite = prompt("Enter an invite code or link.");
         if (!invite) return;
 
-        const req = await fetch(`/api/invite/${encodeURIComponent(invite)}`);
+        const req = await fetch(`/api/invites/${encodeURIComponent(invite)}`);
         if (!req.ok) return alert("Invalid invite.");
 
         const {

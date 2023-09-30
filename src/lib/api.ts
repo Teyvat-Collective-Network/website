@@ -4,6 +4,8 @@ export default async function (token: string | null, route: string, body?: any, 
     let request = route.startsWith("!");
     if (request) route = route.slice(1);
 
+    console.log(`=> API: ${route}`, ...(body ? [body] : []));
+
     const [method, real] = route.split(/\s+/);
 
     options ??= {};

@@ -239,6 +239,12 @@ button {
     user-select: none;
 }
 
+input[type="submit"] {
+    font-family: "Rubik", sans-serif;
+    font-size: 100%;
+    font-weight: 300;
+}
+
 a.button,
 button,
 input[type="submit"] {

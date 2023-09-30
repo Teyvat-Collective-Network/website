@@ -21,7 +21,7 @@
     async function checkInvite() {
         invite = invite.trim().split("/").at(-1);
 
-        const req = await fetch(`/api/invite/${encodeURIComponent(invite)}`);
+        const req = await fetch(`/api/invites/${encodeURIComponent(invite)}`);
         inviteData = req.ok ? await req.json() : null;
     }
 
@@ -96,7 +96,7 @@
                 name="ownerid"
                 class="bg-1"
                 placeholder="17-20 digit number"
-                pattern="^[0-9]{'{17,20}'}$"
+                pattern={"^[1-9][0-9]{16,19}$"}
                 style="width: 50%"
                 required
                 autocomplete="off"
@@ -174,18 +174,22 @@
             etc.)?
         </h5>
         <h6>You do not have to have been the owner of the server / forum / etc.; any position of management or moderation is of interest.</h6>
-        <p>Max length: 1024 characters</p>
-        <Textarea name="experience" value={form?.experience} class="bg-1" />
+        <Textarea name="experience" value={form?.experience} class="bg-1" placeholder="Max length: 1024 characters" maxlength={1024} />
         <br />
         <hr />
         <h5>What are some of your short-term goals or ideas for the server?</h5>
-        <p>Required &mdash; Max length: 1024 characters</p>
-        <Textarea name="shortgoals" value={form?.shortgoals} class="bg-1" />
+        <Textarea
+            name="shortgoals"
+            value={form?.shortgoals}
+            class="bg-1"
+            placeholder="Required &mdash; Max length: 1024 characters"
+            required
+            maxlength={1024}
+        />
         <br />
         <hr />
         <h5>What are some of your long-term goals or ideas for the server?</h5>
-        <p>Required &mdash; Max length: 1024 characters</p>
-        <Textarea name="longgoals" value={form?.longgoals} class="bg-1" />
+        <Textarea name="longgoals" value={form?.longgoals} class="bg-1" placeholder="Required &mdash; Max length: 1024 characters" required maxlength={1024} />
         <br />
         <hr />
         <h5>Please give us a rough outline of your server's history.</h5>
@@ -193,13 +197,11 @@
             For example, if your server has ever rebranded, please list its former identities. Additionally, what inspired/motivated you to start the server,
             and what notable events or changes have occurred or what troubles have you had to overcome?
         </h6>
-        <p>Required &mdash; Max length: 1024 characters</p>
-        <Textarea name="history" value={form?.history} class="bg-1" />
+        <Textarea name="history" value={form?.history} class="bg-1" placeholder="Required &mdash; Max length: 1024 characters" required maxlength={1024} />
     </div>
     <div class="panel">
         <h5>Any additional questions or comments you'd like to include?</h5>
-        <p>Max length: 1024 characters</p>
-        <Textarea name="additional" value={form?.additional} class="bg-1" />
+        <Textarea name="additional" value={form?.additional} class="bg-1" placeholder="Max length: 1024 characters" maxlength={1024} />
     </div>
     <Callout style="info">
         <p>

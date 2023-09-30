@@ -2,48 +2,27 @@
     import { onMount } from "svelte";
 
     export let value: string;
-    export let name: string = "";
-    const _ = value || "";
-
-    let other_classes = "";
-
-    export { other_classes as class };
-
     let item: any;
+    let scroll: number;
 
     function update() {
-        value = new DOMParser().parseFromString(
-            item.innerHTML.replaceAll("<div>", "\n").replaceAll("<br>", "").replaceAll("</div>", "").replaceAll("&nbsp;", " "),
-            "text/html",
-        ).documentElement.textContent!;
+        const old = scroll;
+
+        item.style.height = 0;
+        item.style.height = Math.max(item.scrollHeight, 40) + "px";
+
+        window.scrollTo({ top: old, behavior: "instant" });
     }
 
-    onMount(() =>
-        item.addEventListener("paste", (e: any) => {
-            e.preventDefault();
-            const text = e.clipboardData.getData("text/plain");
-            document.execCommand("insertHTML", false, text);
-        }),
-    );
+    onMount(() => setTimeout(update, 0));
 </script>
 
-<svelte:window on:keydown={update} on:keyup={update} on:mousedown={update} />
+<svelte:window bind:scrollY={scroll} />
 
-<div bind:this={item} {...$$props} class={other_classes} contenteditable>{_}</div>
-
-{#if name}
-    <textarea {name} hidden bind:value />
-{/if}
+<textarea bind:this={item} {...$$props} bind:value on:input={update} />
 
 <style lang="scss">
-    div {
-        background-color: rgb(var(--bg-3));
-        border-radius: 5px;
-        border: none;
-        font-family: "Atkinson Hyperlegible", sans-serif;
-        line-height: 120%;
-        outline: none;
-        padding: 5px;
-        word-wrap: break-word;
+    textarea {
+        resize: none;
     }
 </style>

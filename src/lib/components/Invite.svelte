@@ -16,7 +16,7 @@
     async function load() {
         done = false;
 
-        const req = await fetch(`/api/invite/${encodeURIComponent(invite)}`);
+        const req = await fetch(`/api/invites/${encodeURIComponent(invite)}`);
 
         if (!req.ok) return;
         const data = await req.json();
