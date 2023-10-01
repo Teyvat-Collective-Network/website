@@ -33,8 +33,9 @@ export default async function (token: string | null, route: string, body?: any, 
     if (request) return req;
 
     if (!req.ok) {
-        console.error(route, await req.json());
-        throw req.status;
+        const res = await req.json();
+        console.error(route, res);
+        throw res.message ?? res;
     }
 
     const text = await req.text();

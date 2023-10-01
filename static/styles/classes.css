@@ -121,3 +121,7 @@
 .unset {
     all: unset;
 }
+
+.outline-accent {
+    outline: 2px solid rgb(var(--text-accent));
+}

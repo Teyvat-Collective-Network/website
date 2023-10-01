@@ -6,7 +6,7 @@
     import LoggedInAs from "$lib/components/LoggedInAs.svelte";
     import Mention from "$lib/components/Mention.svelte";
     import Textarea from "$lib/components/Textarea.svelte";
-    import { debounce } from "$lib/utils";
+    import { debounce, patterns } from "$lib/utils";
     import { onMount } from "svelte";
 
     let done = false;
@@ -73,7 +73,17 @@
     </div>
     <div class="panel">
         <h5>Which Genshin Impact character is your server based on?</h5>
-        <input type="text" name="mascot" class="bg-1" placeholder="Character Name" style="width: 50%" required autocomplete="off" value={form?.mascot ?? ""} />
+        <input
+            type="text"
+            name="mascot"
+            class="bg-1"
+            placeholder="Character Name"
+            style="width: 50%"
+            required
+            maxlength={64}
+            autocomplete="off"
+            value={form?.mascot ?? ""}
+        />
         <br /><br />
         <hr />
         <h5>What is your role in the server?</h5>
@@ -86,7 +96,7 @@
                 <option value="other">Other...</option>
             </select>
             {#if role === "other"}
-                <input type="text" name="roleother" class="bg-1" style="width: 50%" required autocomplete="off" value={form?.roleother ?? ""} />
+                <input type="text" name="roleother" class="bg-1" style="width: 50%" required maxlength={32} autocomplete="off" value={form?.roleother ?? ""} />
             {/if}
         </div>
         {#if role !== "owner"}
@@ -96,7 +106,7 @@
                 name="ownerid"
                 class="bg-1"
                 placeholder="17-20 digit number"
-                pattern={"^[1-9][0-9]{16,19}$"}
+                pattern={patterns.snowflake}
                 style="width: 50%"
                 required
                 autocomplete="off"
@@ -108,7 +118,17 @@
         <hr />
         <h5>Enter an invite code pointing to your server.</h5>
         <h6>Please use a permanent, non-vanity invite.</h6>
-        <input type="text" name="invite" class="bg-1" style="width: 50%" on:input={debounce(checkInvite)} required autocomplete="off" bind:value={invite} />
+        <input
+            type="text"
+            name="invite"
+            class="bg-1"
+            style="width: 50%"
+            on:input={debounce(checkInvite)}
+            required
+            maxlength={64}
+            autocomplete="off"
+            bind:value={invite}
+        />
         <br />
         {#if inviteData}
             {#if inviteData.vanity}

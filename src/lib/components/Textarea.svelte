@@ -19,7 +19,7 @@
 
 <svelte:window bind:scrollY={scroll} />
 
-<textarea bind:this={item} {...$$props} bind:value on:input={update} />
+<textarea bind:this={item} {...$$restProps} bind:value on:input={update} />
 
 <style lang="scss">
     textarea {

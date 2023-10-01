@@ -1,11 +1,8 @@
 <script lang="ts" context="module">
-    const routeMap: Record<string, string> = {
-        "/info/other-bots/daedalus": "/info/other-bots",
-        "/info/discord/permission-list": "/info/discord",
-        "/info/discord/permissions": "/info/discord",
-        "/info/discord/webhooks": "/info/discord",
-        "/info/discord/embeds": "/info/discord",
-    };
+    function mapRoute(real: string): string {
+        for (const prefix of ["/info/other-bots", "/info/discord", "/admin/api-manager"]) if (real.startsWith(prefix)) return prefix;
+        return real;
+    }
 </script>
 
 <script lang="ts">
@@ -26,15 +23,15 @@
     let doc: any = null;
 
     onMount(() => {
-        selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.onclick = () => setTimeout(close)));
+        selectall<HTMLAnchorElement>("#sidebar-contents a:not(.btn)").forEach((e) => (e.onclick = () => setTimeout(close)));
 
         page.subscribe((x) => {
-            href = `${x.url.origin}${routeMap[x.url.pathname] ?? x.url.pathname}`;
-            href = routeMap[href] ?? href;
+            href = `${x.url.origin}${mapRoute(x.url.pathname) ?? x.url.pathname}`;
+            href = mapRoute(href) ?? href;
 
-            selectall<HTMLAnchorElement>("#sidebar-contents a").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
+            selectall<HTMLAnchorElement>("#sidebar-contents a:not(.btn)").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
             for (const id of ["info-pages", "staff-area", "miscellaneous", "voting"])
-                if (selectall<HTMLAnchorElement>(`#${id} a`).some((e) => e.href === href)) openSections[id] = true;
+                if (selectall<HTMLAnchorElement>(`#${id} a:not(.btn)`).some((e) => e.href === href)) openSections[id] = true;
         });
 
         doc = document;
@@ -74,15 +71,16 @@
 
 <div id="sidebar" class={open ? "open" : ""}>
     <div id="sidebar-contents">
-        <button
-            class="t1"
+        <a
+            href={"javascript:void(0)"}
+            class="btn t1"
             on:click={() => {
                 dark_mode.update((x) => !x);
             }}
         >
             <Icon icon={$dark_mode ? "light_mode" : "dark_mode"} />
             Switch to {$dark_mode ? "Light" : "Dark"} Mode
-        </button>
+        </a>
 
         <a href="/" class="t1"><Icon icon="home" /> Home</a>
         <a href="/about" class="t1"><Icon icon="info" /> About Us</a>
@@ -92,13 +90,13 @@
         <a href="/calendar" class="t1"><Icon icon="calendar_month" /> Calendar</a>
         <a href="/contact" class="t1"><Icon icon="call" /> Contact Us</a>
 
-        <button class="t1" on:click={() => (openSections["info-pages"] = !openSections["info-pages"])}>
+        <a href={"javascript:void(0)"} class="btn t1" on:click={() => (openSections["info-pages"] = !openSections["info-pages"])}>
             <Icon icon={openSections["info-pages"] ? "expand_more" : "chevron_right"} />
             Info Pages
-        </button>
+        </a>
 
         <Show when={openSections["info-pages"]}>
-            <div id="info-pages">
+            <span id="info-pages">
                 <a href="/info/quickstart" class="t2"><Icon icon="developer_guide" /> Quickstart</a>
                 <div>
                     <a href="/info/partner-list" class="t3"><Icon icon="list" /> Partner List &amp; Autosync</a>
@@ -109,10 +107,10 @@
                 </div>
                 <a href="/info/discord" class="t2"><Icon icon="help" /> Discord Help</a>
 
-                <button class="t2" on:click={() => (openSections["miscellaneous"] = !openSections["miscellaneous"])}>
+                <a href={"javascript:void(0)"} class="btn t2" on:click={() => (openSections["miscellaneous"] = !openSections["miscellaneous"])}>
                     <Icon icon={openSections["miscellaneous"] ? "expand_more" : "chevron_right"} />
                     Miscellaneous
-                </button>
+                </a>
 
                 <Show when={openSections["miscellaneous"]}>
                     <div id="miscellaneous">
@@ -120,15 +118,15 @@
                         <a href="/info/exit-procedure" class="t3"><Icon icon="door_back" /> Exit Procedure</a>
                     </div>
                 </Show>
-            </div>
+            </span>
         </Show>
 
         {#if $user}
             {#if $user.staff}
-                <button class="t1" on:click={() => (openSections["staff-area"] = !openSections["staff-area"])}>
+                <a href={"javascript:void(0)"} class="btn t1" on:click={() => (openSections["staff-area"] = !openSections["staff-area"])}>
                     <Icon icon={openSections["staff-area"] ? "expand_more" : "chevron_right"} />
                     Staff Area
-                </button>
+                </a>
 
                 <Show when={openSections["staff-area"]}>
                     <div id="staff-area">
@@ -144,13 +142,14 @@
                 </Show>
             {/if}
 
-            <button class="t1" on:click={() => fetch(`/logout`, { method: "post" }).then(() => location.reload())}>
+            <a href={"javascript:void(0)"} class="btn t1" on:click={() => fetch(`/logout`, { method: "post" }).then(() => location.reload())}>
                 <Icon icon="logout" />
                 Log Out
-            </button>
+            </a>
 
-            <button
-                class="t1"
+            <a
+                href={"javascript:void(0)"}
+                class="btn t1"
                 on:click={() => {
                     let first = true;
                     while (true) {
@@ -165,14 +164,14 @@
                         if (!input) return;
                         if (input !== $user?.tag) continue;
 
-                        api($token, "POST /auth/invalidate").then(() => location.reload());
+                        api($token, `POST /auth/invalidate`).then(() => location.reload());
                         return;
                     }
                 }}
             >
                 <Icon icon="dangerous" />
                 Invalidate
-            </button>
+            </a>
         {:else}
             <a href="/login" class="t1"><Icon icon="login" />Log In</a>
         {/if}
@@ -335,8 +334,7 @@
         padding-left: 4em;
     }
 
-    a,
-    button {
+    a {
         align-items: center;
         background-color: transparent;
         border: none;
@@ -350,14 +348,8 @@
         text-decoration: none;
     }
 
-    button {
-        padding: 0;
-    }
-
     a:hover,
-    a:focus,
-    button:hover,
-    button:focus {
+    a:focus {
         background-color: #00000011;
     }
 </style>

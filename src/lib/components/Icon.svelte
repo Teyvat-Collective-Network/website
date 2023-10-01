@@ -5,4 +5,4 @@
     export { other_classes as class };
 </script>
 
-<span {...$$props} class="material-symbols-outlined {other_classes}">{icon}</span>
+<span {...$$restProps} class="material-symbols-outlined {other_classes}">{icon}</span>

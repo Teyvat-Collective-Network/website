@@ -146,10 +146,10 @@
         </div>
     </div>
     <p class="row gap-1">
-        <button class="row" on:click={preview}><Icon icon="visibility" /> Preview</button>
         <button class="row" on:click={save}><Icon icon="save" /> {isNew ? "Create" : "Save"}</button>
+        <button class="row tp text-accent" on:click={preview}><Icon icon="visibility" /> Preview</button>
         {#if !isNew}
-            <button class="row red-button" on:click={del}><Icon icon="delete" /> Delete</button>
+            <button class="row tp red-text" on:click={del}><Icon icon="delete" /> Delete</button>
         {/if}
         <span id="savebox" class="row" style={saved ? "" : "opacity: 0"}><Icon icon="check" class="green-text" /></span>
     </p>

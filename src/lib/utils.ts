@@ -7,6 +7,11 @@ const waiting: Record<string, any[]> = {};
 let key: string = "";
 token.subscribe((x) => (key = x));
 
+export const patterns = {
+    snowflake: "^[1-9][0-9]{16,19}$",
+    id: "^[a-z\\-]{1,32}$",
+};
+
 export async function getTag(id: string): Promise<string | null> {
     if (id in tags) return tags[id];
 

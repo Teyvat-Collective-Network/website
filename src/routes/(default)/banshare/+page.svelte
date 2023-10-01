@@ -126,8 +126,8 @@
     <div class="panel">
         <div class="row gap-1">
             <input type="submit" name="submit" value="Submit" />
-            <input type="submit" name="submit" value="Submit Without Validation" />
-            <input type="submit" name="submit" value="Submit Without Checks" />
+            <input type="submit" name="submit" class="text-accent" value="Submit Without Validation" style="background-color: transparent" />
+            <input type="submit" name="submit" class="red-text" value="Submit Without Checks" style="background-color: transparent" />
         </div>
         <p>
             <b>Warning:</b> You should only submit without checks if your ID list is a link. Doing this prevents autobanning. You should paste your entire ID list

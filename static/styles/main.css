@@ -73,6 +73,16 @@ h6 {
     margin-top: 1.5em;
 }
 
+h1.short,
+h2.short,
+h3.short,
+h4.short,
+h5.short,
+h6.short {
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+}
+
 b,
 strong {
     font-weight: 600;
@@ -252,6 +262,7 @@ input[type="submit"] {
     border-radius: 5px;
     color: rgb(var(--text-primary));
     transition: background-color 200ms;
+    position: relative;
 }
 
 a.button,
@@ -259,10 +270,26 @@ input[type="submit"] {
     padding: 0.5em 1em;
 }
 
-a.button:hover,
-button:not(:disabled):hover,
-input[type="submit"]:hover {
-    background-color: rgb(var(--accent-less));
+a.button::after,
+button:not(:disabled)::after,
+input[type="submit"]::after {
+    transition: background-color 100ms;
+    border-radius: 5px;
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+a.button:hover::after,
+button:not(:disabled):hover::after,
+input[type="submit"]:hover::after {
+    background-color: rgb(var(--pure-rgb), 0.1);
+}
+
+a.button:active::after,
+button:not(:disabled):active::after,
+input[type="submit"]:active::after {
+    background-color: rgb(var(--pure-rgb), 0.2);
 }
 
 button:disabled {
@@ -356,4 +383,29 @@ button.void {
 
 .error {
     outline: 2px solid rgb(var(--red-text)) !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+table,
+tr,
+th,
+td {
+    border: 1px solid rgb(var(--text-2));
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 0.5em;
+}
+
+.hscroll {
+    overflow-x: scroll;
 }

@@ -10,7 +10,7 @@ export const GET: RequestHandler = async ({ cookies, setHeaders, url }) => {
     cookies.set("redirect", url.searchParams.get("redirect") ?? "/", { domain: PUBLIC_COOKIE_DOMAIN, path: "/", sameSite: "lax" });
 
     throw redirect(
-        302,
+        303,
         `https://discord.com/oauth2/authorize?${new URLSearchParams({
             response_type: "code",
             client_id: DISCORD_ID,

@@ -34,5 +34,5 @@ export const GET: RequestHandler = async ({ cookies, fetch, url }) => {
 
     cookies.set("token", await req.text(), { domain: PUBLIC_COOKIE_DOMAIN, maxAge: 30 * 24 * 60 * 60 * 1000, path: "/", sameSite: "lax" });
 
-    throw redirect(302, target);
+    throw redirect(303, target);
 };

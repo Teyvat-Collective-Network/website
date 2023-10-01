@@ -1,7 +1,6 @@
 <script lang="ts">
     import A from "$lib/components/A.svelte";
     import Callout from "$lib/components/Callout.svelte";
-    import Carousel from "$lib/components/Carousel.svelte";
     import Icon from "$lib/components/Icon.svelte";
     import Image from "$lib/components/Image.svelte";
     import Linkable from "$lib/components/Linkable.svelte";

@@ -8,5 +8,5 @@
 
 <svelte:element this={e} {id} class="row gap-1">
     <A to="#{id}"><Icon icon="link" /></A>
-    <span {...$$props}><slot /></span>
+    <span {...$$restProps}><slot /></span>
 </svelte:element>

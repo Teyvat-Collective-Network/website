@@ -1,12 +1,9 @@
 <script lang="ts">
     export let to: string;
     export let external: boolean = false;
-
-    let other_classes = "";
-    export { other_classes as classes };
 </script>
 
-<a on:click {...$$props} class={other_classes} href={to} {...external ? { target: "_blank", rel: "noreferrer" } : {}}><slot /></a>
+<a on:click {...$$restProps} href={to} {...external ? { target: "_blank", rel: "noreferrer" } : {}}><slot /></a>
 
 <style lang="scss">
     a {

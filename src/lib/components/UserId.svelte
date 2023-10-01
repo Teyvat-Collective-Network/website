@@ -1,10 +1,11 @@
 <script lang="ts">
     import { getTag } from "$lib/utils";
+    import { onMount } from "svelte";
 
     export let id: string;
-    let tag: string | null;
+    export let tag: string | null = null;
 
-    $: id && getTag(id).then((x) => (tag = x));
+    $: id, (tag = null), id && getTag(id).then((x) => (tag = x));
 </script>
 
 {#if tag}

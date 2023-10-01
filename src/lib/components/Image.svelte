@@ -5,6 +5,8 @@
     export let width: string = "";
     export let height: string = "";
 
+    export let style: string = "";
+
     export let transparent: boolean = false;
 
     export let open: boolean = false;
@@ -15,29 +17,23 @@
 
 <svelte:window on:keydown={(e) => e.key === "Escape" && (open = false)} />
 
-<div class="box">
-    <img
-        role="none"
-        class="base {other_classes}"
-        {src}
-        {alt}
-        {width}
-        {height}
-        on:click={() => (open = true)}
-        on:keydown={() => (open = true)}
-        style="max-width: 100%"
-    />
-</div>
+<img
+    role="none"
+    class="base {other_classes}"
+    {src}
+    {alt}
+    {width}
+    {height}
+    on:click={() => (open = true)}
+    on:keydown={() => (open = true)}
+    style="max-width: 100%; {style}"
+/>
 
 <div role="none" class="lightbox {open ? 'open' : ''}" on:click={() => (open = false)} on:keydown={() => (open = false)}>
     <img {src} {alt} class={transparent ? "transparent" : ""} style="max-width: 75%; max-height: 75%" />
 </div>
 
 <style lang="scss">
-    .box {
-        display: inline-block;
-    }
-
     .lightbox {
         align-items: center;
         backdrop-filter: blur(1px);

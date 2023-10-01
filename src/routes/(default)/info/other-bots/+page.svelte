@@ -1,7 +1,6 @@
 <script lang="ts">
     import A from "$lib/components/A.svelte";
     import Callout from "$lib/components/Callout.svelte";
-    import Icon from "$lib/components/Icon.svelte";
     import Linkable from "$lib/components/Linkable.svelte";
     import Mention from "$lib/components/Mention.svelte";
     import Navigation from "$lib/components/Navigation.svelte";

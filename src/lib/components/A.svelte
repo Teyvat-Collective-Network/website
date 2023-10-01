@@ -8,7 +8,7 @@
     export { other_classes as class };
 </script>
 
-<a on:click {...$$props} class={other_classes} href={to} {...external ? { target: "_blank", rel: "noreferrer" } : {}}><slot /></a>
+<a on:click {...$$restProps} class={other_classes} href={to} {...external ? { target: "_blank", rel: "noreferrer" } : {}}><slot /></a>
 
 <style lang="scss">
     a {
