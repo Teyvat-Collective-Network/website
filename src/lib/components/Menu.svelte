@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     function mapRoute(real: string): string {
-        for (const prefix of ["/info/other-bots", "/info/discord", "/admin/api-manager"]) if (real.startsWith(prefix)) return prefix;
+        for (const prefix of ["/info/other-bots", "/info/discord", "/admin/api-manager", "/docs"]) if (real.startsWith(prefix)) return prefix;
         return real;
     }
 </script>
@@ -14,6 +14,7 @@
     import Icon from "./Icon.svelte";
     import Mention from "./Mention.svelte";
     import Show from "./Show.svelte";
+    import Timestamp from "./Timestamp.svelte";
 
     let open = false;
     let href: string;
@@ -138,6 +139,9 @@
                             <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
                             <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
                         {/if}
+                        {#if $user.council}
+                            <a href="/docs" class="t2"><Icon icon="description" /> Documents</a>
+                        {/if}
                     </div>
                 </Show>
             {/if}
@@ -184,6 +188,8 @@
             <br />
         {/if}
         &copy; 2023 TCN Development Team
+        <br />
+        <span class="text-2">Page last loaded: <Timestamp timestamp={Math.floor(Date.now() / 1000)} /></span>
     </div>
 </div>
 

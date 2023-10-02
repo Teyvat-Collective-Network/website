@@ -1,6 +1,7 @@
+<svelte:options customElement="user-id" />
+
 <script lang="ts">
     import { getTag } from "$lib/utils";
-    import { onMount } from "svelte";
 
     export let id: string;
     export let tag: string | null = null;
@@ -11,5 +12,5 @@
 {#if tag}
     {tag}
 {:else}
-    <code>User {id}</code>
+    <span><code>User {id}</code></span>
 {/if}

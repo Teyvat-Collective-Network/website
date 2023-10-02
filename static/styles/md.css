@@ -26,3 +26,37 @@ a.md {
     color: rgb(var(--text-accent));
     text-decoration: none;
 }
+
+li.md {
+    padding: 2px 0;
+}
+
+blockquote.md {
+    border-left: 2px solid rgb(var(--text-accent));
+    margin-left: 0;
+    padding-left: 2vw;
+}
+
+table.md {
+    width: 100%;
+}
+
+div.md.table-box {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+th.align-l,
+td.align-l {
+    text-align: left;
+}
+
+th.align-c,
+td.align-c {
+    text-align: center;
+}
+
+th.align-r,
+td.align-r {
+    text-align: right;
+}

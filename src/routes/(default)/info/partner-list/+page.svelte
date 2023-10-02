@@ -8,11 +8,16 @@
     import Navigation from "$lib/components/Navigation.svelte";
     import Show from "$lib/components/Show.svelte";
     import { select } from "$lib/html-utils";
+    import { alerts } from "$lib/stores";
+
+    const { copy: copyStore } = alerts;
 
     const open: Record<string, boolean> = {};
 
     function copy(id: string) {
         navigator.clipboard.writeText(select(`#${id}`).innerHTML);
+        copyStore.update((x) => x + 1);
+        setTimeout(() => copyStore.update((x) => x - 1), 1500);
     }
 </script>
 

@@ -1,12 +1,19 @@
+<script lang="ts" context="module">
+    declare const MathJax: any;
+</script>
+
 <script lang="ts">
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import Menu from "$lib/components/Menu.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
     import { select } from "$lib/html-utils";
-    import { dark_mode } from "$lib/stores";
+    import { alerts, dark_mode } from "$lib/stores";
     import { onMount } from "svelte";
+    import Alert from "./Alert.svelte";
     import Icon from "./Icon.svelte";
     import Show from "./Show.svelte";
+
+    const { copy, save } = alerts;
 
     let scroll: number = 0;
     let show = false;
@@ -26,10 +33,31 @@
 
             opaque = true;
         }, 100);
+
+        MathJax.typeset();
     });
+
+    export let title: string = "Teyvat Collective Network";
+    export let description: string =
+        "The Teyvat Collective Network is a network of high-quality Genshin Impact Discord servers, each dedicated to one character. Our mission is to unite mains servers across Teyvat, provide support, and promote collaboration.";
+    export let color: number = 0x207868;
+    export let image: string = `${PUBLIC_DOMAIN}/favicon.png`;
+    export let thumbnail: boolean = true;
+
+    function click({ target }: MouseEvent) {
+        if (target instanceof Element && target.tagName === "SPAN" && target.classList.contains("mention") && "dataset" in target) {
+            const { id } = target.dataset as { id?: string };
+
+            if (id) {
+                navigator.clipboard.writeText(id);
+                copy.update((x) => x + 1);
+                setTimeout(() => copy.update((x) => x - 1), 1500);
+            }
+        }
+    }
 </script>
 
-<svelte:window bind:scrollY={scroll} />
+<svelte:window bind:scrollY={scroll} on:click={click} />
 
 <html lang="en" class="bg-1 text-1">
     <head>
@@ -39,20 +67,21 @@
         <meta name="author" content="Teyvat Collective Network Development Team" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <meta property="og:title" content="Teyvat Collective Network" />
-        <meta
-            property="og:description"
-            content="The Teyvat Collective Network is a network of high-quality Genshin Impact Discord servers, each dedicated to one character. Our mission is to unite mains servers across Teyvat, provide support, and promote collaboration."
-        />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
         <meta property="og:url" content={PUBLIC_DOMAIN} />
-        <meta property="og:image" content="{PUBLIC_DOMAIN}/favicon.png" />
-        <meta name="theme-color" data-react-hemlet="true" content="#2078668" />
+        <meta property="og:image" content={image} />
+        {#if !thumbnail}<meta name="twitter:card" content="summary_large_image" />{/if}
+        <meta name="theme-color" data-react-helmet="true" content="#{color.toString(16).padStart(6, '0')}" />
 
         <link rel="shortcut icon" type="image/png" href="/favicon.png" />
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link rel="stylesheet" type="text/css" href="/styles/{$dark_mode ? 'dark' : 'light'}.css" />
         <link rel="stylesheet" type="text/css" href="/styles/main.css" />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
         <title>TCN</title>
     </head>
@@ -70,6 +99,9 @@
         </Show>
     </body>
 </html>
+
+<Alert icon="content_copy" text="Copied to clipboard" open={$copy > 0} />
+<Alert icon="check" text="Saved" open={$save > 0} />
 
 <style lang="scss">
     @keyframes fade-in {

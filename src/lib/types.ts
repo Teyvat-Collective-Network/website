@@ -28,3 +28,22 @@ export type Guild = {
 export type Attribute = { name: string; emoji: string };
 export type Character = { id: string; name: string; short?: string; attributes: Record<string, string> };
 export type CalendarEvent = { id: number; owner: string; start: number; end: number; title: string; body: string; invites: string[] };
+
+export type TCNDoc = {
+    id: string;
+    official: boolean;
+    deleted: boolean;
+    author: string;
+    anon: boolean;
+    allowCouncil: boolean;
+    allowEveryone: boolean;
+    allowLoggedIn: boolean;
+    allowlist: string[];
+    title: string;
+    body: string;
+    embedTitle: string;
+    embedBody: string;
+    embedColor: number;
+    embedImage: string;
+    embedThumbnail: boolean;
+};

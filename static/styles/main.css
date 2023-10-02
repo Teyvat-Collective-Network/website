@@ -143,6 +143,10 @@ label {
     gap: 0.5em;
 }
 
+.flex-space {
+    justify-content: space-between;
+}
+
 .row,
 .col {
     display: flex;

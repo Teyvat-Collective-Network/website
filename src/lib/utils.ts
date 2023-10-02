@@ -1,5 +1,7 @@
 import { token } from "./stores.js";
 
+declare const hljs: any;
+
 const tags: Record<string, string | null> = {};
 const loading = new Set<string>();
 const waiting: Record<string, any[]> = {};
@@ -60,4 +62,13 @@ export function debounce<T extends any[], U>(fn: (...args: T) => U, timeout: num
         if (timer) clearTimeout(timer);
         timer = setTimeout(() => fn(...args), timeout);
     };
+}
+
+export function highlight(depth = 0) {
+    try {
+        hljs.configure({ ignoreUnescapedHTML: true });
+        hljs.highlightAll();
+    } catch {
+        if (depth < 10) setTimeout(() => highlight(depth + 1), 250);
+    }
 }
