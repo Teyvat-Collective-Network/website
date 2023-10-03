@@ -8,19 +8,22 @@
     import UserId from "$lib/components/UserId.svelte";
     import { token, user } from "$lib/stores";
     import type { TCNDoc } from "$lib/types";
-    import { highlight } from "$lib/utils";
+    import { highlight, withAudit } from "$lib/utils";
     import { onMount } from "svelte";
 
     const { doc, parsed } = $page.data as unknown as { doc: TCNDoc; parsed: string | null };
     const offset = new Date().getTimezoneOffset();
 
     async function setOfficial(official: boolean) {
-        if (!confirm(`Are you sure you want to ${official ? "set this document as officially endorsed" : "remove this document's official designation"}?`))
-            return;
-
         try {
-            await api($token, `PATCH /docs/${doc.id}/official`, { official });
-            doc.official = official;
+            await withAudit(
+                `Are you sure you want to ${official ? "set this document as officially endorsed" : "remove this document's official designation"}?`,
+                async (reason) => {
+                    await api($token, `PATCH /docs/${doc.id}/official`, { official }, reason);
+                    doc.official = official;
+                },
+                false,
+            );
         } catch (error) {
             alert(error);
         }
@@ -28,11 +31,8 @@
 
     async function del() {
         if (doc.author === $user?.id) {
-            if (
-                !confirm("Are you sure you want to delete this document? It will become visible to only yourself and observers. You may undo this at any time.")
-            )
+            if (!confirm("Are you sure you want to delete this document? It will become visible to only you an observers. You can undo this at any time."))
                 return;
-
             try {
                 await api($token, `PATCH /docs/${doc.id}`, { deleted: true });
                 doc.deleted = true;
@@ -40,16 +40,15 @@
                 alert(error);
             }
         } else {
-            if (
-                !confirm(
-                    "Are you sure you want to delete this document? It will become visible to only the author and observers. Only the author may undo this.",
-                )
-            )
-                return;
-
             try {
-                await api($token, `DELETE /docs/${doc.id}`);
-                doc.deleted = true;
+                await withAudit(
+                    "Are you sure you want to delete this document? It will become visible to only the author and observers. Only the author can undo this.",
+                    async (reason) => {
+                        await api($token, `DELETE /docs/${doc.id}`, undefined, reason);
+                        doc.deleted = true;
+                    },
+                    true,
+                );
             } catch (error) {
                 alert(error);
             }

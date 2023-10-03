@@ -1,4 +1,4 @@
-import { token } from "./stores.js";
+import { auditMessage, auditReason, auditRequired, modals, token } from "./stores.js";
 
 declare const hljs: any;
 
@@ -71,4 +71,35 @@ export function highlight(depth = 0) {
     } catch {
         if (depth < 10) setTimeout(() => highlight(depth + 1), 250);
     }
+}
+
+export async function withAudit<T extends boolean>(message: string, fn: (reason: T extends true ? string : string | null) => any, required: T) {
+    auditRequired.set(required);
+    auditMessage.set(message);
+    auditReason.set(undefined);
+    modals.audit.set(true);
+
+    await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let first = true;
+
+            const unsubscribe = auditReason.subscribe(async (reason) => {
+                if (first) {
+                    first = false;
+                    return;
+                }
+
+                try {
+                    if (reason !== null && (!required || reason)) await fn(reason || (null as any));
+                } catch (error) {
+                    reject(error);
+                    return;
+                }
+
+                modals.audit.set(false);
+                unsubscribe();
+                resolve(reason);
+            });
+        });
+    });
 }

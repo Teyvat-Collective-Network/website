@@ -11,6 +11,7 @@
     import Textarea from "$lib/components/Textarea.svelte";
     import UserId from "$lib/components/UserId.svelte";
     import { token, user } from "$lib/stores";
+    import { withAudit } from "$lib/utils";
     import { onMount } from "svelte";
 
     const { isNew, event } = $page.data;
@@ -99,12 +100,26 @@
     }
 
     async function del() {
-        if (!confirm("Are you sure you wish to delete this event? This action is irreversible.")) return;
+        const message = "Are you sure you want to delete this event? This action is irreversible.";
 
-        const req = await api($token, `!DELETE /events/${event.id}`);
-        if (!req.ok) return alert((await req.json()).message);
-
-        goto("/calendar");
+        try {
+            if (event.owner === $user!.id) {
+                if (!confirm(message)) return;
+                await api($token, `DELETE /events/${event.id}`);
+                goto("/calendar");
+            } else {
+                await withAudit(
+                    message,
+                    async (reason) => {
+                        await api($token, `DELETE /events/${event.id}`, undefined, reason);
+                        goto("/calendar");
+                    },
+                    true,
+                );
+            }
+        } catch (error) {
+            alert(error);
+        }
     }
 
     let start = event.start ? new Date(event.start) : undefined;

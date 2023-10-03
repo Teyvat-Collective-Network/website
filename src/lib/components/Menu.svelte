@@ -9,7 +9,7 @@
     import { page } from "$app/stores";
     import api from "$lib/api";
     import { selectall } from "$lib/html-utils";
-    import { dark_mode, token, user } from "$lib/stores";
+    import { darkMode, token, user } from "$lib/stores";
     import { onMount } from "svelte";
     import Icon from "./Icon.svelte";
     import Mention from "./Mention.svelte";
@@ -40,7 +40,7 @@
 
     const openSections: Record<string, boolean> = {};
 
-    dark_mode.subscribe((x) => doc && (doc.cookie = `mode=${x ? "dark" : "light"}; expires=${new Date(Date.now() + 100 * 365 * 24 * 60 * 60 * 1000)}; path=/`));
+    darkMode.subscribe((x) => doc && (doc.cookie = `mode=${x ? "dark" : "light"}; expires=${new Date(Date.now() + 100 * 365 * 24 * 60 * 60 * 1000)}; path=/`));
 
     $: open &&
         selectall<HTMLAnchorElement>("#sidebar-contents a")
@@ -76,11 +76,11 @@
             href={"javascript:void(0)"}
             class="btn t1"
             on:click={() => {
-                dark_mode.update((x) => !x);
+                darkMode.update((x) => !x);
             }}
         >
-            <Icon icon={$dark_mode ? "light_mode" : "dark_mode"} />
-            Switch to {$dark_mode ? "Light" : "Dark"} Mode
+            <Icon icon={$darkMode ? "light_mode" : "dark_mode"} />
+            Switch to {$darkMode ? "Light" : "Dark"} Mode
         </a>
 
         <a href="/" class="t1"><Icon icon="home" /> Home</a>

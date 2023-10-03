@@ -31,6 +31,8 @@
         <input type="text" name="owner" required pattern={patterns.snowflake} value={form?.owner ?? ""} />
         <label for="advisor">Advisor ID</label>
         <input type="text" name="advisor" pattern={patterns.snowflake} bind:value={advisor} />
+        <label for="reason"><b>Audit Log Reason</b></label>
+        <input type="text" name="reason" maxlength={256} placeholder="Optional." value={form?.reason ?? ""} />
     </div>
     <br />
     {#if advisor}

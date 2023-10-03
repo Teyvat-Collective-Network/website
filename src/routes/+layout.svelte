@@ -1,10 +1,10 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { dark_mode, token, user } from "$lib/stores";
+    import { darkMode, token, user } from "$lib/stores";
 
     token.set($page.data.token);
     user.set($page.data.user);
-    dark_mode.set($page.data.dark_mode);
+    darkMode.set($page.data.darkMode);
 </script>
 
 <slot />

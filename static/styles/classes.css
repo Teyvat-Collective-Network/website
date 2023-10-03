@@ -26,6 +26,10 @@
     color: rgb(var(--text-2)) !important;
 }
 
+.text-3 {
+    color: rgb(var(--text-3)) !important;
+}
+
 .text-accent {
     color: rgb(var(--text-accent)) !important;
 }

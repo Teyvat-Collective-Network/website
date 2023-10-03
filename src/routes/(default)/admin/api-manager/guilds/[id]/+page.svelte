@@ -11,6 +11,7 @@
     import UserId from "$lib/components/UserId.svelte";
     import { token } from "$lib/stores";
     import type { Character, Guild } from "$lib/types";
+    import { withAudit } from "$lib/utils";
     import { onMount } from "svelte";
 
     const { id } = $page.params;
@@ -32,11 +33,15 @@
     onMount(() => reload(true));
 
     async function deleteGuild() {
-        if (!confirm(`Are you sure you want to delete ${name ?? id}? This action cannot be undone!`)) return;
-
         try {
-            await api($token, `DELETE /guilds/${id}`);
-            goto("/admin/api-manager");
+            await withAudit(
+                `Are you sure you want to delete ${name ?? id}? This action cannot be undone!`,
+                async (reason) => {
+                    await api($token, `DELETE /guilds/${id}`, undefined, reason);
+                    goto("/admin/api-manager");
+                },
+                false,
+            );
         } catch (error) {
             alert(error);
         }
@@ -46,56 +51,97 @@
         const value = prompt(string);
         if (!value) return;
 
-        await api($token, `PATCH /guilds/${id}`, { [key]: value }).catch(alert);
-        await reload();
+        await withAudit(
+            `Confirm editing ${name ?? id}.`,
+            async (reason) => {
+                await api($token, `PATCH /guilds/${id}`, { [key]: value }, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function removeAdvisor() {
-        if (!confirm(`Are you sure you want to remove the advisor for ${name ?? id}?`)) return;
-
-        await api($token, `PATCH /guilds/${id}`, { advisor: null }).catch(alert);
-        await reload();
+        await withAudit(
+            `Are you sure you want to remove the advisor for ${name ?? id}?`,
+            async (reason) => {
+                await api($token, `PATCH /guilds/${id}`, { advisor: null }, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function swapRepresentatives() {
-        if (!confirm(`Are you sure you want to swap the owner and advisor for ${name ?? id}?`)) return;
-
-        await api($token, `PATCH /guilds/${id}`, { owner: guild.advisor, advisor: guild.owner }).catch(alert);
-        await reload();
+        await withAudit(
+            `Are you sure you want to swap the owner and advisor for ${name ?? id}?`,
+            async (reason) => {
+                await api($token, `PATCH /guilds/${id}`, { owner: guild.advisor, advisor: guild.owner }, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function toggleDelegated() {
-        await api($token, `PATCH /guilds/${id}`, { delegated: !guild.delegated }).catch(alert);
-        await reload();
+        await withAudit(
+            `Are you sure you want to switch the voter for ${name ?? id} to the ${guild.delegated ? "server owner" : "council advisor"}?`,
+            async (reason) => {
+                await api($token, `PATCH /guilds/${id}`, { delegated: !guild.delegated }, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function setStaff(user: string, staff: boolean) {
-        if (!confirm(`Are you sure you want to ${staff ? "add" : "remove"} ${tags[user] ?? user} ${staff ? "to" : "from"} the staff team of ${guild.name}?`))
-            return;
-
-        await api($token, `PUT /users/${user}/staff/${id}`, { staff });
-        await reload();
+        await withAudit(
+            `Are you sure you want to ${staff ? "add" : "remove"} ${tags[user] ?? user} ${staff ? "to" : "from"} the staff team of ${guild.name}?`,
+            async (reason) => {
+                await api($token, `PUT /users/${user}/staff/${id}`, { staff }, reason);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function addRole(user: string) {
         const role = prompt(`Enter the role to add to ${tags[user] ?? user} in ${guild.name}.`);
         if (!role) return;
 
-        await api($token, `PUT /users/${user}/roles/${role}/${id}`).catch(alert);
-        await reload();
+        await withAudit(
+            `Confirm adding the ${role} role to ${tags[user] ?? user} in ${guild.name}.`,
+            async (reason) => {
+                await api($token, `PUT /users/${user}/roles/${role}/${id}`, undefined, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function deleteRole(role: string, user: string) {
-        await api($token, `DELETE /users/${user}/roles/${role}/${id}`).catch(alert);
-        await reload();
+        await withAudit(
+            `Confirm removing the ${role} role from ${tags[user] ?? user} in ${guild.name}.`,
+            async (reason) => {
+                await api($token, `DELETE /users/${user}/roles/${role}/${id}`, undefined, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function addStaff() {
         const user = prompt(`Enter the ID of the user to add as a staff member to ${guild.name}.`);
         if (!user) return;
 
-        await api($token, `PUT /users/${user}/staff/${id}`, { staff: true });
-        await reload();
+        await withAudit(
+            `Are you sure you want to add ${user} to the staff team of ${guild.name}?`,
+            async (reason) => {
+                await api($token, `PUT /users/${user}/staff/${id}`, { staff: true }, reason);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function addRoleToNewUser() {

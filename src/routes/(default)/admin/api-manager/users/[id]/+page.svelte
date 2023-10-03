@@ -11,6 +11,7 @@
     import UserId from "$lib/components/UserId.svelte";
     import { user as self, token } from "$lib/stores";
     import type { Guild, User } from "$lib/types";
+    import { withAudit } from "$lib/utils";
     import { onMount } from "svelte";
 
     const { id } = $page.params;
@@ -29,49 +30,68 @@
     onMount(() => reload(true));
 
     async function addRole(guild: string = "") {
-        const role = prompt(`Enter the role to add to this user${guild ? ` in ${guilds.find((x) => x.id === guild)?.name ?? "[Missing Guild]"}` : ""}.`);
+        const role = prompt(`Enter the role to add to ${tag ?? id}${guild ? ` in ${guilds.find((x) => x.id === guild)?.name ?? "[Missing Guild]"}` : ""}.`);
         if (!role) return;
 
-        await api($token, `PUT /users/${id}/roles/${role}${guild ? `/${guild}` : ""}`).catch(alert);
-        await reload();
+        await withAudit(
+            `Are you sure you want to add the ${role} role to ${tag ?? id}${
+                guild ? ` in ${guilds.find((x) => x.id === guild)?.name ?? "[Missing Guild]"}` : ""
+            }?`,
+            async (reason) => {
+                await api($token, `PUT /users/${id}/roles/${role}${guild ? `/${guild}` : ""}`, undefined, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function deleteRole(role: string, guild: string = "") {
-        await api($token, `DELETE /users/${id}/roles/${role}${guild ? `/${guild}` : ""}`).catch(alert);
-        await reload();
+        await withAudit(
+            `Are you sure you want to remove the ${role} role from ${tag ?? id}${
+                guild ? ` in ${guilds.find((x) => x.id === guild)?.name ?? "[Missing Guild]"}` : ""
+            }?`,
+            async (reason) => {
+                await api($token, `DELETE /users/${id}/roles/${role}${guild ? `/${guild}` : ""}`, undefined, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     async function setObserver(observer: boolean) {
-        if (!confirm(`Are you sure you want to ${observer ? "promote" : "demote"} ${tag ?? id}?`)) return;
+        await withAudit(
+            `Are you sure you want to ${observer ? "promote" : "demote"} ${tag ?? id}?`,
+            async (reason) => {
+                if (
+                    id === $self!.id &&
+                    !observer &&
+                    !confirm(
+                        "Are you ABSOLUTELY CERTAIN you wish to demote yourself? You will immediately lose access to this page and will not be able to undo this action!",
+                    )
+                )
+                    return;
 
-        if (
-            id === $self!.id &&
-            !observer &&
-            !confirm(
-                "Are you ABSOLUTELY CERTAIN you wish to demote yourself? You will immediately lose access to this page and will not be able to undo this action!",
-            )
-        )
-            return;
+                await api($token, `PATCH /users/${id}`, { observer }, reason).catch(alert);
 
-        await api($token, `PATCH /users/${id}`, { observer }).catch(alert);
+                if (id === $self!.id && !observer) goto("/");
 
-        if (id === $self!.id && !observer) goto("/");
-
-        await reload();
+                await reload();
+            },
+            true,
+        );
     }
 
     async function setStaff(guild: string, staff: boolean) {
-        if (
-            !confirm(
-                `Are you sure you want to ${staff ? "add" : "remove"} ${tag ?? id} ${staff ? "to" : "from"} the staff team of ${
-                    guilds.find((x) => x.id === guild)?.name ?? "[Missing Guild]"
-                }?`,
-            )
-        )
-            return;
-
-        await api($token, `PUT /users/${id}/staff/${guild}`, { staff }).catch(alert);
-        await reload();
+        await withAudit(
+            `Are you sure you want to ${staff ? "add" : "remove"} ${tag ?? id} ${staff ? "to" : "from"} the staff team of ${
+                guilds.find((x) => x.id === guild)?.name ?? "[Missing Guild]"
+            }?`,
+            async (reason) => {
+                await api($token, `PUT /users/${id}/staff/${guild}`, { staff }, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 </script>
 

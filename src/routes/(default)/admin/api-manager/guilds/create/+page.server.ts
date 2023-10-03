@@ -6,6 +6,7 @@ export const actions: Actions = {
         const data = await request.formData();
 
         const id = data.get("id");
+        const reason = ((data.get("reason") as string) ?? "").trim();
 
         const values = {
             name: data.get("name"),
@@ -17,9 +18,9 @@ export const actions: Actions = {
         };
 
         try {
-            await api(token, `POST /guilds/${id}`, values);
+            await api(token, `POST /guilds/${id}`, values, reason);
         } catch (error) {
-            return { error, id, ...values };
+            return { error, id, ...values, reason };
         }
 
         throw redirect(303, `/admin/api-manager/guilds/${id}`);

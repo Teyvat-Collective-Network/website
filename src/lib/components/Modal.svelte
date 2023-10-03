@@ -1,26 +1,36 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
 
     export let open: any = false;
     export let button = false;
     export let background_color: string = "rgb(var(--bg-3))";
     export let overlay_color: string = "rgb(var(--pure-rgb), 60%)";
+    export let confirmClose: boolean = false;
 
     const dispatch = createEventDispatcher();
 
-    function close() {
+    async function close() {
+        if (!open) return;
+
+        if (confirmClose && !confirm("Close this modal? Unsaved work will be lost.")) return;
+
         open = false;
         dispatch("close");
     }
+
+    let first = false;
+    onMount(() => setTimeout(() => (first = true), 250));
 </script>
 
 <svelte:window on:keydown={(e) => e.key === "Escape" && close()} />
 
-<div id="modal" class={open ? "" : "closed"} style="background-color: {background_color}">
-    <div id="content" class="container">
-        <slot />
+{#if first}
+    <div id="modal" class={open ? "" : "closed"} style="background-color: {background_color}">
+        <div id="content" class="container">
+            <slot />
+        </div>
     </div>
-</div>
+{/if}
 
 {#if button}
     <button on:click={() => (open = true)}>

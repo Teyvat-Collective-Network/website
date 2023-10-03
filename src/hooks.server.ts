@@ -16,12 +16,12 @@ export const handle: Handle = async ({ event, resolve }) => {
             locals.user = await req.json();
 
             try {
-                Object.assign(locals.user, await bot(`GET /user/${locals.user.id}`));
+                Object.assign(locals.user, await bot(null, `GET /user/${locals.user.id}`));
             } catch {}
         }
     }
 
-    locals.dark_mode = cookies.get("mode") !== "light";
+    locals.darkMode = cookies.get("mode") !== "light";
 
     return await resolve(event);
 };

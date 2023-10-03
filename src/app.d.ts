@@ -8,13 +8,13 @@ declare global {
         interface Locals {
             token: string;
             user: User;
-            dark_mode: boolean;
+            darkMode: boolean;
         }
 
         interface PageData {
             token: string;
             user: User;
-            dark_mode: boolean;
+            darkMode: boolean;
         }
     }
 }

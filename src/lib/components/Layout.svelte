@@ -7,17 +7,19 @@
     import Menu from "$lib/components/Menu.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
     import { select } from "$lib/html-utils";
-    import { alerts, dark_mode } from "$lib/stores";
+    import { alerts, auditMessage, auditReason, auditRequired, darkMode, modals } from "$lib/stores";
     import { onMount } from "svelte";
     import Alert from "./Alert.svelte";
+    import ConfirmCancel from "./ConfirmCancel.svelte";
     import Icon from "./Icon.svelte";
+    import Modal from "./Modal.svelte";
     import Show from "./Show.svelte";
 
-    const { copy, save } = alerts;
+    const { copy, save, nodelete } = alerts;
+    const { audit } = modals;
 
     let scroll: number = 0;
     let show = false;
-    let opaque = false;
 
     onMount(() => {
         show = true;
@@ -30,8 +32,6 @@
                     top: select(hash).getBoundingClientRect().top - select("body").getBoundingClientRect().top - window.innerHeight / 2,
                     behavior: "instant",
                 });
-
-            opaque = true;
         }, 100);
 
         MathJax.typeset();
@@ -55,6 +55,14 @@
             }
         }
     }
+
+    let reason: string = "";
+    $: trimmedReason = reason?.trim() ?? "";
+
+    let auditInput: Element & { focus: any };
+
+    auditReason.subscribe((x) => (reason = x as any));
+    audit.subscribe((x) => x && auditInput.focus());
 </script>
 
 <svelte:window bind:scrollY={scroll} on:click={click} />
@@ -77,7 +85,7 @@
         <link rel="shortcut icon" type="image/png" href="/favicon.png" />
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        <link rel="stylesheet" type="text/css" href="/styles/{$dark_mode ? 'dark' : 'light'}.css" />
+        <link rel="stylesheet" type="text/css" href="/styles/{$darkMode ? 'dark' : 'light'}.css" />
         <link rel="stylesheet" type="text/css" href="/styles/main.css" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
@@ -100,8 +108,17 @@
     </body>
 </html>
 
-<Alert icon="content_copy" text="Copied to clipboard" open={$copy > 0} />
-<Alert icon="check" text="Saved" open={$save > 0} />
+<Alert icon="content_copy" iconColor="rgb(var(--blue-text))" text="Copied to clipboard" open={$copy > 0} />
+<Alert icon="check" iconColor="rgb(var(--green-text))" text="Saved" open={$save > 0} />
+<Alert icon="clear" iconColor="rgb(var(--red-text))" text="That item cannot be deleted." open={$nodelete > 0} />
+
+<Modal bind:open={$audit} on:close={() => auditReason.set(null)} confirmClose={!!trimmedReason}>
+    <h3 class="short">Audit Log Reason</h3>
+    <p>{$auditMessage}</p>
+    <p class="text-2">This action will be logged. Enter a reason below.</p>
+    <p><input bind:this={auditInput} type="text" class="bg-1" placeholder={$auditRequired ? "" : "Optional."} bind:value={reason} /></p>
+    <ConfirmCancel save={$audit} bind:cancel={$audit} valid={trimmedReason || !$auditRequired} confirm={() => auditReason.set(trimmedReason)} />
+</Modal>
 
 <style lang="scss">
     @keyframes fade-in {

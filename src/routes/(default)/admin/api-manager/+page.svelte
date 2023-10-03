@@ -7,6 +7,7 @@
     import UserId from "$lib/components/UserId.svelte";
     import { user as self, token } from "$lib/stores";
     import type { Guild } from "$lib/types";
+    import { withAudit } from "$lib/utils";
     import { onMount } from "svelte";
 
     let user: string = $self!.id;
@@ -27,9 +28,7 @@
         )
             return;
 
-        if (!confirm("Please confirm again that you wish to proceed. This action cannot be undone!")) return;
-
-        await api($token, `POST /auth/invalidate/${user}`).catch(alert);
+        withAudit(async (reason) => await api($token, `POST /auth/invalidate/${user}`, undefined, reason).catch(alert), true);
     }
 </script>
 

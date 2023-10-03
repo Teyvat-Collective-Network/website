@@ -1,6 +1,6 @@
 import { PUBLIC_API } from "$env/static/public";
 
-export default async function (token: string | null, route: string, body?: any, options?: RequestInit) {
+export default async function (token: string | null, route: string, body?: any, reason?: string | null) {
     let request = route.startsWith("!");
     if (request) route = route.slice(1);
 
@@ -8,26 +8,16 @@ export default async function (token: string | null, route: string, body?: any, 
 
     const [method, real] = route.split(/\s+/);
 
-    options ??= {};
-    options.method = method;
+    const options: RequestInit & { headers: Record<string, string> } = { method, headers: {} };
 
-    if (token) {
-        options.headers ??= {};
-
-        if (Array.isArray(options.headers)) options.headers.push(["Authorization", `Bearer ${token}`]);
-        else if (options.headers instanceof Headers) options.headers.append("Authorization", `Bearer ${token}`);
-        else options.headers.Authorization = `Bearer ${token}`;
-    }
+    if (token) options.headers.Authorization = `Bearer ${token}`;
 
     if (body) {
-        options.headers ??= {};
-
-        if (Array.isArray(options.headers)) options.headers.push(["Content-Type", "application/json"]);
-        else if (options.headers instanceof Headers) options.headers.append("Content-Type", "application/json");
-        else options.headers["Content-Type"] = "application/json";
-
+        options.headers["Content-Type"] = "application/json";
         options.body = JSON.stringify(body);
     }
+
+    if (reason) options.headers["X-Audit-Log-Reason"] = reason;
 
     const req = await fetch(`${PUBLIC_API}${real}`, options);
     if (request) return req;

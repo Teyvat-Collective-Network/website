@@ -5,7 +5,8 @@
     export let text: string;
     export let open: boolean;
     export let background: string = "rgb(var(--bg-0))";
-    export let color: string = "rgb(var(--text-accent))";
+    export let color: string = "rgb(var(--text-1))";
+    export let iconColor: string = color;
 
     let first = false;
     $: first ||= open;
@@ -13,7 +14,7 @@
 
 <div id="box" class="col">
     <div id="alert" class="row gap-1 {open ? 'open' : ''}" style="background-color: {background}; color: {color}; opacity: {first ? 1 : 0}">
-        <Icon {icon} />
+        <Icon {icon} style="color: {iconColor}" />
         {text}
     </div>
 </div>
