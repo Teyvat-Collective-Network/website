@@ -113,7 +113,7 @@ strong {
 
 pre,
 code {
-    background-color: rgb(var(--bg-2));
+    background-color: rgb(40, 41, 45);
     border-radius: 5px;
     font-family: "Share Tech Mono", monospace;
     font-size: 90%;

@@ -52,7 +52,6 @@
 .hljs-type,
 .hljs-symbol,
 .hljs-bullet,
-.hljs-addition,
 .hljs-variable,
 .hljs-template-tag,
 .hljs-template-variable {
@@ -60,8 +59,7 @@
 }
 
 .hljs-comment,
-.hljs-quote,
-.hljs-deletion {
+.hljs-quote {
     color: #6272a4;
 }
 
@@ -84,4 +82,12 @@
 
 .hljs-emphasis {
     font-style: italic;
+}
+
+.hljs-addition {
+    color: #55ff33;
+}
+
+.hljs-deletion {
+    color: #ff5555;
 }

@@ -103,7 +103,7 @@
         <p>This document is only visible to the author, observers, and individually authorized users.</p>
     </Callout>
 {/if}
-<h2 class="short row gap-2">
+<h1 class="short row gap-2">
     {doc.title}
     {#if doc.author === $user?.id}
         <A to="/docs/edit/{doc.id}"><Icon icon="edit" /></A>
@@ -115,7 +115,7 @@
     {:else if doc.author === $user?.id || $user?.observer}
         <A class="red-text" on:click={del}><Icon icon="delete" /></A>
     {/if}
-</h2>
+</h1>
 {#if doc.anon && !$user?.observer && doc.author !== $user?.id}
     <p>Author: anonymous</p>
 {:else}
