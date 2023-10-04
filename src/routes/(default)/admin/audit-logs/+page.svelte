@@ -77,7 +77,7 @@
     onMount(async () => {
         const incoming = await api($token, `GET /audit-logs?limit=${limit}`).catch(alert);
 
-        const guilds = (await api($token, `GET /guilds`).catch(alert)) as Guild[];
+        const guilds: Guild[] = await api($token, `GET /guilds`).catch(alert);
         if (guilds) for (const guild of guilds) guildNames[guild.id] = guild.name;
 
         if (incoming) {
