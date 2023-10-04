@@ -9,6 +9,7 @@ export type User = {
     voter: boolean;
     council: boolean;
     staff: boolean;
+    observerSince: number;
 };
 
 export type Role = { id: string; description: string; assignment: string };
@@ -49,6 +50,7 @@ export type TCNDoc = {
 };
 
 export type AuditLogEntry = {
+    hidden: boolean;
     uuid: number;
     time: number;
     user: string;

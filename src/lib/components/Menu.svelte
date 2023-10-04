@@ -31,7 +31,7 @@
             href = mapRoute(href) ?? href;
 
             selectall<HTMLAnchorElement>("#sidebar-contents a:not(.btn)").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
-            for (const id of ["info-pages", "staff-area", "miscellaneous", "voting"])
+            for (const id of ["info-pages", "staff-area", "miscellaneous", "records"])
                 if (selectall<HTMLAnchorElement>(`#${id} a:not(.btn)`).some((e) => e.href === href)) openSections[id] = true;
         });
 
@@ -144,6 +144,19 @@
                         {/if}
                         {#if $user.observer}
                             <a href="/admin/audit-logs" class="t2"><Icon icon="format_list_numbered" /> Audit Log</a>
+                        {/if}
+
+                        {#if $user.council}
+                            <a href={"javascript:void(0)"} class="btn t2" on:click={() => (openSections["records"] = !openSections["records"])}>
+                                <Icon icon={openSections["records"] ? "expand_more" : "chevron_right"} />
+                                Records
+                            </a>
+
+                            <Show when={openSections["records"]}>
+                                <div id="records">
+                                    <a href="/records/membership-changes" class="t3"><Icon icon="history" /> Membership Changes</a>
+                                </div>
+                            </Show>
                         {/if}
                     </div>
                 </Show>

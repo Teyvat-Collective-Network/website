@@ -3,6 +3,7 @@
         user: "alternate_email",
         text: "tag",
         guild: "domain",
+        time: "schedule",
     };
 </script>
 

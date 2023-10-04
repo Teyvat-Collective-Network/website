@@ -413,3 +413,7 @@ td {
 .hscroll {
     overflow-x: scroll;
 }
+
+.w-100 {
+    width: 100%;
+}

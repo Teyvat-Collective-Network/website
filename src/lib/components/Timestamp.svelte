@@ -2,7 +2,7 @@
 
 <script lang="ts">
     export let timestamp: number | string;
-    export let short = false;
+    export let mode: "full" | "time" | "date" = "full";
     export let ms = false;
 
     $: ts = typeof timestamp === "number" ? timestamp : parseInt(timestamp);
@@ -10,4 +10,4 @@
     $: isostring = new Date(real - new Date().getTimezoneOffset() * 60000).toISOString();
 </script>
 
-{(short ? isostring.split("T")[1] : isostring.replace("T", " | ")).slice(0, -5)}
+{mode === "time" ? isostring.split("T")[1].slice(0, -5) : mode === "date" ? isostring.split("T")[0] : isostring.replace("T", " | ").slice(0, -5)}
