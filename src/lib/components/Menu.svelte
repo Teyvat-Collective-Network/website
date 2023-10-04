@@ -142,6 +142,9 @@
                         {#if $user.council}
                             <a href="/docs" class="t2"><Icon icon="description" /> Documents</a>
                         {/if}
+                        {#if $user.observer}
+                            <a href="/admin/audit-logs" class="t2"><Icon icon="format_list_numbered" /> Audit Log</a>
+                        {/if}
                     </div>
                 </Show>
             {/if}
@@ -189,7 +192,7 @@
         {/if}
         &copy; 2023 TCN Development Team
         <br />
-        <span class="text-2">Page last loaded: <Timestamp timestamp={Math.floor(Date.now() / 1000)} /></span>
+        <span class="text-2">Page last loaded: <Timestamp ms timestamp={Date.now()} /></span>
     </div>
 </div>
 

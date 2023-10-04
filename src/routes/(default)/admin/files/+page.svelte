@@ -79,40 +79,38 @@
     }
 </script>
 
-<div class="container">
-    <h1>Files</h1>
-    <div class="col no-center gap-1">
-        {#each files.sort() as file}
-            <div class="row gap-1">
-                <button class="tp blue-text" on:click={() => load(file)}><Icon icon="visibility" /></button>
-                <button class="tp green-text" on:click={() => edit(file)}><Icon icon="edit" /></button>
-                <button class="tp red-text" on:click={() => del(file)}><Icon icon="delete" /></button>
-                <code>{file}</code>
-            </div>
-
-            <Modal open={open === file} on:close={() => (open = "")}>
-                {#if loaded[file]}
-                    {@const ex = ext(file)}
-                    <Loading done={loaded[file]}>
-                        {#if data[file] === 0}
-                            <Callout style="red">
-                                <p>An error occurred loading this file's content!</p>
-                            </Callout>
-                        {:else if ["png"].includes(ex)}
-                            <div class="col">
-                                <img src="/files/{file}?{anticache[file]}" alt="Dynamic Content" />
-                            </div>
-                        {:else if ["txt"].includes(ex)}
-                            <pre>{data[file]}</pre>
-                        {:else if ["json"].includes(ex)}
-                            <pre>{JSON.stringify(data[file], undefined, 4)}</pre>
-                        {/if}
-                    </Loading>
-                {/if}
-            </Modal>
-        {/each}
-        <div>
-            <button class="green-button" on:click={() => edit(prompt("Enter the filename of the file to create."), true)}><Icon icon="add" /></button>
+<h1>Files</h1>
+<div class="col no-center gap-1">
+    {#each files.sort() as file}
+        <div class="row gap-1">
+            <button class="tp blue-text" on:click={() => load(file)}><Icon icon="visibility" /></button>
+            <button class="tp green-text" on:click={() => edit(file)}><Icon icon="edit" /></button>
+            <button class="tp red-text" on:click={() => del(file)}><Icon icon="delete" /></button>
+            <code>{file}</code>
         </div>
+
+        <Modal open={open === file} on:close={() => (open = "")}>
+            {#if loaded[file]}
+                {@const ex = ext(file)}
+                <Loading done={loaded[file]}>
+                    {#if data[file] === 0}
+                        <Callout style="red">
+                            <p>An error occurred loading this file's content!</p>
+                        </Callout>
+                    {:else if ["png"].includes(ex)}
+                        <div class="col">
+                            <img src="/files/{file}?{anticache[file]}" alt="Dynamic Content" />
+                        </div>
+                    {:else if ["txt"].includes(ex)}
+                        <pre>{data[file]}</pre>
+                    {:else if ["json"].includes(ex)}
+                        <pre>{JSON.stringify(data[file], undefined, 4)}</pre>
+                    {/if}
+                </Loading>
+            {/if}
+        </Modal>
+    {/each}
+    <div>
+        <button class="green-button" on:click={() => edit(prompt("Enter the filename of the file to create."), true)}><Icon icon="add" /></button>
     </div>
 </div>

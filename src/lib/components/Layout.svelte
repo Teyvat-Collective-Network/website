@@ -11,11 +11,11 @@
     import { onMount } from "svelte";
     import Alert from "./Alert.svelte";
     import ConfirmCancel from "./ConfirmCancel.svelte";
-    import Icon from "./Icon.svelte";
+    import FixedButton from "./FixedButton.svelte";
     import Modal from "./Modal.svelte";
     import Show from "./Show.svelte";
 
-    const { copy, save, nodelete } = alerts;
+    const { copy, save, nodelete, nomore } = alerts;
     const { audit } = modals;
 
     let scroll: number = 0;
@@ -63,6 +63,9 @@
 
     auditReason.subscribe((x) => (reason = x as any));
     audit.subscribe((x) => x && auditInput.focus());
+
+    let first = false;
+    onMount(() => setTimeout(() => (first = true), 250));
 </script>
 
 <svelte:window bind:scrollY={scroll} on:click={click} />
@@ -95,9 +98,7 @@
     </head>
 
     <body>
-        <button id="top" on:click={() => scrollTo({ top: 0 })} style="opacity: {scroll ? 1 : 0}">
-            <Icon icon="expand_less" />
-        </button>
+        <FixedButton icon="expand_less" click={() => scrollTo({ top: 0 })} />
         <Show when={show}>
             <Menu />
             <Navbar />
@@ -111,14 +112,17 @@
 <Alert icon="content_copy" iconColor="rgb(var(--blue-text))" text="Copied to clipboard" open={$copy > 0} />
 <Alert icon="check" iconColor="rgb(var(--green-text))" text="Saved" open={$save > 0} />
 <Alert icon="clear" iconColor="rgb(var(--red-text))" text="That item cannot be deleted." open={$nodelete > 0} />
+<Alert icon="block" iconColor="rgb(var(--red-text))" text="No more items to load." open={$nomore > 0} />
 
-<Modal bind:open={$audit} on:close={() => auditReason.set(null)} confirmClose={!!trimmedReason}>
-    <h3 class="short">Audit Log Reason</h3>
-    <p>{$auditMessage}</p>
-    <p class="text-2">This action will be logged. Enter a reason below.</p>
-    <p><input bind:this={auditInput} type="text" class="bg-1" placeholder={$auditRequired ? "" : "Optional."} bind:value={reason} /></p>
-    <ConfirmCancel save={$audit} bind:cancel={$audit} valid={trimmedReason || !$auditRequired} confirm={() => auditReason.set(trimmedReason)} />
-</Modal>
+{#if first}
+    <Modal bind:open={$audit} on:close={() => auditReason.set(null)} confirmClose={!!trimmedReason}>
+        <h3 class="short">Audit Log Reason</h3>
+        <p>{$auditMessage}</p>
+        <p class="text-2">This action will be logged. Enter a reason below.</p>
+        <p><input bind:this={auditInput} type="text" class="bg-1" placeholder={$auditRequired ? "" : "Optional."} bind:value={reason} /></p>
+        <ConfirmCancel save={$audit} bind:cancel={$audit} valid={trimmedReason || !$auditRequired} confirm={() => auditReason.set(trimmedReason)} />
+    </Modal>
+{/if}
 
 <style lang="scss">
     @keyframes fade-in {
@@ -141,26 +145,5 @@
 
     :global(#slot > *) {
         animation: 600ms 100ms fade-in backwards;
-    }
-
-    #top {
-        aspect-ratio: 1 / 1;
-        background-color: rgb(var(--text-accent));
-        border-radius: 50%;
-        border: none;
-        bottom: 50px;
-        box-shadow: 2px 2px 10px rgb(var(--pure-rgb), 75%);
-        color: rgb(var(--pure-rgb));
-        outline: none;
-        padding: 10px;
-        position: fixed;
-        right: 50px;
-        transition: transform 50ms, box-shadow 50ms, opacity 200ms;
-        z-index: 1;
-
-        &:active {
-            box-shadow: 2px 2px 10px transparent;
-            transform: translate(2px, 2px);
-        }
     }
 </style>

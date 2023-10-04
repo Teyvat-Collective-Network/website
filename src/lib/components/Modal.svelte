@@ -17,20 +17,15 @@
         open = false;
         dispatch("close");
     }
-
-    let first = false;
-    onMount(() => setTimeout(() => (first = true), 250));
 </script>
 
 <svelte:window on:keydown={(e) => e.key === "Escape" && close()} />
 
-{#if first}
-    <div id="modal" class={open ? "" : "closed"} style="background-color: {background_color}">
-        <div id="content" class="container">
-            <slot />
-        </div>
+<div id="modal" class={open ? "" : "closed"} style="background-color: {background_color}">
+    <div id="content" class="container">
+        <slot />
     </div>
-{/if}
+</div>
 
 {#if button}
     <button on:click={() => (open = true)}>

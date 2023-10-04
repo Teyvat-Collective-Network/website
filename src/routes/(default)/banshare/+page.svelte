@@ -40,7 +40,7 @@
 </script>
 
 <form class="container" method="post" on:submit={() => (finished = true)}>
-    <h2>Submit Banshare</h2>
+    <h1>Submit Banshare</h1>
     {#if form?.error}
         <Callout style="red">
             <p>{@html form.error}</p>

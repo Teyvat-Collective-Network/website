@@ -9,6 +9,7 @@
     import Loading from "$lib/components/Loading.svelte";
     import Mention from "$lib/components/Mention.svelte";
     import UserId from "$lib/components/UserId.svelte";
+    import UserMention from "$lib/components/UserMention.svelte";
     import { token } from "$lib/stores";
     import type { Character, Guild } from "$lib/types";
     import { withAudit } from "$lib/utils";
@@ -183,7 +184,7 @@
         </div>
         <b>Owner</b>
         <div class="row gap-1">
-            <Mention id={guild.owner}><UserId id={guild.owner} /></Mention>
+            <UserMention id={guild.owner} />
             <A to="/admin/api-manager/users/{guild.owner}">Edit User</A>
         </div>
         <div class="row gap-1">
@@ -195,7 +196,7 @@
         <b>Advisor</b>
         <div class="row gap-1">
             {#if guild.advisor}
-                <Mention id={guild.advisor}><UserId id={guild.advisor} /></Mention>
+                <UserMention id={guild.advisor} />
                 <A to="/admin/api-manager/users/{guild.advisor}">Edit User</A>
             {:else}
                 (none)

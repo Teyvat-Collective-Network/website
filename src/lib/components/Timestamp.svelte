@@ -3,9 +3,11 @@
 <script lang="ts">
     export let timestamp: number | string;
     export let short = false;
+    export let ms = false;
 
     $: ts = typeof timestamp === "number" ? timestamp : parseInt(timestamp);
-    $: isostring = new Date(ts * 1000 - new Date().getTimezoneOffset() * 60000).toISOString();
+    $: real = ms ? ts : ts * 1000;
+    $: isostring = new Date(real - new Date().getTimezoneOffset() * 60000).toISOString();
 </script>
 
-{@html (short ? isostring.split("T")[1] : isostring.replace("T", "&nbsp;&nbsp;")).slice(0, -5)}
+{(short ? isostring.split("T")[1] : isostring.replace("T", " | ")).slice(0, -5)}

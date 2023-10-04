@@ -29,7 +29,7 @@
 </script>
 
 <form class="container" method="post" on:submit={() => (done = true)}>
-    <h2>TCN Application Form</h2>
+    <h1>TCN Application Form</h1>
     {#if form?.error}
         <Callout style="red">
             <p>{@html form.error}</p>

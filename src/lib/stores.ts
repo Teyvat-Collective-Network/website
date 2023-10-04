@@ -9,6 +9,7 @@ export const alerts = {
     copy: writable<number>(0),
     save: writable<number>(0),
     nodelete: writable<number>(0),
+    nomore: writable<number>(0),
 };
 
 export const modals = {

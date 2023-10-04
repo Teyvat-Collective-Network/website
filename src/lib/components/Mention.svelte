@@ -2,6 +2,7 @@
     const icons = {
         user: "alternate_email",
         text: "tag",
+        guild: "domain",
     };
 </script>
 

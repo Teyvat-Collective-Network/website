@@ -97,8 +97,14 @@
     }
 
     async function deleteCharacter(id: string) {
-        await withAudit(async (reason) => await api($token, `DELETE /characters/${id}`, undefined, reason).catch(alert), false);
-        await reload();
+        await withAudit(
+            `Are you sure you want to delete ${characters.find((x) => x.id === id)?.name ?? id}?`,
+            async (reason) => {
+                await api($token, `DELETE /characters/${id}`, undefined, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     function noDelete() {
@@ -147,8 +153,14 @@
     }
 
     async function deleteAttribute(type: string, id: string) {
-        await withAudit(async (reason) => await api($token, `DELETE /attributes/${type}/${id}`, undefined, reason).catch(alert), false);
-        await reload();
+        await withAudit(
+            `Are you sure you want to delete the ${type} attribute with ID ${id}?`,
+            async (reason) => {
+                await api($token, `DELETE /attributes/${type}/${id}`, undefined, reason).catch(alert);
+                await reload();
+            },
+            false,
+        );
     }
 
     $: attributeTypes = Object.keys(attributes ?? {}).sort();

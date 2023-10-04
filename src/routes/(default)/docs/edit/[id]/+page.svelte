@@ -17,13 +17,12 @@
     import { onMount } from "svelte";
 
     const { save: saveStore } = alerts;
-    const { id } = $page.params;
 
     let doc: TCNDoc;
     let failed: boolean, done: boolean;
 
     onMount(async () => {
-        if (id === "new")
+        if ($page.params.id === "new")
             doc = {
                 id: "",
                 official: false,
@@ -44,7 +43,7 @@
             };
         else
             try {
-                doc = await api($token, `GET /docs/${id}`);
+                doc = await api($token, `GET /docs/${$page.params.id}`);
             } catch (error) {
                 alert(error);
                 failed = true;
@@ -73,13 +72,13 @@
         const data = { ...doc, id: undefined, author: undefined };
 
         try {
-            if (id === "new") {
+            if ($page.params.id === "new") {
                 const { id } = await api($token, `POST /docs`, data);
 
                 leave = true;
                 goto(`/docs/edit/${id}`);
             } else {
-                await api($token, `PATCH /docs/${id}`, data);
+                await api($token, `PATCH /docs/${$page.params.id}`, data);
                 saveStore.update((x) => x + 1);
                 setTimeout(() => saveStore.update((x) => x - 1), 1500);
             }
@@ -252,12 +251,12 @@
         <div class="panel">
             <div class="row gap-1">
                 <button class="row" on:click={save}><Icon icon="save" /> Save</button>
-                {#if id !== "new"}
+                {#if $page.params.id !== "new"}
                     <button class="row tp red-text" on:click={() => del(!doc.deleted)}>
                         <Icon icon={doc.deleted ? "restore_from_trash" : "delete"} />
                         {doc.deleted ? "Restore" : "Delete"}
                     </button>
-                    <A class="row gap-1" to="/docs/{id}"><Icon icon="visibility" /> View</A>
+                    <A class="row gap-1" to="/docs/{$page.params.id}"><Icon icon="visibility" /> View</A>
                 {/if}
             </div>
         </div>

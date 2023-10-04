@@ -66,7 +66,7 @@ export function debounce<T extends any[], U>(fn: (...args: T) => U, timeout: num
 
 export function highlight(depth = 0) {
     try {
-        hljs.configure({ ignoreUnescapedHTML: true });
+        hljs.configure({ ignoreUnescapedHTML: true, languages: [] });
         hljs.highlightAll();
     } catch {
         if (depth < 10) setTimeout(() => highlight(depth + 1), 250);

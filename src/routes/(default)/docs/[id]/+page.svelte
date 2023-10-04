@@ -4,8 +4,7 @@
     import A from "$lib/components/A.svelte";
     import Callout from "$lib/components/Callout.svelte";
     import Icon from "$lib/components/Icon.svelte";
-    import Mention from "$lib/components/Mention.svelte";
-    import UserId from "$lib/components/UserId.svelte";
+    import UserMention from "$lib/components/UserMention.svelte";
     import { token, user } from "$lib/stores";
     import type { TCNDoc } from "$lib/types";
     import { highlight, withAudit } from "$lib/utils";
@@ -121,7 +120,7 @@
     <p>Author: anonymous</p>
 {:else}
     <p class="row gap-1">
-        Author: <b><Mention id={doc.author}><UserId id={doc.author} /></Mention></b>
+        Author: <b><UserMention id={doc.author} /></b>
         {#if doc.anon}&nbsp;anonymously{/if}
     </p>
     <p>

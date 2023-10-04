@@ -21,14 +21,11 @@
     async function invalidate() {
         if (!user) return;
 
-        if (
-            !confirm(
-                `Are you sure you want to invalidate ${tag ?? "this user"}'s tokens? This will log them out everywhere and make all of their API keys invalid.`,
-            )
-        )
-            return;
-
-        withAudit(async (reason) => await api($token, `POST /auth/invalidate/${user}`, undefined, reason).catch(alert), true);
+        withAudit(
+            `Are you sure you want to invalidate ${tag ?? "this user"}'s tokens? This will log them out everywhere and make all of their API keys invalid.`,
+            async (reason) => await api($token, `POST /auth/invalidate/${user}`, undefined, reason).catch(alert),
+            true,
+        );
     }
 </script>
 
