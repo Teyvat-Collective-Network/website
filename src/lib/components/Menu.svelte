@@ -155,6 +155,8 @@
                             <Show when={openSections["records"]}>
                                 <div id="records">
                                     <a href="/records/membership-changes" class="t3"><Icon icon="history" /> Membership Changes</a>
+                                    <a href="/records/observer-terms" class="t3"><Icon icon="view_timeline" /> Observer Terms</a>
+                                    <a href="/records/observation-schedule" class="t3"><Icon icon="calendar_clock" /> Observation Schedule</a>
                                 </div>
                             </Show>
                         {/if}

@@ -34,12 +34,14 @@
         "guilds/create": { title: "Guild created", icon: "add_box" },
         "guilds/delete": { title: "Guild deleted", icon: "delete_forever" },
         "guilds/edit": { title: "Guild edited", icon: "edit" },
+        "observation-records/edit": { title: "Observation record edited", icon: "edit" },
         "users/demote": { title: "User demoted from observer", icon: "remove_moderator" },
         "users/promote": { title: "User promoted to observer", icon: "add_moderator" },
         "users/roles/add": { title: "User role added", icon: "code" },
         "users/roles/remove": { title: "User role removed", icon: "code_off" },
         "users/staff/add": { title: "User added to staff team", icon: "person_add" },
         "users/staff/remove": { title: "User removed from staff team", icon: "person_remove" },
+        "users/term/refresh": { title: "User term refreshed / re-elected", icon: "refresh" },
     };
 </script>
 
@@ -53,6 +55,7 @@
     import Icon from "$lib/components/Icon.svelte";
     import Invite from "$lib/components/Invite.svelte";
     import Loading from "$lib/components/Loading.svelte";
+    import Mention from "$lib/components/Mention.svelte";
     import Modal from "$lib/components/Modal.svelte";
     import Show from "$lib/components/Show.svelte";
     import Switch from "$lib/components/Switch.svelte";
@@ -147,7 +150,8 @@
                 <span>
                     <UserMention id={entry.user} />
                     {#if entry.action === "apply"}
-                        ({entry.data.role === "other" ? entry.data.roleother : entry.data.role}) applied for {entry.data.mascot} Mains.
+                        ({entry.data.role === "other" ? entry.data.roleother : entry.data.role}) applied for
+                        <A to="https://discord.gg/{entry.data.code}" external><Mention type="guild">{entry.data.name}</Mention></A>.
                     {:else if entry.action === "attributes/create"}
                         created attribute <code>{entry.data.type}:{entry.data.id}</code>:
                         <ul class="space">
@@ -357,6 +361,37 @@
                                 </li>
                             {/if}
                         </ul>
+                    {:else if entry.action === "observation-records/edit"}
+                        edited observation record <code>{entry.data.uuid}</code> for {#if entry.data.name}<Mention type="guild" id={entry.data.id}
+                                >{entry.data.name}</Mention
+                            >{:else}<GuildMention id={entry.data.id} {guildNames} />{/if}:
+                        <ul>
+                            {#if entry.data.changes.observer}
+                                {@const [before, after] = entry.data.changes.observer}
+                                <li>
+                                    <b>Observer:</b>
+                                    {#if before}<UserMention id={before} />{:else}<span class="text-2">(none)</span>{/if} &rightarrow;
+                                    {#if after}<UserMention id={after} />{:else}<span class="text-2">(none)</span>{/if}
+                                </li>
+                            {/if}
+                            {#if entry.data.changes.start}
+                                {@const [before, after] = entry.data.changes.start}
+                                <li>
+                                    <b>Start:</b>
+                                    {#if before}<Timestamp ms mode="date" timestamp={before} />{:else}<span class="text-2">(none)</span>{/if} &rightarrow;
+                                    {#if after}<Timestamp ms mode="date" timestamp={after} />{:else}<span class="text-2">(none)</span>{/if}
+                                </li>
+                            {/if}
+                            {#if entry.data.changes.end}
+                                {@const [before, after] = entry.data.changes.end}
+                                <li>
+                                    <b>Start:</b>
+                                    {#if before}<Timestamp ms mode="date" timestamp={before} />{:else}<span class="text-2">(none)</span>{/if} &rightarrow;
+                                    {#if after}<Timestamp ms mode="date" timestamp={after} />{:else}<span class="text-2">(none)</span>{/if}
+                                </li>
+                            {/if}
+                            <Changelog changes={entry.data.changes} hide={["observer", "start", "end"]} code={["hidden", "status"]} />
+                        </ul>
                     {:else if entry.action === "users/demote"}
                         demoted <UserMention id={entry.data.id} /> from the observer team.
                     {:else if entry.action === "users/promote"}
@@ -371,6 +406,8 @@
                         added <UserMention id={entry.data.id} /> to the staff team of <GuildMention id={entry.data.guild} {guildNames} />.
                     {:else if entry.action === "users/staff/remove"}
                         removed <UserMention id={entry.data.id} /> from the staff team of <GuildMention id={entry.data.guild} {guildNames} />.
+                    {:else if entry.action === "users/term/refresh"}
+                        refreshed <UserMention id={entry.data.id} />'s term.
                     {:else}
                         <pre><code class="language-json">{JSON.stringify(entry, undefined, 4)}</code></pre>
                     {/if}

@@ -120,7 +120,13 @@
         <p>{$auditMessage}</p>
         <p class="text-2">This action will be logged. Enter a reason below.</p>
         <p><input bind:this={auditInput} type="text" class="bg-1" placeholder={$auditRequired ? "" : "Optional."} bind:value={reason} /></p>
-        <ConfirmCancel save={$audit} bind:cancel={$audit} valid={trimmedReason || !$auditRequired} confirm={() => auditReason.set(trimmedReason)} />
+        <ConfirmCancel
+            save={$audit}
+            bind:cancel={$audit}
+            canceled={() => auditReason.set(null)}
+            valid={trimmedReason || !$auditRequired}
+            confirm={() => auditReason.set(trimmedReason)}
+        />
     </Modal>
 {/if}
 

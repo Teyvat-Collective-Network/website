@@ -21,3 +21,9 @@
     {#if type !== "none"}<Icon icon={icons[type]} />{/if}
     <slot />
 </span>
+
+<style lang="scss">
+    span {
+        white-space: nowrap;
+    }
+</style>

@@ -215,6 +215,7 @@ span.mention {
     cursor: default;
     display: inline-flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     font-size: 90%;
     gap: 0.1em;
     margin: 2px;
@@ -225,6 +226,14 @@ span.mention {
 span.mention.with-icon {
     margin-top: -6.5px;
     top: 6.5px;
+}
+
+table span.mention.with-icon {
+    top: 4.75px;
+}
+
+table .row span.mention.with-icon {
+    top: 3.75px;
 }
 
 span.mention:hover::after {

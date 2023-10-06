@@ -79,7 +79,7 @@ export async function withAudit<T extends boolean>(message: string, fn: (reason:
     auditReason.set(undefined);
     modals.audit.set(true);
 
-    await new Promise((resolve, reject) => {
+    return await new Promise<string | null | undefined>((resolve, reject) => {
         setTimeout(() => {
             let first = true;
 

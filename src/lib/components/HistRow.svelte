@@ -68,8 +68,4 @@
         border-left: none;
         padding-left: 0.25em;
     }
-
-    #hist-row :global(span.mention) {
-        top: 4.75px;
-    }
 </style>
