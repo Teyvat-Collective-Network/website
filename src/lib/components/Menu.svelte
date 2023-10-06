@@ -157,6 +157,7 @@
                                     <a href="/records/membership-changes" class="t3"><Icon icon="history" /> Membership Changes</a>
                                     <a href="/records/observer-terms" class="t3"><Icon icon="view_timeline" /> Observer Terms</a>
                                     <a href="/records/observation-schedule" class="t3"><Icon icon="calendar_clock" /> Observation Schedule</a>
+                                    <a href="/records/election-history" class="t3"><Icon icon="how_to_reg" /> Election History</a>
                                 </div>
                             </Show>
                         {/if}
