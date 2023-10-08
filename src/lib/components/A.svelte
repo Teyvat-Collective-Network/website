@@ -14,5 +14,6 @@
     a {
         color: rgb(var(--text-accent));
         text-decoration: none;
+        white-space: nowrap;
     }
 </style>

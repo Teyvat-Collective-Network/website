@@ -5,9 +5,11 @@
     export let index: number;
     export let delete_last: boolean = false;
     export let table: boolean = false;
+
+    export let hide_del: boolean = false;
 </script>
 
-{#if !delete_last}
+{#if !delete_last && !hide_del}
     {#if table}
         <td>
             <ListButton bind:array bind:index del />
@@ -33,7 +35,7 @@
     <ListButton bind:array bind:index down />
 {/if}
 
-{#if delete_last}
+{#if delete_last && !hide_del}
     {#if table}
         <td>
             <ListButton bind:array bind:index del />

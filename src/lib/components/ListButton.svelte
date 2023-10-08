@@ -1,5 +1,6 @@
 <script lang="ts">
     import { swap, without } from "$lib/utils";
+    import A from "./A.svelte";
     import Icon from "./Icon.svelte";
 
     export let array: any[];
@@ -13,10 +14,7 @@
 </script>
 
 {#if del || index != (up ? 0 : array.length - 1)}
-    <button
-        class="tp row {del ? 'red-text' : 'text-accent'}"
-        on:click={() => (array = del ? without(array, index) : swap(array, index, index + (up ? -1 : 1)))}
-    >
+    <A class="tp row {del ? 'red-text' : 'text-accent'}" on:click={() => (array = del ? without(array, index) : swap(array, index, index + (up ? -1 : 1)))}>
         <Icon icon={del ? "delete" : up ? "expand_less" : "expand_more"} />
-    </button>
+    </A>
 {/if}
