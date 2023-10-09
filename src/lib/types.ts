@@ -118,3 +118,10 @@ export type PollResults = {
     tied: string[];
     scores: Record<string, number>;
 };
+
+export type Rolesync = {
+    roleToStaff: string[];
+    staffToRole: string[];
+    roleToApi: Record<string, string[]>;
+    apiToRole: Record<string, string[]>;
+};

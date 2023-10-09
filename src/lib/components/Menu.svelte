@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     function mapRoute(real: string): string {
-        for (const prefix of ["/info/other-bots", "/info/discord", "/admin/api-manager", "/docs"]) if (real.startsWith(prefix)) return prefix;
+        for (const prefix of ["/info/other-bots", "/info/discord", "/admin/api-manager", "/docs", "/manage"]) if (real.startsWith(prefix)) return prefix;
         return real;
     }
 </script>
@@ -31,7 +31,7 @@
             href = mapRoute(href) ?? href;
 
             selectall<HTMLAnchorElement>("#sidebar-contents a:not(.btn)").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
-            for (const id of ["info-pages", "staff-area", "miscellaneous", "records"])
+            for (const id of ["info-pages", "staff-area", "miscellaneous", "records", "admin"])
                 if (selectall<HTMLAnchorElement>(`#${id} a:not(.btn)`).some((e) => e.href === href)) openSections[id] = true;
         });
 
@@ -103,7 +103,7 @@
                     <a href="/info/partner-list" class="t3"><Icon icon="list" /> Partner List &amp; Autosync</a>
                     <a href="/info/banshares" class="t3"><Icon icon="cell_tower" /> Banshares</a>
                     <a href="/info/global" class="t3"><Icon icon="language" /> Global Chat</a>
-                    <a href="/info/staff-link" class="t3"><Icon icon="link" /> Staff Link</a>
+                    <a href="/info/rolesync" class="t3"><Icon icon="sync" /> Rolesync</a>
                     <a href="/info/other-bots" class="t3"><Icon icon="robot_2" /> Other Bots</a>
                 </div>
                 <a href="/info/discord" class="t2"><Icon icon="help" /> Discord Help</a>
@@ -135,15 +135,8 @@
                         {#if $user.council}
                             <a href="/vote" class="t2"><Icon icon="how_to_vote" /> Voting Center</a>
                         {/if}
-                        {#if $user.observer}
-                            <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
-                            <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
-                        {/if}
                         {#if $user.council}
                             <a href="/docs" class="t2"><Icon icon="description" /> Documents</a>
-                        {/if}
-                        {#if $user.observer}
-                            <a href="/admin/audit-logs" class="t2"><Icon icon="format_list_numbered" /> Audit Log</a>
                         {/if}
 
                         {#if $user.council}
@@ -163,6 +156,26 @@
                         {/if}
                     </div>
                 </Show>
+            {/if}
+
+            {#if $user.observer}
+                <a href={"javascript:void(0)"} class="btn t1" on:click={() => (openSections.admin = !openSections.admin)}>
+                    <Icon icon={openSections.admin ? "expand_more" : "chevron_right"} />
+                    Admin
+                </a>
+
+                <Show when={openSections.admin}>
+                    {#if $user.observer}
+                        <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
+                        <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
+                        <a href="/admin/audit-logs" class="t2"><Icon icon="format_list_numbered" /> Audit Log</a>
+                        <a href="/admin/monitor" class="t2"><Icon icon="monitor_heart" /> Monitor</a>
+                    {/if}
+                </Show>
+            {/if}
+
+            {#if $user.owner || $user.observer}
+                <a href="/manage" class="t1"><Icon icon="settings" /> Manage {$user.observer ? "Servers" : "Your Server"}</a>
             {/if}
 
             <a href={"javascript:void(0)"} class="btn t1" on:click={() => fetch(`/logout`, { method: "post" }).then(() => location.reload())}>

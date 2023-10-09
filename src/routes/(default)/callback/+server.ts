@@ -1,5 +1,5 @@
-import { DISCORD_ID, DISCORD_SECRET, PRIVATE_API } from "$env/static/private";
-import { PUBLIC_COOKIE_DOMAIN, PUBLIC_DOMAIN } from "$env/static/public";
+import { DISCORD_SECRET, PRIVATE_API } from "$env/static/private";
+import { PUBLIC_COOKIE_DOMAIN, PUBLIC_DISCORD_ID, PUBLIC_DOMAIN } from "$env/static/public";
 import { redirect, type RequestHandler } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async ({ cookies, fetch, url }) => {
@@ -11,7 +11,7 @@ export const GET: RequestHandler = async ({ cookies, fetch, url }) => {
     const t_req = await fetch(`https://discord.com/api/v10/oauth2/token`, {
         method: "post",
         body: new URLSearchParams({
-            client_id: DISCORD_ID,
+            client_id: PUBLIC_DISCORD_ID,
             client_secret: DISCORD_SECRET,
             code: url.searchParams.get("code")!,
             redirect_uri: `${PUBLIC_DOMAIN}/callback`,

@@ -10,6 +10,9 @@
 <div class="container">
     <Navigation last={["/info/constitution", "TCN Constitution"]}>
         <h1>Quickstart</h1>
+        <Callout style="info">
+            <p>We recommend that you <A to="/add-bot">add the TCN bot</A> to your server. It is not a requirement, but nearly all features depend on it.</p>
+        </Callout>
         <Linkable e="h2" id="required">Required</Linkable>
         <Linkable e="h3" id="partner-list">Partner List</Linkable>
         <p>
