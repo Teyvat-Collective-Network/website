@@ -19,3 +19,5 @@ export const modals = {
 export const auditRequired = writable<boolean>(false);
 export const auditMessage = writable<string>("");
 export const auditReason = writable<string | null | undefined>();
+
+export const tags = writable<Record<string, string | null>>({});

@@ -36,6 +36,10 @@
 <div role="none" class="overlay {open ? '' : 'closed'}" style="background-color: {overlay_color}" on:click={close} />
 
 <style lang="scss">
+    button {
+        white-space: nowrap;
+    }
+
     #content {
         min-width: fit-content;
     }

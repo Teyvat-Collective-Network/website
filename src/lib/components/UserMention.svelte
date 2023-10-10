@@ -6,4 +6,4 @@
     export let tag: string | null = null;
 </script>
 
-<Mention {id}><UserId {id} bind:tag /></Mention>
+<Mention type={id === "1".repeat(18) ? "system" : "user"} {id}><UserId {id} bind:tag /></Mention>

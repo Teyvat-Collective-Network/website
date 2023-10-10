@@ -1,9 +1,11 @@
 <script lang="ts" context="module">
     const icons = {
+        system: "dns",
         user: "alternate_email",
         text: "tag",
         guild: "domain",
         time: "schedule",
+        anon: "account_circle",
     };
 </script>
 
