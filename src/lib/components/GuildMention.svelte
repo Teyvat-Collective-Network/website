@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { PUBLIC_HUB } from "$env/static/public";
+    import { PUBLIC_HQ, PUBLIC_HUB } from "$env/static/public";
     import A from "./A.svelte";
     import Mention from "./Mention.svelte";
 
@@ -8,4 +8,4 @@
     export let name: string | null = null;
 </script>
 
-<A to="/guilds/{id}" external><Mention type="guild">{name ?? guildNames[id] ?? (id === PUBLIC_HUB ? "TCN Hub" : id)}</Mention></A>
+<A to="/guilds/{id}" external><Mention type="guild">{name ?? guildNames[id] ?? (id === PUBLIC_HQ ? "TCN HQ" : id === PUBLIC_HUB ? "TCN Hub" : id)}</Mention></A>

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { PUBLIC_HQ, PUBLIC_HUB } from "$env/static/public";
     import api from "$lib/api";
     import A from "$lib/components/A.svelte";
     import Callout from "$lib/components/Callout.svelte";
@@ -8,9 +9,11 @@
     import Icon from "$lib/components/Icon.svelte";
     import Loading from "$lib/components/Loading.svelte";
     import Show from "$lib/components/Show.svelte";
+    import ApiToRole from "$lib/components/manage/ApiToRole.svelte";
     import RoleAdd from "$lib/components/manage/RoleAdd.svelte";
     import { alerts, token } from "$lib/stores";
     import type { Guild, Rolesync } from "$lib/types";
+    import { without } from "$lib/utils";
     import { onMount } from "svelte";
 
     const { id } = $page.params;
@@ -19,10 +22,25 @@
     const roles = $page.data.roles as Record<string, { name: string; color: number; manageable: boolean }>;
 
     let guild: Guild;
+    let guilds: Guild[];
     let rolesync: Rolesync;
 
     onMount(async () => {
-        guild = await api($token, `GET /guilds/${id}`).catch(alert);
+        if (id === PUBLIC_HQ || id === PUBLIC_HUB)
+            guild = {
+                id,
+                owner: "",
+                advisor: null,
+                voter: "",
+                delegated: true,
+                name: id === PUBLIC_HQ ? "TCN HQ" : "TCN Hub",
+                invite: "",
+                users: {},
+                mascot: "",
+            };
+        else guild = await api($token, `GET /guilds/${id}`).catch(alert);
+
+        guilds = await api($token, `GET /guilds`).catch(alert);
         rolesync = await api($token, `GET /guilds/${id}/rolesync`).catch(alert);
     });
 
@@ -48,14 +66,6 @@
 
         rolesync.roleToApi[role] = [...rolesync.roleToApi[role], add];
     }
-
-    function addApiToRole() {
-        const role = prompt("Enter the API role for which to add synchronizations.");
-        if (!role) return;
-        if (rolesync.apiToRole[role]) return alert("That API role is already on the list.");
-
-        rolesync.apiToRole[role] = [];
-    }
 </script>
 
 <h1>
@@ -72,95 +82,83 @@
             </Callout>
         {:else}
             <Loading done={rolesync}>
-                {#each keys as key, index}
-                    {@const array = rolesync[key]}
-                    {@const openKey = `addrole-first-${index}`}
-                    <h5 class="short row gap-1 sub-header">{index === 0 ? "Role" : "Staff"} <Icon icon="trending_flat" /> {index === 0 ? "Staff" : "Role"}</h5>
-                    <p class="text-2">
-                        {index === 0
-                            ? "Users with any of these roles will automatically be assigned as staff."
-                            : "Staff will automatically be assigned all of these roles. Only roles that the bot can manage can be added."}
-                    </p>
+                {#if id !== PUBLIC_HQ && id !== PUBLIC_HUB}
+                    {#each keys as key, index}
+                        {@const array = rolesync[key]}
+                        {@const openKey = `addrole-first-${index}`}
+                        <h5 class="short row gap-1 sub-header">
+                            {index === 0 ? "Role" : "Staff"}
+                            <Icon icon="trending_flat" />
+                            {index === 0 ? "Staff" : "Role"}
+                        </h5>
+                        <p class="text-2">
+                            {index === 0
+                                ? "Users with any of these roles will automatically be assigned as staff."
+                                : "Staff will automatically be assigned all of these roles. Only roles that the bot can manage can be added."}
+                        </p>
+                        <div class="col no-center gap-1">
+                            {#each array as role}
+                                <div class="row gap-1">
+                                    <A class="row red-text" on:click={() => (rolesync[key] = array.filter((x) => x !== role))}><Icon icon="delete" /></A>
+                                    <DiscordRole id={role} name={roles[role]?.name} color={roles[role]?.color ?? 0} />
+                                </div>
+                            {/each}
+                            <span class="row gap-1">
+                                <A on:click={() => (open[openKey] = !open[openKey])}>{open[openKey] ? "collapse" : "add roles"}</A>
+                                {#if open[openKey]}
+                                    <RoleAdd manageableOnly={index === 1} bind:array={rolesync[key]} {roles} />
+                                {/if}
+                            </span>
+                        </div>
+                    {/each}
+                    <h5 class="short row gap-1 sub-header">Role <Icon icon="trending_flat" /> API</h5>
+                    <p class="text-2">For each Discord role below, users with that role will automatically be assigned the API roles listed following it.</p>
                     <div class="col no-center gap-1">
-                        {#each array as role}
+                        {#each Object.entries(rolesync.roleToApi) as [role, apiRoles]}
                             <div class="row gap-1">
-                                <A class="row red-text" on:click={() => (rolesync[key] = array.filter((x) => x !== role))}><Icon icon="delete" /></A>
+                                <A
+                                    class="row red-text"
+                                    on:click={() => (rolesync.roleToApi = Object.fromEntries(Object.entries(rolesync.roleToApi).filter(([x]) => x !== role)))}
+                                >
+                                    <Icon icon="delete" />
+                                </A>
                                 <DiscordRole id={role} name={roles[role]?.name} color={roles[role]?.color ?? 0} />
+                                <Icon icon="trending_flat" />
+                                {#each apiRoles as apiRole}
+                                    <button
+                                        class="void row"
+                                        on:click={() => (rolesync.roleToApi[role] = apiRoles.filter((x) => x !== apiRole))}
+                                        style="padding: 0 5px; outline: 2px solid rgb(var(--red-text))"
+                                    >
+                                        <Icon icon="clear" />
+                                        {apiRole}
+                                    </button>
+                                {/each}
+                                <button on:click={() => addApiRole(role)}><Icon icon="add" /></button>
                             </div>
                         {/each}
                         <span class="row gap-1">
-                            <A on:click={() => (open[openKey] = !open[openKey])}>{open[openKey] ? "collapse" : "add roles"}</A>
-                            {#if open[openKey]}
-                                <RoleAdd manageableOnly={index === 1} bind:array={rolesync[key]} {roles} />
+                            <A on:click={() => (open.addRoleToApi = !open.addRoleToApi)}>{open.addRoleToApi ? "collapse" : "add roles"}</A>
+                            {#if open.addRoleToApi}
+                                <RoleAdd array={Object.keys(rolesync.roleToApi)} {roles} on:add={({ detail }) => (rolesync.roleToApi[detail] = [])} />
                             {/if}
                         </span>
                     </div>
-                {/each}
-                <h5 class="short row gap-1 sub-header">Role <Icon icon="trending_flat" /> API</h5>
-                <p class="text-2">For each Discord role below, users with that role will automatically be assigned the API roles listed following it.</p>
-                <div class="col no-center gap-1">
-                    {#each Object.entries(rolesync.roleToApi) as [role, apiRoles]}
-                        <div class="row gap-1">
-                            <A
-                                class="row red-text"
-                                on:click={() => (rolesync.roleToApi = Object.fromEntries(Object.entries(rolesync.roleToApi).filter(([x]) => x !== role)))}
-                            >
-                                <Icon icon="delete" />
-                            </A>
-                            <DiscordRole id={role} name={roles[role]?.name} color={roles[role]?.color ?? 0} />
-                            <Icon icon="trending_flat" />
-                            {#each apiRoles as apiRole}
-                                <button
-                                    class="void row"
-                                    on:click={() => (rolesync.roleToApi[role] = apiRoles.filter((x) => x !== apiRole))}
-                                    style="padding: 0 5px; outline: 2px solid rgb(var(--red-text))"
-                                >
-                                    <Icon icon="clear" />
-                                    {apiRole}
-                                </button>
-                            {/each}
-                            <button on:click={() => addApiRole(role)}><Icon icon="add" /></button>
-                        </div>
-                    {/each}
-                    <span class="row gap-1">
-                        <A on:click={() => (open.addRoleToApi = !open.addRoleToApi)}>{open.addRoleToApi ? "collapse" : "add roles"}</A>
-                        {#if open.addRoleToApi}
-                            <RoleAdd array={Object.keys(rolesync.roleToApi)} {roles} on:add={({ detail }) => (rolesync.roleToApi[detail] = [])} />
-                        {/if}
-                    </span>
-                </div>
+                {/if}
                 <h5 class="short row gap-1 sub-header">API <Icon icon="trending_flat" /> Role</h5>
                 <p class="text-2">
-                    For each API role below, users with that role (either globally or within this guild) will automatically be assigned the Discord roles listed
-                    following it. Only roles that the bot can manage can be added.
+                    For each API condition below, users matching the condition will automatically be assigned the Discord roles listed following it. Only roles
+                    that the bot can manage can be added.
                 </p>
                 <div class="col no-center gap-1">
-                    {#each Object.entries(rolesync.apiToRole) as [apiRole, roleList]}
-                        {@const openKey = `addrole-apitorole-${apiRole}`}
-                        <div class="row gap-1">
-                            <A
-                                class="row red-text"
-                                on:click={() => (rolesync.apiToRole = Object.fromEntries(Object.entries(rolesync.apiToRole).filter(([x]) => x !== apiRole)))}
-                            >
-                                <Icon icon="delete" />
-                            </A>
-                            <span><code>{apiRole}</code></span>
-                            <Icon icon="trending_flat" />
-                            {#each roleList as role}
-                                <button class="void" on:click={() => (rolesync.apiToRole[apiRole] = rolesync.apiToRole[apiRole].filter((x) => x !== role))}>
-                                    <DiscordRole icon="clear" id={role} name={roles[role]?.name} color={roles[role]?.color ?? 0} />
-                                </button>
-                            {/each}
-                            <button on:click={() => (open[openKey] = !open[openKey])}>
-                                <Icon icon={open[openKey] ? "keyboard_double_arrow_left" : "add"} />
-                            </button>
-                            {#if open[openKey]}
-                                <RoleAdd manageableOnly bind:array={rolesync.apiToRole[apiRole]} {roles} />
-                            {/if}
-                        </div>
+                    {#each rolesync.apiToRole as entry, index}
+                        <ApiToRole bind:entry {guilds}>
+                            <A class="red-text" on:click={() => (rolesync.apiToRole = without(rolesync.apiToRole, index))}>delete condition</A>
+                        </ApiToRole>
                     {/each}
-                    <A on:click={addApiToRole}>add API role</A>
+                    <A on:click={() => (rolesync.apiToRole = [...rolesync.apiToRole, { type: "position", value: "observer", roles: [] }])}>add API condition</A>
                 </div>
+                <br />
                 <button class="row" on:click={saveRolesync}><Icon icon="save" /> Save</button>
             </Loading>
         {/if}

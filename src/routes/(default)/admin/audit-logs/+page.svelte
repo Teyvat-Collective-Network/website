@@ -35,10 +35,15 @@
         "guilds/delete": { title: "Guild deleted", icon: "delete_forever" },
         "guilds/edit": { title: "Guild edited", icon: "edit" },
         "observation-records/edit": { title: "Observation record edited", icon: "edit" },
+        "polls/create": { title: "Poll created", icon: "add_box" },
+        "polls/delete": { title: "Poll deleted", icon: "delete_forever" },
+        "polls/edit": { title: "Poll edited", icon: "edit" },
+        "rolesync/edit": { title: "Rolesync configuration edited", icon: "edit" },
         "users/demote": { title: "User demoted from observer", icon: "remove_moderator" },
         "users/promote": { title: "User promoted to observer", icon: "add_moderator" },
         "users/roles/add": { title: "User role added", icon: "code" },
         "users/roles/remove": { title: "User role removed", icon: "code_off" },
+        "users/roles/set": { title: "User roles set", icon: "edit" },
         "users/staff/add": { title: "User added to staff team", icon: "person_add" },
         "users/staff/remove": { title: "User removed from staff team", icon: "person_remove" },
         "users/term/refresh": { title: "User term refreshed / re-elected", icon: "refresh" },
@@ -69,6 +74,7 @@
     import type { AuditLogEntry, Guild } from "$lib/types";
     import { highlight } from "$lib/utils";
     import { onMount } from "svelte";
+    import yaml from "yaml";
 
     let entries: AuditLogEntry[] = [];
     const limit = 50;
@@ -127,6 +133,25 @@
                 .filter(([key]) => key.startsWith("attributes/"))
                 .map(([key, value]) => [key.slice(11), value]),
         );
+    }
+
+    function showDiff(remove?: string[], add?: string[]) {
+        return `<pre><code class="language-diff">${[...(remove ?? []).map((x) => `- ${x}`), ...(add ?? []).map((x) => `+ ${x}`)].join("\n")}</code></pre>`;
+    }
+
+    function calcDiff(before: string[], after: string[]) {
+        return showDiff(
+            before.filter((x) => !after.includes(x)),
+            after.filter((x) => !before.includes(x)),
+        );
+    }
+
+    function flatRoleToApi(map: Record<string, string[]>) {
+        return Object.entries(map).flatMap(([key, roles]) => roles.map((x) => `${key} => ${x}`));
+    }
+
+    function flatApiToRole(entries: { type: string; value: string; guild?: string; roles: string[] }[]) {
+        return entries.map((x) => `${x.type} ${x.value} ${x.guild ? `in ${x.guild} ` : ""}=> ${x.roles.join(" ")}`);
     }
 </script>
 
@@ -392,6 +417,62 @@
                             {/if}
                             <Changelog changes={entry.data.changes} hide={["observer", "start", "end"]} code={["hidden", "status"]} />
                         </ul>
+                    {:else if entry.action === "polls/create"}
+                        created a poll:
+                        <pre><code class="language-yaml">{yaml.stringify(entry.data)}</code></pre>
+                    {:else if entry.action === "polls/delete"}
+                        deleted a poll:
+                        <pre><code class="language-yaml">{yaml.stringify(entry.data)}</code></pre>
+                    {:else if entry.action === "polls/edit"}
+                        edited <A to="/vote/edit/{entry.data.id}">poll {entry.data.id}</A>:
+                        <ul>
+                            <Changelog
+                                changes={entry.data.changes}
+                                code={["duration", "dm", "live", "restricted", "quorum", "closed", "preinduct", "wave", "seats", "min", "max"]}
+                                hide={["close", "candidates", "options"]}
+                                names={{
+                                    duration: "Duration (Hours)",
+                                    dm: "DM Reminder",
+                                    live: "Show Live Results",
+                                    restricted: "Restrict to Voters",
+                                    preinduct: "Pre-Induct",
+                                    min: "Min # Options",
+                                    max: "Max # Options",
+                                }}
+                            />
+                            {#if entry.data.changes.close}
+                                <li>
+                                    <b>Close:</b>
+                                    <span><code><Timestamp ms timestamp={entry.data.changes.close[0]} /></code></span>
+                                    &rightarrow;
+                                    <span><code><Timestamp ms timestamp={entry.data.changes.close[1]} /></code></span>
+                                </li>
+                            {/if}
+                            {#each ["candidates", "options"] as key}
+                                {@const changes = entry.data.changes[key]}
+                                {#if changes && JSON.stringify(changes[0]) !== JSON.stringify(changes[1])}
+                                    <li><b>{key[0].toUpperCase()}{key.slice(1)}:</b> {@html calcDiff(changes[0], changes[1])}</li>
+                                {/if}
+                            {/each}
+                        </ul>
+                    {:else if entry.action === "rolesync/edit"}
+                        edited the rolesync configuration for <GuildMention id={entry.data.id} {guildNames} />
+                        {#if JSON.stringify(entry.data.before.roleToStaff) !== JSON.stringify(entry.data.after.roleToStaff)}
+                            <h5 class="short row gap-1">Role <Icon icon="trending_flat" /> Staff</h5>
+                            {@html calcDiff(entry.data.before.roleToStaff, entry.data.after.roleToStaff)}
+                        {/if}
+                        {#if JSON.stringify(entry.data.before.staffToRole) !== JSON.stringify(entry.data.after.staffToRole)}
+                            <h5 class="short row gap-1">Staff <Icon icon="trending_flat" /> Role</h5>
+                            {@html calcDiff(entry.data.before.staffToRole, entry.data.after.staffToRole)}
+                        {/if}
+                        {#if JSON.stringify(entry.data.before.roleToApi) !== JSON.stringify(entry.data.after.roleToApi)}
+                            <h5 class="short row gap-1">Role <Icon icon="trending_flat" /> API</h5>
+                            {@html calcDiff(flatRoleToApi(entry.data.before.roleToApi), flatRoleToApi(entry.data.after.roleToApi))}
+                        {/if}
+                        {#if JSON.stringify(entry.data.before.apiToRole) !== JSON.stringify(entry.data.after.apiToRole)}
+                            <h5 class="short row gap-1">API <Icon icon="trending_flat" /> Role</h5>
+                            {@html calcDiff(flatApiToRole(entry.data.before.apiToRole), flatApiToRole(entry.data.after.apiToRole))}
+                        {/if}
                     {:else if entry.action === "users/demote"}
                         demoted <UserMention id={entry.data.id} /> from the observer team.
                     {:else if entry.action === "users/promote"}
@@ -402,6 +483,9 @@
                     {:else if entry.action === "users/roles/remove"}
                         removed <code>{entry.data.role}</code> from <UserMention id={entry.data.id} />{#if entry.data.guild}
                             &nbsp;in <GuildMention id={entry.data.guild} {guildNames} />{/if}.
+                    {:else if entry.action === "users/roles/set"}
+                        batch-edited <UserMention id={entry.data.id} />'s roles in <GuildMention id={entry.data.guild} {guildNames} />:
+                        {@html showDiff(entry.data.remove, entry.data.add)}
                     {:else if entry.action === "users/staff/add"}
                         added <UserMention id={entry.data.id} /> to the staff team of <GuildMention id={entry.data.guild} {guildNames} />.
                     {:else if entry.action === "users/staff/remove"}
