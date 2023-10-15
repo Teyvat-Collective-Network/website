@@ -7,6 +7,7 @@
     import Mention from "./Mention.svelte";
     import Timestamp from "./Timestamp.svelte";
 
+    export let show: boolean;
     export let label: string;
     export let entry: AuditLogEntry;
     export let guilds: Set<string> | null;
@@ -22,7 +23,7 @@
 </script>
 
 {#if !entry.hidden || $user?.observer}
-    <tr id="hist-row" class={entry.hidden ? "red-text" : ""}>
+    <tr id="hist-row" class={entry.hidden ? "red-text" : ""} style={show ? "" : "display: none"}>
         {#if $user?.observer}
             <td>
                 <button class="tp {entry.hidden ? 'green-text' : 'red-text'}" on:click={toggleHide}>

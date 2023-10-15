@@ -38,14 +38,35 @@
             loading = false;
         }
     }
+
+    let guild = "";
+    let user = "";
+
+    function match(user: string, ...x: string[]) {
+        return !user || x.includes(user);
+    }
 </script>
 
 <h1>Membership Changes</h1>
+<p class="gap-1" style="display: grid; grid-template-columns: auto auto 1fr">
+    <b>Filter by Guild ID:</b>
+    <span><input type="text" bind:value={guild} /></span>
+    <span />
+    <b>Filter by User ID:</b>
+    <span><input type="text" bind:value={user} /></span>
+    <span />
+</p>
 <div class="w-100 hscroll">
     <table id="membership-changes" class="w-100">
         {#each entries as entry}
+            {@const gm = !guild || entry.data.id === guild}
             {#if entry.action === "guilds/create" || entry.action == "guilds/delete"}
-                <HistRow label={entry.action === "guilds/create" ? "Induct" : "Left"} {entry} {guilds}>
+                <HistRow
+                    show={gm && match(user, entry.data.owner, entry.data.advisor)}
+                    label={entry.action === "guilds/create" ? "Induct" : "Left"}
+                    {entry}
+                    {guilds}
+                >
                     <td>Owner</td>
                     <td><UserMention id={entry.data.owner} /></td>
                     <td>Advisor</td>
@@ -56,7 +77,7 @@
             {:else if entry.action === "guilds/edit"}
                 {@const changes = entry.data.changes}
                 {#if changes.owner && changes.advisor && changes.owner[0] === changes.advisor[1] && changes.owner[1] === changes.advisor[0]}
-                    <HistRow label="Switch Owner and Advisor" {entry} {guilds}>
+                    <HistRow show={gm && match(user, ...changes.owner)} label="Switch Owner and Advisor" {entry} {guilds}>
                         <td>Owner &rightarrow; Advisor</td>
                         <td><UserMention id={changes.owner[0]} /></td>
                         <td>Advisor &rightarrow; Owner</td>
@@ -64,7 +85,7 @@
                     </HistRow>
                 {:else}
                     {#if changes.owner}
-                        <HistRow label="Transfer Ownership" {entry} {guilds}>
+                        <HistRow show={gm && match(user, ...changes.owner)} label="Transfer Ownership" {entry} {guilds}>
                             <td>From</td>
                             <td><UserMention id={changes.owner[0]} /></td>
                             <td>To</td>
@@ -74,14 +95,14 @@
                     {#if changes.advisor}
                         {#if changes.advisor[0]}
                             {#if changes.advisor[1]}
-                                <HistRow label="Switch Advisor" {entry} {guilds}>
+                                <HistRow show={gm && match(user, ...changes.advisor)} label="Switch Advisor" {entry} {guilds}>
                                     <td>From</td>
                                     <td><UserMention id={changes.advisor[0]} /></td>
                                     <td>To</td>
                                     <td><UserMention id={changes.advisor[1]} /></td>
                                 </HistRow>
                             {:else}
-                                <HistRow label="Advisor Removed" {entry} {guilds}>
+                                <HistRow show={gm && match(user, ...changes.advisor)} label="Advisor Removed" {entry} {guilds}>
                                     <td>Advisor</td>
                                     <td><UserMention id={changes.advisor[0]} /></td>
                                     <td />
@@ -89,7 +110,7 @@
                                 </HistRow>
                             {/if}
                         {:else}
-                            <HistRow label="Add Advisor" {entry} {guilds}>
+                            <HistRow show={gm && match(user, ...changes.advisor)} label="Add Advisor" {entry} {guilds}>
                                 <td>Advisor</td>
                                 <td><UserMention id={changes.advisor[1]} /></td>
                                 <td />
@@ -99,7 +120,7 @@
                     {/if}
                 {/if}
                 {#if changes.delegated}
-                    <HistRow label="Owner {changes.delegated[0] ? 'Reclaims' : 'Delegates'} Vote" {entry} {guilds}>
+                    <HistRow show={gm && match(user, ...changes.voter)} label="Owner {changes.delegated[0] ? 'Reclaims' : 'Delegates'} Vote" {entry} {guilds}>
                         <td>From</td>
                         <td><UserMention id={changes.voter[0]} /></td>
                         <td>To</td>
@@ -108,6 +129,7 @@
                 {/if}
             {:else if entry.action === "users/promote" || entry.action === "users/demote" || entry.action === "users/term/refresh"}
                 <HistRow
+                    show={!guild && match(user, entry.data.id)}
                     label={entry.action === "users/promote" ? "Promoted" : entry.action === "users/term/refresh" ? "Re-Elected" : "Demoted"}
                     {entry}
                     guilds={null}
