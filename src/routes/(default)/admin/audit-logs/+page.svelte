@@ -31,6 +31,7 @@
         "events/delete/other": { title: "Event deleted by observer", icon: "event_busy" },
         "events/delete/self": { title: "Event deleted by self", icon: "event_busy" },
         "events/edit": { title: "Event edited", icon: "edit_calendar" },
+        "global/filter/delete": { title: "Global Filter Item Deleted", icon: "delete_forever" },
         "guilds/create": { title: "Guild created", icon: "add_box" },
         "guilds/delete": { title: "Guild deleted", icon: "delete_forever" },
         "guilds/edit": { title: "Guild edited", icon: "edit" },
@@ -353,6 +354,8 @@
                                 </Modal>
                             {/if}
                         </ul>
+                    {:else if entry.action === "global/filter/delete"}
+                        deleted global filter item #{entry.data.id}: <code>/{entry.data.match}/</code>.
                     {:else if entry.action === "guilds/create"}
                         created <GuildMention id={entry.data.id} name={entry.data.name} />:
                         <GuildInfo {entry} />

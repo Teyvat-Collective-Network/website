@@ -170,6 +170,7 @@
                         <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
                         <a href="/admin/audit-logs" class="t2"><Icon icon="format_list_numbered" /> Audit Log</a>
                         <a href="/admin/monitor" class="t2"><Icon icon="monitor_heart" /> Monitor</a>
+                        <a href="/admin/global" class="t2"><Icon icon="public" /> Global Chat</a>
                     {/if}
                 </Show>
             {/if}
