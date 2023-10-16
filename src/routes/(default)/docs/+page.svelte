@@ -19,6 +19,7 @@
     TCN Documents are available to TCN council members, allowing them to create markdown documents with support for many Discord features such as mentioning
     users.
 </p>
+<p><A to="/docs/documentation">Documentation</A></p>
 <h3>Your Documents</h3>
 <Loading done={docs}>
     <ul>

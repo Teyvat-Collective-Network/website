@@ -36,7 +36,7 @@ export async function mdToHtml(content: string, reader?: string): Promise<string
                             `<span class="mention with-icon" data-id="${id}"><span class="material-symbols-outlined">alternate_email</span> <user-id id="${id}" /></span>`,
                     )
                     .replace(
-                        /\[([1-9][0-9]{16,19})?\$([^\]]+)\]/g,
+                        /\[([1-9][0-9]{16,19})?%([^\]]+)\]/g,
                         (_, id, name) =>
                             `<span class="mention with-icon" data-id="${
                                 id || ""
