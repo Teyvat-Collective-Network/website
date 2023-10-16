@@ -130,22 +130,12 @@ A network of high-quality Genshin Impact character-mains style servers that focu
                     external>this link</A
                 >.
             </li>
+            <li>Run <code>/autosync channel set</code> to set up an embed instance in a specific channel.</li>
+            <li>Run <code>/autosync webhook set</code> to set up an embed instance using a webhook (this overrides the <b>channel</b> option).</li>
+            <li>Run <code>/autosync mode set</code> if you would like the embed to be re-posted each time instead of edited when there is an update.</li>
             <li>
-                Run <code>/partnerlist post</code> to set up an embed instance:
-                <ul>
-                    <li>Specify <b>channel</b> to change where it posts &mdash; by default, it will post in the channel in which you run the command.</li>
-                    <li>
-                        Set <b>repost</b> to <code>true</code> if you would like the embed to be re-posted each time instead of edited when there is an update.
-                    </li>
-                    <li>
-                        Set <b>webhook</b> if you would like the embed to be posted via a webhook instead of by the bot itself. If this option is set,
-                        <b>channel</b> is ignored.
-                    </li>
-                </ul>
-            </li>
-            <li>
-                To change the format (template) of the embed, use <code>/partnerlist edit</code>. For help with using this, ask us in
-                <Mention type="text">dev-chat</Mention> in HQ or the TCN Hub.
+                To change the format (template) of the embed, go to <b>Manage Servers</b> on the dashboard (in the left navigation menu &mdash; you need to be
+                logged in). For help with using this, ask us in <Mention type="text">dev-chat</Mention> in HQ or the TCN Hub.
             </li>
         </ol>
     </Navigation>
