@@ -103,7 +103,6 @@
                     <a href="/info/partner-list" class="t3"><Icon icon="list" /> Partner List &amp; Autosync</a>
                     <a href="/info/banshares" class="t3"><Icon icon="cell_tower" /> Banshares</a>
                     <a href="/info/global" class="t3"><Icon icon="language" /> Global Chat</a>
-                    <a href="/info/rolesync" class="t3"><Icon icon="sync" /> Rolesync</a>
                     <a href="/info/other-bots" class="t3"><Icon icon="robot_2" /> Other Bots</a>
                 </div>
                 <a href="/info/discord" class="t2"><Icon icon="help" /> Discord Help</a>
