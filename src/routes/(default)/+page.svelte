@@ -7,7 +7,7 @@
     let guilds = -1;
 
     onMount(async () => {
-        const stats = await api($token, "GET /stats").catch();
+        const stats = await api($token, "GET /stats").catch(() => {});
         guilds = stats?.guilds ?? -1;
     });
 </script>
