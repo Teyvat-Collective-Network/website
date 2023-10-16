@@ -85,7 +85,7 @@
         <p>
             Use <code>/global ban</code> to ban a user from the current global channel. This makes the bot stop relaying messages from that user across all
             servers. The bot will also automatically delete any messages they send in any connected channels. Set <code>local: true</code> to just ban them from
-            your instance of the channel. Only global mods may ban globally, but you can submit a ban request using <code>/global request-ban</code>.
+            your instance of the channel. Only global mods may ban globally, but you can submit a ban request through TCN Hub modmail.
         </p>
         <p>To use this command, you must have the <b>Ban Members</b> permission (to local ban) or be a designated global chat mod (to global ban).</p>
         <p>
