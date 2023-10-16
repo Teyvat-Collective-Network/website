@@ -31,7 +31,7 @@
                 This is the official public server for the TCN, where you can contact observers and other server staff and ask questions or give feedback about
                 the TCN.
             </p>
-            <p><A to="https://discord.gg/FG2wpbywSx">Join the Hub!</A></p>
+            <p><A to="https://discord.gg/FG2wpbywSx" external>Join the Hub!</A></p>
             <hr />
 
             <ITitle e="h3" icon="high_quality">HQ</ITitle>
