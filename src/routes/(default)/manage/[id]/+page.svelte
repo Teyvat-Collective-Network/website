@@ -9,6 +9,7 @@
     import Icon from "$lib/components/Icon.svelte";
     import Loading from "$lib/components/Loading.svelte";
     import Show from "$lib/components/Show.svelte";
+    import Textarea from "$lib/components/Textarea.svelte";
     import ApiToRole from "$lib/components/manage/ApiToRole.svelte";
     import RoleAdd from "$lib/components/manage/RoleAdd.svelte";
     import { alerts, token } from "$lib/stores";
@@ -24,6 +25,7 @@
     let guild: Guild;
     let guilds: Guild[];
     let rolesync: Rolesync;
+    let autosync: { template: string };
 
     onMount(async () => {
         if (id === PUBLIC_HQ || id === PUBLIC_HUB)
@@ -42,7 +44,18 @@
 
         guilds = await api($token, `GET /guilds`).catch(alert);
         rolesync = await api($token, `GET /guilds/${id}/rolesync`).catch(alert);
+        autosync = await api($token, `GET /autosync/${id}`).catch(alert);
     });
+
+    async function saveAutosync() {
+        try {
+            await api($token, `PATCH /autosync/${id}`, { template: autosync.template });
+            save.update((x) => x + 1);
+            setTimeout(() => save.update((x) => x - 1), 1500);
+        } catch (error) {
+            alert(error);
+        }
+    }
 
     const open: Record<string, boolean> = { rolesync: true };
 
@@ -71,6 +84,21 @@
 <h1>
     Manage {#if guild}{guild.name}{:else}<span class="text-2">{id}</span>{/if}
 </h1>
+<div class="panel">
+    <h3 class="short category-header">Autosync <Expand bind:open={open.autosync} /></h3>
+    <Show when={open.autosync}>
+        {#if Object.keys(roles).length === 0}
+            <Callout style="red">
+                <p>Please <A to="/add-bot" external>add the bot</A> to this server to use autosync.</p>
+            </Callout>
+        {:else}
+            <Loading done={autosync}>
+                <Textarea class="bg-1" bind:value={autosync.template} rows={32} />
+                <button class="row" on:click={saveAutosync}><Icon icon="save" /> Save</button>
+            </Loading>
+        {/if}
+    </Show>
+</div>
 <div class="panel">
     <h3 class="short category-header">Rolesync <Expand bind:open={open.rolesync} /></h3>
     <Show when={open.rolesync}>
