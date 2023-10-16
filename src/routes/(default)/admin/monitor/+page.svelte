@@ -129,7 +129,7 @@
                                             <code>{method} {path}</code>
                                         </p>
                                         <b>Token (public component):</b>
-                                        <pre><code>{token}</code></pre>
+                                        <pre class="hscroll"><code>{token.slice(0, 16)}...{token.slice(-16)}</code></pre>
                                         <b>Request Body:</b>
                                         <pre><code>{JSON.stringify(body, undefined, 4)}</code></pre>
                                     </Modal>
