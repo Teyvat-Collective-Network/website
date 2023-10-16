@@ -24,7 +24,6 @@
 
     const results: Record<number, PollResults> = {};
     const votes: Record<number, PollVote | null> = {};
-    let show = false;
 
     onMount(async () => {
         try {
@@ -44,12 +43,13 @@
 
                         results[id] = await api($token, `GET /polls/${id}/results`);
 
-                        if (!polls.find((x) => x.id === id)!.restricted || $user!.voter)
+                        const poll = polls.find((x) => x.id === id)!;
+                        if (!poll.restricted || $user!.voter)
                             try {
                                 votes[id] = await api($token, `GET /polls/${id}/vote`);
                             } catch {
                                 votes[id] = null;
-                                open[id] = true;
+                                open[id] = !poll.closed;
                             }
                     }
             });
@@ -71,6 +71,7 @@
 <h1>Voting Center</h1>
 {#if $user?.observer}
     <LinkButton to="/vote/edit/new">Create Vote</LinkButton>
+    <LinkButton to="/vote/records">Vote Records</LinkButton>
 {/if}
 <br /><br />
 <Loading {done}>

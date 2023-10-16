@@ -75,10 +75,6 @@ export type ObservationRecord = {
 export type ElectionHistoryRecord = { id: string; status: string; rerunning: boolean };
 
 export type Poll = {
-    id: number;
-    message: string;
-    close: number;
-    closed: boolean;
     duration: number;
     dm: boolean;
     live: boolean;
@@ -90,6 +86,8 @@ export type Poll = {
     | { mode: "election"; wave: number; seats: number; candidates: string[] }
     | { mode: "selection"; question: string; min: number; max: number; options: string[] }
 );
+
+export type PollResponse = Poll & { id: number; message: string; close: number; closed: boolean };
 
 export type PollVote = {
     poll: number;

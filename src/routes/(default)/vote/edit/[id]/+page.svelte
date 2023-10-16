@@ -94,7 +94,7 @@
                 leave = true;
                 goto(`/vote/edit/${id}`);
             } else {
-                await api($token, `PUT /polls/${$page.params.id}`, { id: +$page.params.id, ...poll, message: undefined });
+                await api($token, `PUT /polls/${$page.params.id}`, { ...poll });
                 saveStore.update((x) => x + 1);
                 setTimeout(() => saveStore.update((x) => x - 1), 1500);
             }
