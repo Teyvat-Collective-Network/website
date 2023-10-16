@@ -4,16 +4,16 @@
     import Invite from "$lib/components/Invite.svelte";
     import Linkable from "$lib/components/Linkable.svelte";
     import Loading from "$lib/components/Loading.svelte";
+    import Mention from "$lib/components/Mention.svelte";
+    import UserId from "$lib/components/UserId.svelte";
     import { token } from "$lib/stores";
     import type { User } from "$lib/types";
     import { onMount } from "svelte";
 
-    let observers: User[] = null!;
+    let observers: User[];
 
     onMount(async () => {
-        const users = (await api($token, `GET /users`)).filter((user: User) => user.observer);
-        for (const user of users) user.tag = await (await fetch(`/api/tag/${user.id}`)).text();
-        observers = users;
+        observers = (await api($token, `GET /users`)).filter((user: User) => user.observer);
     });
 </script>
 
@@ -26,7 +26,7 @@
     <Loading done={observers}>
         <ul>
             {#each observers as user}
-                <li><A to="/user/{user.id}">{user.tag}</A> &mdash; <code>{user.id}</code></li>
+                <li><A to="/user/{user.id}"><Mention><UserId id={user.id} /></Mention></A> &mdash; <code>{user.id}</code></li>
             {/each}
         </ul>
     </Loading>
