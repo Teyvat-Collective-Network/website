@@ -177,7 +177,7 @@
                     </td>
                     {#each timeValues as [key, show]}
                         <td>
-                            {#if show}
+                            {#if show === "showStart" ? showStart : showEnd}
                                 <span class="row gap-1 no-wrap">
                                     {#if entry[key] || (key === "end" && entry.start)}
                                         <Mention type="time">
