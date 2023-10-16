@@ -2,8 +2,8 @@
     export let src: string;
     export let alt: string;
 
-    export let width: string = "";
-    export let height: string = "";
+    export let width: number | null = null;
+    export let height: number | null = null;
 
     export let style: string = "";
 

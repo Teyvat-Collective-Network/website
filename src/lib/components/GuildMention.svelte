@@ -6,6 +6,9 @@
     export let id: string;
     export let guildNames: Record<string, string> = {};
     export let name: string | null = null;
+    export let openInTab: boolean = false;
 </script>
 
-<A to="/guilds/{id}" external><Mention type="guild">{name ?? guildNames[id] ?? (id === PUBLIC_HQ ? "TCN HQ" : id === PUBLIC_HUB ? "TCN Hub" : id)}</Mention></A>
+<A to="/server/{id}" external={!openInTab}>
+    <Mention type="guild">{name ?? guildNames[id] ?? (id === PUBLIC_HQ ? "TCN HQ" : id === PUBLIC_HUB ? "TCN Hub" : id)}</Mention>
+</A>
