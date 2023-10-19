@@ -344,9 +344,7 @@
         <li>Votes must be open for at least 48 hours and a DM or ping reminder must be sent at least 24 hours before the vote ends.</li>
         <li>If the voter turnout requirement is not met, the vote will be extended by 48 hours.</li>
         <li>If a vote ties, a discussion will be opened to solidify the council's stance, and then the vote will be repeated as-is unless stated otherwise.</li>
-        <li>
-            If the vote does not conclude twice (e.g. failed to meet the voter turnout requirement or tied), an observer vote will be used to resolve the issue.
-        </li>
+        <li>If the vote ties twice, the server will be automatically rejected (or if the tie is between inducting now and later, deferred).</li>
     </ul>
     <Linkable e="h3" id="proposal-votes">Proposal Votes</Linkable>
     <ul>
@@ -400,6 +398,10 @@
         </li>
         <li>A server that is pre-approved will automatically become eligible for induction when their mascot character is officially confirmed as playable.</li>
         <li>A minor vote may be started to induct a server that is pre-approved at any time.</li>
+        <li>
+            If the vote ties twice, the server will be rejected (or if the tie is between inducting now and later, deferred). This overrides the default
+            behavior of going to an observer vote.
+        </li>
     </ul>
     <Linkable e="h3" id="observer-votes">Observer Votes</Linkable>
     <ul>
