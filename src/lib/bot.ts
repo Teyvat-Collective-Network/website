@@ -1,4 +1,4 @@
-import { DISCORD_INTERFACE } from "$env/static/private";
+import { BOT_API } from "$env/static/private";
 
 export default async function (token: string | null, route: string, options?: RequestInit) {
     let request = route.startsWith("!");
@@ -20,7 +20,7 @@ export default async function (token: string | null, route: string, options?: Re
         else options.headers.Authorization = `Bearer ${token}`;
     }
 
-    const req = await fetch(`${DISCORD_INTERFACE}${route}`, options);
+    const req = await fetch(`${BOT_API}${route}`, options);
     if (request) return req;
 
     if (!req.ok) {
