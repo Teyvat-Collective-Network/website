@@ -20,7 +20,7 @@
     import type { ElectionHistoryRecord } from "$lib/types";
     import { onMount } from "svelte";
 
-    let waves: { wave: number; users: ElectionHistoryRecord[] }[];
+    let waves: { wave: number; seats: number; users: ElectionHistoryRecord[] }[];
 
     async function load() {
         waves = await api($token, `GET /election-history`).catch(alert);
@@ -44,6 +44,17 @@
     async function deleteWave(wave: number) {
         if (!confirm(`Are you sure you want to delete wave ${wave}? This action cannot be undone.`)) return;
         await api($token, `DELETE /election-history/${wave}`).catch(alert);
+        await load();
+    }
+
+    async function editSeats(wave: number) {
+        const raw = prompt("Enter the number of seats for this election.");
+        if (!raw) return;
+
+        const num = parseInt(raw);
+        if (isNaN(num) || num < 0 || num % 1 !== 0) return alert("Please entry a non-negative integer.");
+
+        await api($token, `PATCH /election-history/${wave}`, { seats: num }).catch(alert);
         await load();
     }
 
@@ -83,7 +94,7 @@
     <br />
 {/if}
 <Loading done={waves}>
-    {#each waves as { wave, users }}
+    {#each waves as { wave, seats, users }}
         <div class="panel">
             <h4 class="short row gap-1">
                 {#if editing}
@@ -91,6 +102,12 @@
                 {/if}
                 Wave {wave}
             </h4>
+            <h6 class="short row gap-1 text-2">
+                <span>Seats: {seats}</span>
+                {#if editing}
+                    <A class="row" on:click={() => editSeats(wave)}><Icon icon="edit" /></A>
+                {/if}
+            </h6>
             <div class="w-100 hscroll">
                 <table>
                     <tr>
