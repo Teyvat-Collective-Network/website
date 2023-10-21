@@ -218,7 +218,7 @@
                                 </A>
                             </span>
                         {:else}
-                            <span>
+                            <span style="white-space: nowrap">
                                 {entry.notes}
                             </span>
                         {/if}
