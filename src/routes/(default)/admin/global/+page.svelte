@@ -61,7 +61,7 @@
         </tr>
         {#each filter as { id, match, user, created, lastUpdated }}
             <tr>
-                <td><code>{match}</code></td>
+                <td><code style="white-space: nowrap">{match}</code></td>
                 <td><UserMention id={user} /></td>
                 <td><Mention type="time" id={`${created}`}><Timestamp ms timestamp={created} /></Mention></td>
                 <td><Mention type="time" id={`${lastUpdated}`}><Timestamp ms timestamp={lastUpdated} /></Mention></td>
