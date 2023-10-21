@@ -22,10 +22,10 @@
             for (const { id, observerSince } of users) {
                 const date = new Date(observerSince);
 
-                const end = date;
+                const end = new Date(date);
                 end.setMonth(end.getMonth() + 6);
 
-                const elect = end;
+                const elect = new Date(date);
                 elect.setDate(elect.getDate() - 9);
 
                 dates[id] = { start: observerSince, end: end.getTime(), elect: elect.getTime() };
