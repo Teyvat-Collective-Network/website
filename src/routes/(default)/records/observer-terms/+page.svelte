@@ -25,7 +25,7 @@
                 const end = new Date(date);
                 end.setMonth(end.getMonth() + 6);
 
-                const elect = new Date(date);
+                const elect = new Date(end);
                 elect.setDate(elect.getDate() - 9);
 
                 dates[id] = { start: observerSince, end: end.getTime(), elect: elect.getTime() };
