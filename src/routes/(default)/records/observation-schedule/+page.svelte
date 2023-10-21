@@ -218,7 +218,9 @@
                                 </A>
                             </span>
                         {:else}
-                            {entry.notes}
+                            <span>
+                                {entry.notes}
+                            </span>
                         {/if}
                     </td>
                 </tr>
