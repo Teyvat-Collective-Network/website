@@ -138,7 +138,7 @@
                 <tr>
                     <td>
                         <span class="row no-wrap gap-1">
-                            <span><code>{entry.uuid + 1}</code></span>
+                            <span><code>{entry.uuid}</code></span>
                             {#if editing}
                                 <A class="row {entry.hidden ? 'blue-text' : 'red-text'}" on:click={() => toggleHide(entry)}>
                                     <Icon icon={entry.hidden ? "visibility" : "visibility_off"} />
