@@ -91,6 +91,7 @@
             <Callout style="red">
                 <p>Please <A to="/add-bot" external>add the bot</A> to this server to use autosync.</p>
             </Callout>
+            <br />
         {/if}
         <Loading done={autosync}>
             <Textarea class="bg-1" bind:value={autosync.template} rows={32} />
@@ -107,6 +108,7 @@
                     Please <A to="/add-bot" external>add the bot</A> to this server to use rolesync.
                 </p>
             </Callout>
+            <br />
         {/if}
         <Loading done={rolesync}>
             {#if id !== PUBLIC_HQ && id !== PUBLIC_HUB}
