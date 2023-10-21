@@ -66,7 +66,7 @@
                 <td><Mention type="time" id={`${created}`}><Timestamp ms timestamp={created} /></Mention></td>
                 <td><Mention type="time" id={`${lastUpdated}`}><Timestamp ms timestamp={lastUpdated} /></Mention></td>
                 <td>
-                    <div class="row gap-1">
+                    <div class="row gap-1 no-wrap">
                         <button class="tp text-accent" on:click={() => edit(id)}><Icon icon="edit" /></button>
                         <button class="tp red-text" on:click={() => del(id, match)}><Icon icon="delete" /></button>
                     </div>
