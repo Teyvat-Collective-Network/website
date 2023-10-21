@@ -20,6 +20,15 @@
             alert(error);
         }
     }
+
+    let rendered: string;
+
+    if (entry.reason)
+        try {
+            fetch(`/api/render`, { method: "POST", body: entry.reason })
+                .then((x) => x.text())
+                .then((x) => (rendered = x));
+        } catch {}
 </script>
 
 {#if !entry.hidden || $user?.observer}
@@ -45,7 +54,15 @@
         <slot />
         {#if entry.reason}
             <td>Notes</td>
-            <td>{entry.reason}</td>
+            <td>
+                {#if rendered}
+                    <span class="notes">
+                        {@html rendered}
+                    </span>
+                {:else}
+                    {entry.reason}
+                {/if}
+            </td>
         {:else}
             <td />
             <td />
@@ -54,6 +71,10 @@
 {/if}
 
 <style lang="scss">
+    :global(.notes p) {
+        margin: 0;
+    }
+
     :global(#hist-row td:nth-child(2n + 5)) {
         font-size: 75%;
         text-transform: uppercase;

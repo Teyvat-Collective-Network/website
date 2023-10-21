@@ -83,6 +83,7 @@
     let loading = true;
 
     const guildNames: Record<string, string> = {};
+    const rendered: Record<number, string> = {};
 
     onMount(async () => {
         const incoming = await api($token, `GET /audit-logs?limit=${limit}`).catch(alert);
@@ -93,6 +94,11 @@
         if (incoming) {
             entries = [...entries, ...incoming];
             loading = false;
+
+            for (const x of incoming)
+                try {
+                    rendered[x.uuid] = x.reason && (await (await fetch(`/api/render`, { method: "POST", body: x.reason })).text());
+                } catch {}
         }
 
         setTimeout(highlight);
@@ -528,7 +534,11 @@
             {#if entry.reason}
                 <p>
                     <b class="text-2">Reason</b><br />
-                    {entry.reason}
+                    {#if rendered[entry.uuid]}
+                        {@html rendered[entry.uuid]}
+                    {:else}
+                        {entry.reason}
+                    {/if}
                 </p>
             {/if}
             <hr />
