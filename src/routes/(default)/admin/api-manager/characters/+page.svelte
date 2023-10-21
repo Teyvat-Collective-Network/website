@@ -186,7 +186,7 @@
             {#each characters.sort((x, y) => x.id.localeCompare(y.id)) as character}
                 <tr>
                     <td>
-                        <div class="row gap-1">
+                        <div class="row gap-1 no-wrap">
                             <A class="row" on:click={() => editCharacter(character.id)}><Icon icon="edit" /></A>
                             {#if guilds?.some((guild) => guild.mascot === character.id)}
                                 <A class="row text-3" on:click={noDelete}><Icon icon="delete" /></A>
