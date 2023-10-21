@@ -51,27 +51,29 @@
 <h1>Global Chat Configuration</h1>
 <Loading done={filter}>
     <p><button on:click={add}><Icon icon="add" /></button></p>
-    <table>
-        <tr>
-            <th>Regex</th>
-            <th>Last Updated By</th>
-            <th>Created At</th>
-            <th>Last Updated At</th>
-            <th />
-        </tr>
-        {#each filter as { id, match, user, created, lastUpdated }}
+    <div class="w-100 hscroll">
+        <table>
             <tr>
-                <td><code style="white-space: nowrap">{match}</code></td>
-                <td><UserMention id={user} /></td>
-                <td><Mention type="time" id={`${created}`}><Timestamp ms timestamp={created} /></Mention></td>
-                <td><Mention type="time" id={`${lastUpdated}`}><Timestamp ms timestamp={lastUpdated} /></Mention></td>
-                <td>
-                    <div class="row gap-1 no-wrap">
-                        <button class="tp text-accent" on:click={() => edit(id)}><Icon icon="edit" /></button>
-                        <button class="tp red-text" on:click={() => del(id, match)}><Icon icon="delete" /></button>
-                    </div>
-                </td>
+                <th>Regex</th>
+                <th>Last Updated By</th>
+                <th>Created At</th>
+                <th>Last Updated At</th>
+                <th />
             </tr>
-        {/each}
-    </table>
+            {#each filter as { id, match, user, created, lastUpdated }}
+                <tr>
+                    <td><code style="white-space: nowrap">{match}</code></td>
+                    <td><UserMention id={user} /></td>
+                    <td><Mention type="time" id={`${created}`}><Timestamp ms timestamp={created} /></Mention></td>
+                    <td><Mention type="time" id={`${lastUpdated}`}><Timestamp ms timestamp={lastUpdated} /></Mention></td>
+                    <td>
+                        <div class="row gap-1 no-wrap">
+                            <button class="tp text-accent" on:click={() => edit(id)}><Icon icon="edit" /></button>
+                            <button class="tp red-text" on:click={() => del(id, match)}><Icon icon="delete" /></button>
+                        </div>
+                    </td>
+                </tr>
+            {/each}
+        </table>
+    </div>
 </Loading>
