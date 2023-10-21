@@ -46,10 +46,19 @@
 
         await reload();
     }
+
+    let matchFilter = "";
+    let searchString = "";
 </script>
 
 <h1>Global Chat Configuration</h1>
 <Loading done={filter}>
+    <div class="gap-1" style="display: grid; grid-template-columns: auto 1fr">
+        <b>Test:</b>
+        <span><input type="text" placeholder="string to test" bind:value={matchFilter} /></span>
+        <b>Search:</b>
+        <span><input type="text" placeholder="search regex" bind:value={searchString} /></span>
+    </div>
     <p><button on:click={add}><Icon icon="add" /></button></p>
     <div class="w-100 hscroll">
         <table>
@@ -61,7 +70,7 @@
                 <th />
             </tr>
             {#each filter as { id, match, user, created, lastUpdated }}
-                <tr>
+                <tr style={(matchFilter && !matchFilter.match(new RegExp(match))) || (searchString && !match.includes(searchString)) ? "display: none" : ""}>
                     <td><code style="white-space: nowrap">{match}</code></td>
                     <td><UserMention id={user} /></td>
                     <td><Mention type="time" id={`${created}`}><Timestamp ms timestamp={created} /></Mention></td>
