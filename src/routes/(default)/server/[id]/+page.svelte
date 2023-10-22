@@ -38,14 +38,16 @@
                     <li><b>Advisor:</b> <A to="/user/{guild.advisor}"><Mention><UserId id={guild.advisor} /></Mention></A></li>
                 {/if}
                 <li>
-                    <b>Staff:</b>
-                    {#if staff.length === 0}
-                        <span class="text-2">(none)</span>
-                    {:else}
-                        {#each staff as id}
-                            <A to="/user/{id}"><Mention><UserId {id} /></Mention></A>
-                        {/each}
-                    {/if}
+                    <div class="row gap-1">
+                        <b>Staff:</b>
+                        {#if staff.length === 0}
+                            <span class="text-2">(none)</span>
+                        {:else}
+                            {#each staff as id}
+                                <A to="/user/{id}"><Mention><UserId {id} /></Mention></A>
+                            {/each}
+                        {/if}
+                    </div>
                 </li>
             </ul>
         {:else}
