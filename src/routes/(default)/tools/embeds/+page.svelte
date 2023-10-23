@@ -111,26 +111,28 @@
         setTimeout(() => store.update((x) => x - 1), 1500);
     }
 
+    let lastSave: string;
     let shareLink: string;
 
     async function share() {
+        const key = source
+            .trim()
+            .split("\n")
+            .map((x) => x.trimEnd())
+            .join("\n")
+            .replace(/\n\n+/g, "\n\n");
+
+        if (key === lastSave) return (showShare = true);
+
         shareLink = "";
         showShare = true;
 
-        const res = await api(
-            $token,
-            `POST /share-links`,
-            source
-                .trim()
-                .split("\n")
-                .map((x) => x.trimEnd())
-                .join("\n")
-                .replace(/\n\n+/g, "\n\n"),
-        ).catch(alert);
+        const res = await api($token, `POST /share-links`, key).catch(alert);
 
         if (!res) return;
 
         shareLink = `${PUBLIC_DOMAIN}/tools/embeds/${res.id}`;
+        lastSave = key;
     }
 
     function copy() {
