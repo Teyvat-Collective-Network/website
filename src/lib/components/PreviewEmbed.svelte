@@ -87,8 +87,8 @@
                                                 style="font-size: 14px; line-height: 18px; grid-column: {(index * 12) / row.length + 1} / span {12 /
                                                     row.length}"
                                             >
-                                                <div style="font-weight: 500; margin-bottom: 2px">{field.name}</div>
-                                                <div>{field.value}</div>
+                                                <div class="mdblock" style="font-weight: 500; margin-bottom: 2px">{@html parse(field.name)}</div>
+                                                <div class="mdblock">{@html parse(field.value)}</div>
                                             </div>
                                         {/each}
                                     {/each}
@@ -191,6 +191,10 @@
         & span.mention.with-icon {
             margin: -2px 0 0 0;
             top: 2px;
+        }
+
+        & pre {
+            margin-bottom: 0;
         }
     }
 

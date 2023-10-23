@@ -31,7 +31,7 @@
             href = mapRoute(href) ?? href;
 
             selectall<HTMLAnchorElement>("#sidebar-contents a:not(.btn)").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
-            for (const id of ["info-pages", "tools", "staff-area", "miscellaneous", "records", "admin"])
+            for (const id of ["info-pages", "tools", "staff-area", "miscellaneous", "records", "admin", "admin-tools"])
                 if (selectall<HTMLAnchorElement>(`#${id} a:not(.btn)`).some((e) => e.href === href)) openSections[id] = true;
         });
 
@@ -176,11 +176,24 @@
 
                 <Show when={openSections.admin}>
                     {#if $user.observer}
-                        <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
-                        <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
-                        <a href="/admin/audit-logs" class="t2"><Icon icon="format_list_numbered" /> Audit Log</a>
-                        <a href="/admin/monitor" class="t2"><Icon icon="monitor_heart" /> Monitor</a>
-                        <a href="/admin/global" class="t2"><Icon icon="public" /> Global Chat</a>
+                        <div id="admin">
+                            <a href="/admin/api-manager" class="t2"><Icon icon="dashboard" /> API Manager</a>
+                            <a href="/admin/files" class="t2"><Icon icon="folder_open" /> Files</a>
+                            <a href="/admin/audit-logs" class="t2"><Icon icon="format_list_numbered" /> Audit Log</a>
+                            <a href="/admin/monitor" class="t2"><Icon icon="monitor_heart" /> Monitor</a>
+                            <a href="/admin/global" class="t2"><Icon icon="public" /> Global Chat</a>
+
+                            <a href={"javascript:void(0)"} class="btn t2" on:click={() => (openSections["admin-tools"] = !openSections["admin-tools"])}>
+                                <Icon icon={openSections["admin-tools"] ? "expand_more" : "chevron_right"} />
+                                Admin Tools
+                            </a>
+
+                            <Show when={openSections["admin-tools"]}>
+                                <div id="admin-tools">
+                                    <a href="/admin/tools/weekly-summaries" class="t3"><Icon icon="summarize" /> Weekly Summaries</a>
+                                </div>
+                            </Show>
+                        </div>
                     {/if}
                 </Show>
             {/if}

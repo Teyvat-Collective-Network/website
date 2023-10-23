@@ -47,8 +47,6 @@ marked.use({
             {
                 const match = src.match(/^@(everyone|here)/);
 
-                console.log(match);
-
                 if (match)
                     return {
                         type: "link",
@@ -64,8 +62,6 @@ marked.use({
     },
     renderer: {
         link(href, title, text) {
-            console.log(href);
-
             if (href === overrides.u) return `<span class="u">${text}</span>`;
             if (href === overrides.mentions.u)
                 return `<span class="mention with-icon"><span class="material-symbols-outlined">alternate_email</span> user</span>`;

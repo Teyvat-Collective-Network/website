@@ -33,7 +33,7 @@
             if (key === params.get("data")) return;
 
             params.set("data", key);
-            goto(`${location.pathname}?${params}`, { replaceState: true, keepFocus: true });
+            goto(`${location.pathname}?${params}`, { replaceState: true, keepFocus: true, noScroll: true });
         } catch {}
     }
 

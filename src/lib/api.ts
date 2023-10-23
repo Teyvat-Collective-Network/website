@@ -1,6 +1,6 @@
 import { PUBLIC_API } from "$env/static/public";
 
-export default async function (token: string | null, route: string, body?: any, reason?: string | null, _fetch?: any) {
+export default async function (token: string | null, route: string, body?: any, reason?: string | null, forceText?: boolean, _fetch?: any) {
     let request = route.startsWith("!");
     if (request) route = route.slice(1);
 
@@ -29,6 +29,7 @@ export default async function (token: string | null, route: string, body?: any, 
     }
 
     const text = await req.text();
+    if (forceText) return text;
 
     try {
         return JSON.parse(text);
