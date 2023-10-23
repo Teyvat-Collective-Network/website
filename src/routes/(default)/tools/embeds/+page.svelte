@@ -111,7 +111,7 @@
         setTimeout(() => store.update((x) => x - 1), 1500);
     }
 
-    let lastSave: string;
+    const cache: Record<string, string> = {};
     let shareLink: string;
 
     async function share() {
@@ -122,7 +122,11 @@
             .join("\n")
             .replace(/\n\n+/g, "\n\n");
 
-        if (key === lastSave) return (showShare = true);
+        if (cache[key]) {
+            shareLink = cache[key];
+            showShare = true;
+            return;
+        }
 
         shareLink = "";
         showShare = true;
@@ -131,8 +135,7 @@
 
         if (!res) return;
 
-        shareLink = `${PUBLIC_DOMAIN}/tools/embeds/${res.id}`;
-        lastSave = key;
+        cache[key] = shareLink = `${PUBLIC_DOMAIN}/tools/embeds/${res.id}`;
     }
 
     function copy() {
