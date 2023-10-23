@@ -90,7 +90,27 @@
             body: JSON.stringify(data),
         });
 
-        if (!req.ok) return alert((await req.json()).message);
+        let fail: string | undefined;
+
+        if (!req.ok) fail = (await req.json()).message;
+
+        if (fail) {
+            const webhook = await (await fetch(`/api/webhooks/observer-gallery`)).text();
+            const link = await getLink();
+
+            const req = await fetch(`${webhook}/messages/${id}?wait=true`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    ...data,
+                    content: `<@&${PUBLIC_WEEKLY_SUMMARY_OBSERVER_PING_ROLE}> <@${
+                        $user!.id
+                    }> is requesting your review on this weekly summary (you can edit it at ${link}).`,
+                }),
+            });
+
+            if (!req.ok) return alert(fail);
+        }
 
         alerts.edited.update((x) => x + 1);
         setTimeout(() => alerts.edited.update((x) => x - 1), 1500);
