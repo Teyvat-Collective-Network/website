@@ -131,6 +131,7 @@
                 <a href="/tools/embeds" class="t2"><Icon icon="chat" /> Embeds</a>
                 <a href="/tools/timestamps" class="t2"><Icon icon="schedule" /> Timestamp Generator</a>
                 <a href="/tools/snowflakes" class="t2"><Icon icon="ac_unit" /> Snowflakes (IDs)</a>
+                <a href="/tools/url-shortener" class="t2"><Icon icon="link" /> URL Shortener</a>
             </span>
         </Show>
 
