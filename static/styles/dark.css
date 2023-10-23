@@ -32,6 +32,11 @@
 
     --pure-rgb: 10, 10, 10;
     --invert-rgb: 240, 240, 240;
+
+    --d-bg-main: #313338;
+    --d-bg-hover: #2e3035;
+    --d-bg-embed: #2b2d31;
+    --d-default-embed-color: #1e1f22;
 }
 
 .light {

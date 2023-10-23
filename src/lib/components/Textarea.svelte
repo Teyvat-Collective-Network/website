@@ -65,7 +65,7 @@
     }
 </script>
 
-<textarea {...$$restProps} bind:value {rows} on:keydown={handle} />
+<textarea {...$$restProps} bind:value {rows} on:keydown={handle} on:input />
 
 <style lang="scss">
     textarea {

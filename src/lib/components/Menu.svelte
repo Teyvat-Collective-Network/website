@@ -31,7 +31,7 @@
             href = mapRoute(href) ?? href;
 
             selectall<HTMLAnchorElement>("#sidebar-contents a:not(.btn)").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
-            for (const id of ["info-pages", "staff-area", "miscellaneous", "records", "admin"])
+            for (const id of ["info-pages", "tools", "staff-area", "miscellaneous", "records", "admin"])
                 if (selectall<HTMLAnchorElement>(`#${id} a:not(.btn)`).some((e) => e.href === href)) openSections[id] = true;
         });
 
@@ -118,6 +118,17 @@
                         <a href="/info/exit-procedure" class="t3"><Icon icon="door_back" /> Exit Procedure</a>
                     </div>
                 </Show>
+            </span>
+        </Show>
+
+        <a href={"javascript:void(0)"} class="btn t1" on:click={() => (openSections.tools = !openSections.tools)}>
+            <Icon icon={openSections.tools ? "expand_more" : "chevron_right"} />
+            Tools
+        </a>
+
+        <Show when={openSections.tools}>
+            <span id="tools">
+                <a href="/tools/embeds" class="t2"><Icon icon="chat" /> Embeds</a>
             </span>
         </Show>
 

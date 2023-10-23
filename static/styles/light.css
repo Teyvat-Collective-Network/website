@@ -32,6 +32,11 @@
 
     --pure-rgb: 240, 240, 240;
     --invert-rgb: 10, 10, 10;
+
+    --d-bg-main: #ffffff;
+    --d-bg-hover: #f7f7f7;
+    --d-bg-embed: #f2f3f5;
+    --d-default-embed-color: #e3e5e8;
 }
 
 .dark {
