@@ -307,7 +307,7 @@ select {
     outline: none;
 }
 
-.panel input,
+.panel input:not([type="submit"]),
 .panel textarea,
 .panel select {
     background-color: rgb(var(--bg-1));

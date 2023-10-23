@@ -139,7 +139,6 @@
         </p>
     </div>
 </form>
-
 <Modal bind:open>
     <h2>Banshare Targets</h2>
     <Loading {done} />
