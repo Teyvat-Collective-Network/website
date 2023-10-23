@@ -172,7 +172,7 @@
             <div class="row gap-1">
                 <button on:click={format}>format</button>
                 <button class="tp {error ? 'red-text' : ''}" on:click={() => (showError = true)} disabled={!error}>show error</button>
-                <button on:click={share}>share</button>
+                <button disabled={!source.trim()} on:click={share}>share</button>
             </div>
             <Textarea autofocus rows={32} bind:value={source} on:input={updateURL} />
         </div>
