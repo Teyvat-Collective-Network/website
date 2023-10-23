@@ -9,6 +9,7 @@
     let done = false;
 
     async function shorten() {
+        url = url.trim();
         if (!url.match(/^https?:\/\//)) return alert("That does not look like a valid URL.");
 
         id = id.trim();
@@ -47,7 +48,7 @@
                     <button on:click={copy}><Icon icon="content_copy" /></button>
                 </div>
                 <hr />
-                <button on:click={() => (done = false)}>Shorten Another</button>
+                <button on:click={() => ((url = ""), (id = ""), (done = false))}>Shorten Another</button>
             {:else}
                 <h5 class="short">Shorten a URL</h5>
                 <input type="text" placeholder="Enter URL Here" bind:value={url} />
@@ -57,7 +58,7 @@
                     <input type="text" placeholder="Enter Alias (Optional)" bind:value={id} />
                 </div>
                 <hr />
-                <button on:click={shorten}>Shorten!</button>
+                <button on:click={shorten} disabled={!url.trim().match(/^https?:\/\//)}>Shorten!</button>
             {/if}
         </div>
     </div>
