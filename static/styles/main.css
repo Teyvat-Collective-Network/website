@@ -320,6 +320,19 @@ select {
     outline: none;
 }
 
+.panel input,
+.panel textarea,
+.panel select {
+    background-color: rgb(var(--bg-1));
+}
+
+input[readonly],
+textarea[readonly],
+select[readonly] {
+    background-color: rgb(var(--bg-2));
+    cursor: not-allowed;
+}
+
 input[type="text"],
 input[type="password"],
 input[type="number"],

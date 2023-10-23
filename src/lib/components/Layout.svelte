@@ -15,7 +15,7 @@
     import Modal from "./Modal.svelte";
     import Show from "./Show.svelte";
 
-    const { copy, save, nodelete, nomore } = alerts;
+    const { copy, save, nodelete, nomore, sent, edited } = alerts;
     const { audit } = modals;
 
     let scroll: number = 0;
@@ -113,6 +113,8 @@
 <Alert icon="check" iconColor="rgb(var(--green-text))" text="Saved" open={$save > 0} />
 <Alert icon="clear" iconColor="rgb(var(--red-text))" text="That item cannot be deleted." open={$nodelete > 0} />
 <Alert icon="block" iconColor="rgb(var(--red-text))" text="No more items to load." open={$nomore > 0} />
+<Alert icon="send" iconColor="rgb(var(--green-text))" text="Sent" open={$sent > 0} />
+<Alert icon="send" iconColor="rgb(var(--green-text))" text="Edited" open={$edited > 0} />
 
 {#if first}
     <Modal bind:open={$audit} on:close={() => auditReason.set(null)} confirmClose={!!trimmedReason}>

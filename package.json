@@ -32,7 +32,7 @@
   "type": "module",
   "dependencies": {
     "@iarna/toml": "^2.2.5",
-    "@teyvat-collective-network/toml-discord-embeds": "1.0.4",
+    "@teyvat-collective-network/toml-discord-embeds": "1.0.5",
     "@types/dompurify": "^3.0.4",
     "@types/node": "^20.6.0",
     "compressjs": "^1.0.3",

@@ -10,6 +10,8 @@ export const alerts = {
     save: writable<number>(0),
     nodelete: writable<number>(0),
     nomore: writable<number>(0),
+    sent: writable<number>(0),
+    edited: writable<number>(0),
 };
 
 export const modals = {
