@@ -129,6 +129,7 @@
         <Show when={openSections.tools}>
             <span id="tools">
                 <a href="/tools/embeds" class="t2"><Icon icon="chat" /> Embeds</a>
+                <a href="/tools/timestamps" class="t2"><Icon icon="schedule" /> Timestamp Generator</a>
             </span>
         </Show>
 
