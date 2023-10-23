@@ -48,7 +48,7 @@
                 footer: Object.entries(fields).some(([x, y]) => !optional.includes(x) && !y)
                     ? {
                           text: `empty sections: ${Object.entries(fields)
-                              .filter(([, y]) => !y)
+                              .filter(([x, y]) => !optional.includes(x) && !y)
                               .map(([x]) => x)
                               .join(", ")}`,
                       }
