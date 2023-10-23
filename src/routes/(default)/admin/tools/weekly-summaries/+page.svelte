@@ -37,7 +37,6 @@
     $: data = {
         content: `<@&${PUBLIC_WEEKLY_SUMMARY_PING_ROLE}>`,
         username: "TCN Weekly Summary",
-        avatarURL: `${PUBLIC_DOMAIN}/favicon.png`,
         embeds: [
             {
                 title: "**Your Weekly Summary**",
