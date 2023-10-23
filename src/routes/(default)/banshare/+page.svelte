@@ -82,9 +82,9 @@
         <hr />
         <h5>Evidence</h5>
         <p>
-            Please upload images to <A to="https://imgur.com" external>Imgur</A>. Discord image links work too, but keep in mind that they will become invalid
-            if the message containing the image is deleted. We strongly advise uploading sensitive evidence to Imgur and marking it as "Mature" for safety
-            purposes.
+            Please upload images to <A to="https://imgur.com" external>Imgur</A> (or your image hosting platform of choice). Discord media links are
+            <b>not allowed</b> because Discord has made changes that will cause static links to expire. This does not affect usage of Discord itself, but means that
+            using Discord attachment links to share images is no longer viable.
         </p>
         <p>
             If you need more than 1000 characters, please <A to="/documents" external>create a document</A> and link it here. Include some basic information in the
