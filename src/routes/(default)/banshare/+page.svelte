@@ -87,7 +87,7 @@
             using Discord attachment links to share images is no longer viable.
         </p>
         <p>
-            If you need more than 1000 characters, please <A to="/documents" external>create a document</A> and link it here. Include some basic information in the
+            If you need more than 1000 characters, please <A to="/docs" external>create a document</A> and link it here. Include some basic information in the
             evidence so people can see roughly what your document contains.
         </p>
         <p>Provide sufficient evidence to verify your reason and for other staff to make an informed decision.</p>
