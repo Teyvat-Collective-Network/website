@@ -31,6 +31,6 @@
     }
 
     #icon {
-        padding: 1.3em 1em 0 0;
+        padding: 1.25em 1em 0 0;
     }
 </style>

@@ -33,6 +33,10 @@ body {
     padding: 0 calc(max(5%, 50% - 600px));
 }
 
+.container-tight {
+    padding: 0 calc(max(5%, 50% - 400px));
+}
+
 #main {
     padding-bottom: 5%;
 }
