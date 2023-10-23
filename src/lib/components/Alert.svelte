@@ -38,6 +38,6 @@
         inset: 0;
         pointer-events: none;
         position: fixed;
-        z-index: 20;
+        z-index: 400;
     }
 </style>

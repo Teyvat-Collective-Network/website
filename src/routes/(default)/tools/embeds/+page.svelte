@@ -1,11 +1,20 @@
+<script context="module" lang="ts">
+    const init = `# Use 0x for hex codes.\n# This sets the default embed color.\n# You can override this per embed.\ncolor = 0x2b2d31\n\ncontent = """\nHello, World!\nThis is a multiline string. \\nPut a backslash at the end of a line to avoid line-breaking.\n\n<@1> <@&1> <#1>\n...\n"""\n\n[profile]\nname = "Webhook Display Name"\navatar = "https://teyvatcollective.network/favicon.png"\n\n[[embed]] # it is important that this is [[]] and not []\ntitle = "Hello!"\ndescription = "This is the TCN's TOML-based embed utility."\nurl = "https://teyvatcollective.network"\n\n# the below fields can be in any order\n\n[embed.author] # this must come after the above data\nname = "author name"\nicon = "https://teyvatcollective.network/favicon.png"\n\n[[embed.field]] # also must be [[]]\nname = "a"\nvalue = "b"\ninline = true\n\n[[embed.field]]\nname = "c"\nvalue = "d"\ninline = true\n\n[[embed.field]]\nname = "e"\nvalue = "f"\n\n[embed.footer]\ntext = "footer text"\nicon = "https://teyvatcollective.network/favicon.png"\n\n# this is a new embed\n\n[[embed]]\ntitle = "a"\ncolor = 0x009688\nfield = [\n    { name = "this is a", value = "shorter way" },\n    { name = "to define", value = "an embed's fields" }\n]\nthumbnail = "https://teyvatcollective.network/favicon.png"\nimage = "https://i.imgur.com/r32P1Ay.png"\nfooter = { text = "shorter way to define a footer", icon = "https://teyvatcollective.network/favicon.png" }`;
+</script>
+
 <script lang="ts">
     import { afterNavigate, goto } from "$app/navigation";
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import api from "$lib/api";
+    import A from "$lib/components/A.svelte";
     import Expand from "$lib/components/Expand.svelte";
+    import Icon from "$lib/components/Icon.svelte";
     import Loading from "$lib/components/Loading.svelte";
+    import Modal from "$lib/components/Modal.svelte";
     import PreviewEmbed from "$lib/components/PreviewEmbed.svelte";
     import Show from "$lib/components/Show.svelte";
     import Textarea from "$lib/components/Textarea.svelte";
-    import { alerts } from "$lib/stores";
+    import { alerts, token } from "$lib/stores";
     import { unzip, zip } from "$lib/zip";
     import TOML from "@iarna/toml";
     import TDE from "@teyvat-collective-network/toml-discord-embeds";
@@ -32,7 +41,7 @@
         const load = new URLSearchParams(location.search).get("data");
 
         if (load) source = unzip(load.replace(/-/g, "+").replace(/_/g, "/"));
-        if (!source) source = "a = 1";
+        if (!source) source = init;
 
         updateURL();
 
@@ -60,7 +69,9 @@
     let threadIDOrURL: string = "";
     let messageIDOrURL: string = "";
 
-    let open = true;
+    let open = true,
+        showError = false,
+        showShare = false;
 
     const IDorURL = /^(|\d+|https:\/\/([^.]+\.)?discord\.com\/channels\/[1-9][0-9]{16,19}\/[1-9][0-9]{16,19}\/[1-9][0-9]{16,19})$/;
 
@@ -99,6 +110,34 @@
         store.update((x) => x + 1);
         setTimeout(() => store.update((x) => x - 1), 1500);
     }
+
+    let shareLink: string;
+
+    async function share() {
+        shareLink = "";
+        showShare = true;
+
+        const res = await api(
+            $token,
+            `POST /share-links`,
+            source
+                .trim()
+                .split("\n")
+                .map((x) => x.trimEnd())
+                .join("\n")
+                .replace(/\n\n+/g, "\n\n"),
+        ).catch(alert);
+
+        if (!res) return;
+
+        shareLink = `${PUBLIC_DOMAIN}/tools/embeds/${res.id}`;
+    }
+
+    function copy() {
+        navigator.clipboard.writeText(shareLink);
+        alerts.copy.update((x) => x + 1);
+        setTimeout(() => alerts.copy.update((x) => x - 1), 1500);
+    }
 </script>
 
 <div class="container">
@@ -127,15 +166,33 @@
             </div>
             <div class="row gap-1">
                 <button on:click={format}>format</button>
+                <button class="tp {error ? 'red-text' : ''}" on:click={() => (showError = true)} disabled={!error}>show error</button>
+                <button on:click={share}>share</button>
             </div>
             <Textarea autofocus rows={32} bind:value={source} on:input={updateURL} />
         </div>
         <div>
-            <Loading {done}><PreviewEmbed {data} /></Loading>
+            <div class="{error ? 'error' : ''} round">
+                <Loading {done}><PreviewEmbed {data} /></Loading>
+            </div>
         </div>
     </div>
-    <p class="red-text">{error}</p>
 </div>
+<Modal bind:open={showError}><pre><code>{error}</code></pre></Modal>
+<Modal bind:open={showShare}>
+    <p>
+        <b class="red-text">Warning:</b> This share link will expire after a week of not being accessed. To get a permanent link, copy the URL out of the
+        browser bar into <A to="https://tinyurl.com" external>TinyURL</A> or a similar service.
+    </p>
+    <div class="col">
+        <Loading done={shareLink}>
+            <div class="row gap-3 bg-1 round" style="padding: 0.2em 1em">
+                <A to={shareLink}>{shareLink}</A>
+                <button on:click={copy}><Icon icon="content_copy" /></button>
+            </div>
+        </Loading>
+    </div>
+</Modal>
 
 <style lang="scss">
     #inputs {

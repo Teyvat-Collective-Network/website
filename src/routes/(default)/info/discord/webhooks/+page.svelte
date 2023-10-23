@@ -49,6 +49,32 @@
             </li>
         </ul>
         <Linkable e="h2" id="services">Services</Linkable>
+        <Linkable e="h3" id="tcn">TCN Embed Tool</Linkable>
+        <A to="/tools/embeds" external>{PUBLIC_DOMAIN}/tools/embeds</A>
+        <p>
+            The TCN Embed Tool has an example on the landing page. This is a TOML-based message editor that isn't the most convenient to use but is rigorously
+            defined, allows for a much more readable text representation than raw JSON, and is the basis for autosync templates.
+        </p>
+        <div class="row gap-1"><Icon icon="check" class="green-text" /> New Forum Posts</div>
+        <div class="row gap-1"><Icon icon="check" class="green-text" /> Post To Threads</div>
+        <div class="row gap-1"><Icon icon="clear" class="red-text" /> Components (Buttons &amp; Select Menus)</div>
+        <br />
+        <Callout style="red">
+            <p>
+                <b>Careful!</b> TCN Embed Tool's share links expire after one week of not being accessed. If you want to keep a permanent link, copy-paste the
+                link from the browser bar and shorten it using something like <A to="https://tinyurl.com" external>TinyURL</A>.
+            </p>
+        </Callout>
+        <Linkable e="h3" id="tcn">Leaf Embeds</Linkable>
+        <A to="https://embeds.leaf.moe" external>https://embeds.leaf.moe</A>
+        <p>Leaf Embeds does not have any documentation, but you can check out <A to="https://embeds.leaf.moe/demo" external>this example</A> for a demo.</p>
+        <div class="row gap-1"><Icon icon="check" class="green-text" /> New Forum Posts</div>
+        <div class="row gap-1"><Icon icon="check" class="green-text" /> Post To Threads</div>
+        <div class="row gap-1"><Icon icon="clear" class="red-text" /> Components (Buttons &amp; Select Menus)</div>
+        <br />
+        <Callout style="info">
+            <p>Leaf Embeds' save links last forever and have the added bonus of being editable.</p>
+        </Callout>
         <Linkable e="h3" id="discohook">Discohook</Linkable>
         <A to="https://discohook.org" external>https://discohook.org</A>
         <p>Discohook has usage instructions in the landing page.</p>

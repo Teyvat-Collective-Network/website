@@ -15,7 +15,7 @@
         const rows: any[][] = [];
 
         for (const field of fields) {
-            if (rows.length > 0 && rows.at(-1)!.length < 3 && rows.at(-1)!.at(-1)!.inline) rows.at(-1)!.push(field);
+            if (field.inline && rows.length > 0 && rows.at(-1)!.length < 3 && rows.at(-1)!.at(-1)!.inline) rows.at(-1)!.push(field);
             else rows.push([field]);
         }
 
@@ -41,75 +41,86 @@
         <div class="mdblock" style="font-size: 16px; margin: 3px 0">
             {@html parse(data.content)}
         </div>
-        {#each data.embeds ?? [] as embed}
-            <div
-                style="background-color: var(--d-bg-embed); display: inline-grid; grid-template-columns: 1fr min-content; max-width: 400px; padding: 8px 16px 16px 12px; border-radius: 4px; border-left: 4px solid {typeof embed.color ===
-                'number'
-                    ? `#${embed.color.toString(16).padStart(6, '0')}`
-                    : 'var(--d-default-embed-color)'}"
-            >
-                <div style={embed.thumbnail ? "" : "grid-column: 1 / -1"}>
-                    {#if embed.author?.name}
-                        <div class="row" style="margin-top: 8px; font-size: 14px; line-height: 22px; font-weight: 500">
-                            {#if embed.author.icon_url}
-                                <img
-                                    src={embed.author.icon_url}
-                                    alt="Embed Author Icon"
-                                    style="width: 24px; height: 24px; border-radius: 50%; margin-right: 8px"
-                                />
+        <div class="col no-center" style="gap: 8px">
+            {#each data.embeds ?? [] as embed}
+                <div>
+                    <div
+                        style="background-color: var(--d-bg-embed); display: inline-grid; grid-template-columns: 1fr min-content; max-width: 400px; padding: 8px 16px 16px 12px; border-radius: 4px; border-left: 4px solid {typeof embed.color ===
+                        'number'
+                            ? `#${embed.color.toString(16).padStart(6, '0')}`
+                            : 'var(--d-default-embed-color)'}"
+                    >
+                        <div style={embed.thumbnail ? "" : "grid-column: 1 / -1"}>
+                            {#if embed.author?.name}
+                                <div class="row" style="margin-top: 8px; font-size: 14px; line-height: 22px; font-weight: 500">
+                                    {#if embed.author.icon_url}
+                                        <img
+                                            src={embed.author.icon_url}
+                                            alt="Embed Author Icon"
+                                            style="width: 24px; height: 24px; border-radius: 50%; margin-right: 8px"
+                                        />
+                                    {/if}
+                                    {#if embed.author.url}
+                                        <a href={embed.author.url} style="font-weight: 500" target="_blank" rel="noreferrer">{embed.author.name}</a>
+                                    {:else}
+                                        {embed.author.name}
+                                    {/if}
+                                </div>
                             {/if}
-                            {#if embed.author.url}
-                                <a href={embed.author.url} style="font-weight: 500" target="_blank" rel="noreferrer">{embed.author.name}</a>
-                            {:else}
-                                {embed.author.name}
+                            {#if embed.title}
+                                <div class="mdblock" style="margin-top: 8px; font-size: 16px; line-height: 22px; font-weight: 500">
+                                    {#if embed.url}
+                                        <a href={embed.url} style="font-weight: 500" target="_blank" rel="noreferrer">{@html parse(embed.title)}</a>
+                                    {:else}
+                                        {@html parse(embed.title)}
+                                    {/if}
+                                </div>
+                            {/if}
+                            {#if embed.description}
+                                <div class="mdblock" style="font-size: 14px; line-height: 18px; margin-top: 8px">{@html parse(embed.description)}</div>
+                            {/if}
+                            {#if embed.fields}
+                                <div style="margin-top: 8px; display: grid; gap: 8px">
+                                    {#each partition(embed.fields) as row}
+                                        {#each row as field, index}
+                                            <div
+                                                style="font-size: 14px; line-height: 18px; grid-column: {(index * 12) / row.length + 1} / span {12 /
+                                                    row.length}"
+                                            >
+                                                <div style="font-weight: 500; margin-bottom: 2px">{field.name}</div>
+                                                <div>{field.value}</div>
+                                            </div>
+                                        {/each}
+                                    {/each}
+                                </div>
                             {/if}
                         </div>
-                    {/if}
-                    {#if embed.title}
-                        <div class="mdblock" style="margin-top: 8px; font-size: 16px; line-height: 22px; font-weight: 500">
-                            {#if embed.url}
-                                <a href={embed.url} style="font-weight: 500" target="_blank" rel="noreferrer">{@html parse(embed.title)}</a>
-                            {:else}
-                                {@html parse(embed.title)}
-                            {/if}
-                        </div>
-                    {/if}
-                    {#if embed.description}
-                        <div class="mdblock" style="font-size: 14px; line-height: 18px; margin-top: 8px">{@html parse(embed.description)}</div>
-                    {/if}
-                    {#if embed.fields}
-                        <div style="margin-top: 8px; display: grid; gap: 8px">
-                            {#each partition(embed.fields) as row}
-                                {#each row as field, index}
-                                    <div style="font-size: 14px; line-height: 18px; grid-column: {(index * 12) / row.length + 1} / span {12 / row.length}">
-                                        <div style="font-weight: 500; margin-bottom: 2px">{field.name}</div>
-                                        <div>{field.value}</div>
-                                    </div>
-                                {/each}
-                            {/each}
-                        </div>
-                    {/if}
-                </div>
-                {#if embed.thumbnail}
-                    <div style="margin: 8px 0 0 16px">
-                        <img src={embed.thumbnail.url} alt="Embed Thumbnail" style="width: 80px; height: 80px; border-radius: 4px" />
-                    </div>
-                {/if}
-                {#if embed.image}
-                    <div style="margin-top: 16px; grid-column: 1 / -1; line-height: 0">
-                        <img src={embed.image.url} alt="Embed Primary" style="max-width: 400px; max-height: 300px" />
-                    </div>
-                {/if}
-                {#if embed.footer?.text}
-                    <div class="row" style="margin-top: 8px; grid-column: 1 / -1; font-size: 12px; line-height: 16px">
-                        {#if embed.footer.icon_url}
-                            <img src={embed.footer.icon_url} alt="Embed Footer Icon" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 8px" />
+                        {#if embed.thumbnail}
+                            <div style="margin: 8px 0 0 16px">
+                                <img src={embed.thumbnail.url} alt="Embed Thumbnail" style="width: 80px; height: 80px; border-radius: 4px" />
+                            </div>
                         {/if}
-                        {embed.footer.text}
+                        {#if embed.image}
+                            <div style="margin-top: 16px; grid-column: 1 / -1; line-height: 0">
+                                <img src={embed.image.url} alt="Embed Primary" style="max-width: 400px; max-height: 300px" />
+                            </div>
+                        {/if}
+                        {#if embed.footer?.text}
+                            <div class="row" style="margin-top: 8px; grid-column: 1 / -1; font-size: 12px; line-height: 16px">
+                                {#if embed.footer.icon_url}
+                                    <img
+                                        src={embed.footer.icon_url}
+                                        alt="Embed Footer Icon"
+                                        style="width: 20px; height: 20px; border-radius: 50%; margin-right: 8px"
+                                    />
+                                {/if}
+                                {embed.footer.text}
+                            </div>
+                        {/if}
                     </div>
-                {/if}
-            </div>
-        {/each}
+                </div>
+            {/each}
+        </div>
     </div>
 </div>
 

@@ -1,6 +1,6 @@
 import { PUBLIC_API } from "$env/static/public";
 
-export default async function (token: string | null, route: string, body?: any, reason?: string | null) {
+export default async function (token: string | null, route: string, body?: any, reason?: string | null, _fetch?: any) {
     let request = route.startsWith("!");
     if (request) route = route.slice(1);
 
@@ -19,7 +19,7 @@ export default async function (token: string | null, route: string, body?: any, 
 
     if (reason) options.headers["X-Audit-Log-Reason"] = reason;
 
-    const req = await fetch(`${PUBLIC_API}${real}`, options);
+    const req = await (_fetch ?? fetch)(`${PUBLIC_API}${real}`, options);
     if (request) return req;
 
     if (!req.ok) {
