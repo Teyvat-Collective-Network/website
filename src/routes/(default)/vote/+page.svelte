@@ -171,7 +171,7 @@
                                             )}; gap: 10px 0"
                                         >
                                             {#each inductKeys.filter((x) => (poll.mode === "induction" && poll.preinduct) || x !== "preinduct") as key}
-                                                <b style="padding-right: 10px">
+                                                <b style="padding-right: 10px; grid-column: 1">
                                                     {key === "induct"
                                                         ? "Induct"
                                                         : key === "preinduct"
