@@ -166,7 +166,7 @@
                                         </p>
                                     {:else if poll.mode === "induction"}
                                         <div
-                                            style="display: grid; grid-template-columns: auto auto {'1fr'.repeat(
+                                            style="display: grid; grid-template-columns: auto auto {'1fr '.repeat(
                                                 Math.max(result.induct, result.preinduct, result.reject, result.extend) || 1,
                                             )}; gap: 10px 0"
                                         >
