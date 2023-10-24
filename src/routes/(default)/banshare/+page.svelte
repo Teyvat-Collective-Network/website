@@ -77,6 +77,10 @@
             If you need more than 498 characters, you should probably be putting it into the evidence field instead. Make the reason something suitable for an
             audit log reason for the ban and include context in the next field.
         </p>
+        <p>
+            Please keep this as concise as possible and deliver the minimum necessary information here. A reasonable amount of formality is expected and
+            banshares with jokes or non-serious reasons may be denied.
+        </p>
         <Textarea name="reason" class="bg-1" value={form?.reason} placeholder="Required &mdash; Max length: 498 characters" required maxlength={498} />
         <br /><br />
         <hr />
@@ -87,8 +91,8 @@
             using Discord attachment links to share images is no longer viable.
         </p>
         <p>
-            If you need more than 1000 characters, please <A to="/docs" external>create a document</A> and link it here. Include some basic information in the
-            evidence so people can see roughly what your document contains.
+            If you need more than 1000 characters, please <A to="/docs" external>create a document</A> and link it here. Include some basic information in the evidence
+            so people can see roughly what your document contains.
         </p>
         <p>Provide sufficient evidence to verify your reason and for other staff to make an informed decision.</p>
         <Textarea name="evidence" class="bg-1" value={form?.evidence} placeholder="Required &mdash; Max length: 1000 characters" required maxlength={1000} />
