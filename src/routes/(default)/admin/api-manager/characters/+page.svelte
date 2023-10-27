@@ -212,7 +212,7 @@
                     {#each attributeTypes as type}
                         <td>
                             {#if character.attributes[type]}
-                                {attributes[type][character.attributes[type]].name} &mdash; <code>{character.attributes[type]}</code>
+                                {attributes[type][character.attributes[type]]?.name} &mdash; <code>{character.attributes[type]}</code>
                             {:else}
                                 <span class="text-2">(none)</span>
                             {/if}
