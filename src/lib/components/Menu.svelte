@@ -201,7 +201,7 @@
                 </Show>
             {/if}
 
-            {#if $user.owner || $user.observer}
+            {#if $user.council || $user.observer}
                 <a href="/manage" class="t1"><Icon icon="settings" /> Manage {$user.observer ? "Servers" : "Your Server"}</a>
             {/if}
 

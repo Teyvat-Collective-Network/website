@@ -26,8 +26,8 @@
                     <li><A to="/manage/{PUBLIC_HQ}"><b>TCN HQ</b></A></li>
                     <li><A to="/manage/{PUBLIC_HUB}"><b>TCN Hub</b></A></li>
                 {/if}
-                {#each guilds as { id, name, owner }}
-                    {#if $user?.observer || owner === $user?.id}
+                {#each guilds as { id, name, owner, advisor }}
+                    {#if $user?.observer || owner === $user?.id || advisor === $user?.id}
                         <li><A to="/manage/{id}">{name}</A></li>
                     {/if}
                 {/each}
