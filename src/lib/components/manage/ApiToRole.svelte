@@ -47,7 +47,7 @@
     </div>
     <Show when={open}>
         <div class="row gap-1">
-            <button class="row {entry.guild ? 'tp text-accent' : ''}" on:click={() => (entry.guild = undefined)}>
+            <button class="row {entry.guild ? 'tp text-accent' : ''}" on:click={() => (entry.guild = null)}>
                 <Icon icon="clear" /> Network-Wide
             </button>
             {#each guilds as guild}
