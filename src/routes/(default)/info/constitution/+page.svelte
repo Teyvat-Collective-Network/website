@@ -337,7 +337,7 @@
         <li>Votes' live results must be hidden until the vote concludes.</li>
         <li>Abstaining is always permitted and counts towards voter turnout and voting duty. Abstention votes are ignored during tallying.</li>
         <li>
-            Votes must be presented the the council at least 24 hours before they are conducted, extended as needed for discussion. Any concerns raised must be
+            Votes must be presented the council at least 24 hours before they are conducted, extended as needed for discussion. Any concerns raised must be
             addressed and resolved first. This excludes votes such as elections, inductions, etc. which have special requirements.
         </li>
         <li>Information required for voters to make an informed decision must be made available with the vote ping.</li>
