@@ -12,11 +12,6 @@
             You should pick an embed color that you like and stick to it for most or all of your embeds for consistency and organization. If you want embeds to
             appear colorless, use <code>#2b2d31</code> (dark mode).
         </p>
-        <Linkable e="h2" id="text-color">Text Color</Linkable>
-        <p>
-            You cannot color text by default, but you can use code block syntax highlighting to get a similar effect. Refer to
-            <A to="https://docs.google.com/document/d/1tyBtgNfGc6ae7t033dFxdqCSfG9kgiuwrFxlJTvyuu8/edit">this document</A> for a list of some possibilities.
-        </p>
         <Linkable e="h2" id="timestamps">Timestamps</Linkable>
         <p>
             Discord does not make it obvious that this feature exists, but you can show a specific date to a user both in absolute and relative time. Absolute
