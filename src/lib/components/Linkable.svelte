@@ -4,9 +4,10 @@
 
     export let e: string;
     export let id: string;
+    export let short: boolean = false;
 </script>
 
-<svelte:element this={e} {id} class="row gap-1">
+<svelte:element this={e} {id} class="{short ? 'short' : ''} row gap-1">
     <A to="#{id}"><Icon icon="link" /></A>
     <span {...$$restProps}><slot /></span>
 </svelte:element>

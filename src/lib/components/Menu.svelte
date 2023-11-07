@@ -1,6 +1,16 @@
 <script lang="ts" context="module">
+    const docRoutes = [
+        "/docs/observer-onboarding",
+        "/docs/observer-tasks",
+        "/docs/hub-communication-standards",
+        "/docs/global-chat-rules",
+        "/docs/global-chat-moderation",
+        "/docs/global-chat-mod-agreement",
+    ];
+
     function mapRoute(real: string): string {
-        for (const prefix of ["/info/other-bots", "/info/discord", "/admin/api-manager", "/docs", "/manage"]) if (real.startsWith(prefix)) return prefix;
+        for (const prefix of ["/info/other-bots", "/info/discord", "/admin/api-manager", "/manage"]) if (real.startsWith(prefix)) return prefix;
+        if (real.startsWith("/docs") && !docRoutes.includes(real)) return "/docs";
         return real;
     }
 </script>
@@ -31,7 +41,7 @@
             href = mapRoute(href) ?? href;
 
             selectall<HTMLAnchorElement>("#sidebar-contents a:not(.btn)").forEach((e) => (e.style.backgroundColor = e.href === href ? "#00000022" : ""));
-            for (const id of ["info-pages", "tools", "staff-area", "miscellaneous", "records", "admin", "admin-tools"])
+            for (const id of ["info-pages", "tools", "staff-area", "miscellaneous", "records", "admin", "admin-tools", "documentation"])
                 if (selectall<HTMLAnchorElement>(`#${id} a:not(.btn)`).some((e) => e.href === href)) openSections[id] = true;
         });
 
@@ -200,7 +210,25 @@
                     {/if}
                 </Show>
             {/if}
+        {/if}
 
+        <a href={"javascript:void(0)"} class="btn t1" on:click={() => (openSections.documentation = !openSections.documentation)}>
+            <Icon icon={openSections.documentation ? "expand_more" : "chevron_right"} />
+            Documentation
+        </a>
+
+        <Show when={openSections.documentation}>
+            <div id="documentation">
+                <a href="/docs/observer-onboarding" class="t2"><Icon icon="door_open" /> Observer Onboarding Guide</a>
+                <a href="/docs/observer-tasks" class="t2"><Icon icon="task_alt" /> Observer Tasks</a>
+                <a href="/docs/hub-communication-standards" class="t2"><Icon icon="communication" /> Hub Communication Standards</a>
+                <a href="/docs/global-chat-rules" class="t2"><Icon icon="gavel" /> Global Chat Rules</a>
+                <a href="/docs/global-chat-moderation" class="t2"><Icon icon="security" /> Global Chat Moderation</a>
+                <a href="/docs/global-chat-mod-agreement" class="t2"><Icon icon="developer_guide" /> Global Chat Moderator Agreement</a>
+            </div>
+        </Show>
+
+        {#if $user}
             {#if $user.council || $user.observer}
                 <a href="/manage" class="t1"><Icon icon="settings" /> Manage {$user.observer ? "Servers" : "Your Server"}</a>
             {/if}
