@@ -1,11 +1,12 @@
 <script lang="ts" context="module">
     const docRoutes = [
+        "/docs/global-chat-rules",
         "/docs/observer-onboarding",
         "/docs/observer-tasks",
         "/docs/hub-communication-standards",
-        "/docs/global-chat-rules",
         "/docs/global-chat-moderation",
         "/docs/global-chat-mod-agreement",
+        "/docs/observation-guide",
     ];
 
     function mapRoute(real: string): string {
@@ -219,12 +220,13 @@
 
         <Show when={openSections.documentation}>
             <div id="documentation">
+                <a href="/docs/global-chat-rules" class="t2"><Icon icon="gavel" /> Global Chat Rules</a>
                 <a href="/docs/observer-onboarding" class="t2"><Icon icon="door_open" /> Observer Onboarding Guide</a>
                 <a href="/docs/observer-tasks" class="t2"><Icon icon="task_alt" /> Observer Tasks</a>
                 <a href="/docs/hub-communication-standards" class="t2"><Icon icon="communication" /> Hub Communication Standards</a>
-                <a href="/docs/global-chat-rules" class="t2"><Icon icon="gavel" /> Global Chat Rules</a>
                 <a href="/docs/global-chat-moderation" class="t2"><Icon icon="security" /> Global Chat Moderation</a>
                 <a href="/docs/global-chat-mod-agreement" class="t2"><Icon icon="developer_guide" /> Global Chat Moderator Agreement</a>
+                <a href="/docs/observation-guide" class="t2"><Icon icon="assignment" /> Observation Guide</a>
             </div>
         </Show>
 
