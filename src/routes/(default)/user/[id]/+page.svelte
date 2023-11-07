@@ -39,6 +39,8 @@
             </div>
             {#if user.observer}
                 <p><b class="text-2">Observer since <Mention type="time"><Timestamp ms timestamp={user.observerSince} /></Mention></b></p>
+            {:else}
+                <br />
             {/if}
             {#each Object.entries(user.guilds) as [id, guild]}
                 <div class="panel bg-2">
