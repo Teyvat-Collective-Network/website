@@ -2,7 +2,8 @@ import api from "$lib/api.js";
 import { mdToHtml } from "$lib/server-utils.js";
 import type { Actions, ServerLoad } from "@sveltejs/kit";
 
-export const load: ServerLoad = async ({ locals: { token, user } }) => {
+export const load: ServerLoad = async ({ locals }) => {
+    const { token, user } = locals;
     if (!user) return;
 
     const data = await api(token, `GET /secret-santa/data`);
@@ -15,7 +16,7 @@ export const load: ServerLoad = async ({ locals: { token, user } }) => {
         }
     }
 
-    return data;
+    return { ...data, ...locals };
 };
 
 export const actions: Actions = {
