@@ -123,3 +123,12 @@ export type Rolesync = {
     roleToApi: Record<string, string[]>;
     apiToRole: { type: "position" | "role"; value: string; guild: string | null; roles: string[] }[];
 };
+
+export type SecretSantaUser = {
+    user: string;
+    status?: "none" | "locked-out" | "locked-sender" | "awaiting-approval" | "pool-free" | "pool-locked" | "limbo" | "done" | "banned";
+    partner?: string;
+    time?: number;
+    info?: string;
+    proof?: string;
+};

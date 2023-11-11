@@ -3,7 +3,7 @@
 
     export let icon: string;
     export let click: (e: MouseEvent) => any;
-    export let hideTop = true;
+    export let always = false;
     export let index = 0;
     export let backgroundColor: string = "rgb(var(--text-accent))";
     export let color: string = "rgb(var(--pure-rgb))";
@@ -15,10 +15,9 @@
 
 <button
     on:click={click}
-    style="background-color: {backgroundColor}; color: {color}; bottom: {index * 60 + 50}px; opacity: {!hideTop || scroll ? 1 : 0}; pointer-events: {!hideTop ||
-    scroll
-        ? 'inherit'
-        : 'none'}"
+    style="background-color: {backgroundColor}; color: {color}; bottom: {index * 60 + 50}px; opacity: {always || scroll
+        ? 1
+        : 0}; pointer-events: {always || scroll ? 'inherit' : 'none'}"
 >
     <Icon {icon} />
 </button>

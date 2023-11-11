@@ -94,6 +94,12 @@
             Switch to {$darkMode ? "Light" : "Dark"} Mode
         </a>
 
+        <a href="/secret-santa" class="t1 bg-3"><Icon icon="ac_unit" /> Secret Santa</a>
+
+        {#if $user?.observer}
+            <a href="/secret-santa/admin" class="t1"><Icon icon="handyman" /> Secret Santa Admin Page</a>
+        {/if}
+
         <a href="/" class="t1"><Icon icon="home" /> Home</a>
         <a href="/about" class="t1"><Icon icon="info" /> About Us</a>
         <a href="/partners" class="t1"><Icon icon="handshake" /> Partners</a>

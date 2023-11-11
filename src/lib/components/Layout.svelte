@@ -9,10 +9,13 @@
     import { select } from "$lib/html-utils";
     import { alerts, auditMessage, auditReason, auditRequired, darkMode, modals } from "$lib/stores";
     import { onMount } from "svelte";
+    import A from "./A.svelte";
     import Alert from "./Alert.svelte";
+    import Callout from "./Callout.svelte";
     import ConfirmCancel from "./ConfirmCancel.svelte";
     import FixedButton from "./FixedButton.svelte";
     import Modal from "./Modal.svelte";
+    import OneTimeMessage from "./OneTimeMessage.svelte";
     import Show from "./Show.svelte";
 
     const { copy, save, nodelete, nomore, sent, edited } = alerts;
@@ -43,6 +46,7 @@
     export let color: number = 0x207868;
     export let image: string = `${PUBLIC_DOMAIN}/favicon.png`;
     export let thumbnail: boolean = true;
+    export let hideSecretSantaMessage: boolean = false;
 
     function click({ target }: MouseEvent) {
         if (target instanceof Element && target.tagName === "SPAN" && target.classList.contains("mention") && "dataset" in target) {
@@ -66,6 +70,8 @@
 
     let first = false;
     onMount(() => setTimeout(() => (first = true), 250));
+
+    let dismiss: any;
 </script>
 
 <svelte:window bind:scrollY={scroll} on:click={click} />
@@ -103,6 +109,19 @@
             <Menu />
             <Navbar />
             <div id="slot">
+                {#if !hideSecretSantaMessage}
+                    <OneTimeMessage id="secret-santa-banner-ad" bind:dismiss>
+                        <div class="container">
+                            <Callout style="info">
+                                <p>Hey! Interested in our network-side Secret Santa event? Check it out <A to="/secret-santa">here</A>!</p>
+                                <p>
+                                    <button on:click={dismiss}>Dismiss</button>
+                                </p>
+                            </Callout>
+                            <br />
+                        </div>
+                    </OneTimeMessage>
+                {/if}
                 <slot />
             </div>
         </Show>
