@@ -57,6 +57,12 @@
         selectall<HTMLAnchorElement>("#sidebar-contents a")
             .find((e) => e.href === href)
             ?.scrollIntoView({ block: "nearest" });
+
+    let isSecretSantaAdmin = false;
+
+    onMount(async () => {
+        isSecretSantaAdmin = await api($token, `GET /secret-santa/is-admin`);
+    });
 </script>
 
 <svelte:window
@@ -96,7 +102,7 @@
 
         <a href="/secret-santa" class="t1 bg-3"><Icon icon="ac_unit" /> Secret Santa</a>
 
-        {#if $user?.observer}
+        {#if isSecretSantaAdmin}
             <a href="/secret-santa/admin" class="t1"><Icon icon="handyman" /> Secret Santa Admin Page</a>
         {/if}
 
