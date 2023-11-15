@@ -128,6 +128,9 @@
                 {#if entry.status === "done"}
                     <button on:click={() => op("Returning user to pool of recipients.", "return", entry.user)}>return to pool</button>
                 {/if}
+                {#if entry.status === "banned"}
+                    <button on:click={() => op("Resetting user's status to none.", "unban", entry.user)}>unban</button>
+                {/if}
             </div>
         </div>
     {/each}

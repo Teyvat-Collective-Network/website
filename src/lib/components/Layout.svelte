@@ -1,18 +1,34 @@
 <script lang="ts" context="module">
+    import type { SecretSantaUser } from "$lib/types";
     declare const MathJax: any;
+
+    const messages: Record<Exclude<SecretSantaUser["status"], undefined>, string> = {
+        none: "You've saved your Secret Santa info but haven't locked in yet! Head over to the form to continue the sign-up flow.",
+        "locked-out":
+            "You've been temporarily locked out of participating in Secret Santa, but don't worry. You'll be able to sign up again 24 hours after you last forfeited your entry. If you already gave a gift to your original receiver, please fill out the form as soon as possible.",
+        "locked-sender": "You're locked in! Make sure you watch your remaining time and give your gift and submit the form in time!",
+        "awaiting-approval": "Your gift proof has been received! Please give us some time to review it and approve it.",
+        "pool-free": "Your proof has been approved! You'll receive a gift soon!",
+        "pool-locked": "Your proof has been approved! You'll receive a gift soon!",
+        limbo: "Our records show that you've received a gift, but we haven't approved the proof yet. If you did not receive a gift, please <tcn-link to='/contact'>reach out</tcn-link> to us as soon as possible.",
+        done: "Thank you for participating in our Secret Santa event! We've approved the proof for the user who gave you your gift, so if you didn't receive anything, please <tcn-link to='/contact'>let us know</tcn-link> as soon as possible so we can fix it.",
+        banned: "You have been <b>banned</b> from participating in the Secret Santa event (this happens if we determined your proof was illegitimate). If you believe that this was a mistake, please <tcn-link to='/contact'>let us know</tcn-link>.",
+    };
 </script>
 
 <script lang="ts">
     import { PUBLIC_DOMAIN } from "$env/static/public";
+    import api from "$lib/api";
     import Menu from "$lib/components/Menu.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
     import { select } from "$lib/html-utils";
-    import { alerts, auditMessage, auditReason, auditRequired, darkMode, modals } from "$lib/stores";
+    import { alerts, auditMessage, auditReason, auditRequired, darkMode, modals, token } from "$lib/stores";
     import { onMount } from "svelte";
     import A from "./A.svelte";
     import Alert from "./Alert.svelte";
     import Callout from "./Callout.svelte";
     import ConfirmCancel from "./ConfirmCancel.svelte";
+    import Div from "./Div.svelte";
     import FixedButton from "./FixedButton.svelte";
     import Modal from "./Modal.svelte";
     import OneTimeMessage from "./OneTimeMessage.svelte";
@@ -72,6 +88,13 @@
     onMount(() => setTimeout(() => (first = true), 250));
 
     let dismiss: any;
+    let dismissReminder: any;
+
+    let secretSantaUser: SecretSantaUser | undefined;
+
+    onMount(async () => {
+        secretSantaUser = await api($token, `GET /secret-santa/data`).catch(() => {});
+    });
 </script>
 
 <svelte:window bind:scrollY={scroll} on:click={click} />
@@ -110,17 +133,34 @@
             <Navbar />
             <div id="slot">
                 {#if !hideSecretSantaMessage}
-                    <OneTimeMessage id="secret-santa-banner-ad" bind:dismiss>
-                        <div class="container">
-                            <Callout style="info">
-                                <p>Hey! Interested in our network-side Secret Santa event? Check it out <A to="/secret-santa">here</A>!</p>
-                                <p>
-                                    <button on:click={dismiss}>Dismiss</button>
-                                </p>
-                            </Callout>
-                            <br />
-                        </div>
-                    </OneTimeMessage>
+                    {#if secretSantaUser}
+                        <svelte:component
+                            this={secretSantaUser.status === "done" || secretSantaUser.status === "banned" ? OneTimeMessage : Div}
+                            id="secret-santa-reminder"
+                            bind:dismiss={dismissReminder}
+                        >
+                            <div class="container">
+                                <Callout style="info">
+                                    <p>{@html messages[secretSantaUser.status ?? "none"]}</p>
+                                    <div class="row gap-1">
+                                        <A to="/secret-santa/form">Go to form</A>
+                                        <button on:click={() => ((secretSantaUser = undefined), dismissReminder())}>Close</button>
+                                    </div>
+                                </Callout>
+                                <br />
+                            </div>
+                        </svelte:component>
+                    {:else}
+                        <OneTimeMessage id="secret-santa-banner-ad" bind:dismiss>
+                            <div class="container">
+                                <Callout style="info">
+                                    <p>Hey! Interested in our network-side Secret Santa event? Check it out <A to="/secret-santa">here</A>!</p>
+                                    <p><button on:click={dismiss}>Dismiss</button></p>
+                                </Callout>
+                                <br />
+                            </div>
+                        </OneTimeMessage>
+                    {/if}
                 {/if}
                 <slot />
             </div>
