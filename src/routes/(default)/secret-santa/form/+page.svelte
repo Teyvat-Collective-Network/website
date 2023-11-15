@@ -6,6 +6,8 @@
     import Textarea from "$lib/components/Textarea.svelte";
     import Timestamp from "$lib/components/Timestamp.svelte";
     import UserMention from "$lib/components/UserMention.svelte";
+    import { blockApproval } from "$lib/secret-santa";
+    import { token } from "$lib/stores";
     import type { SecretSantaUser } from "$lib/types";
 
     export let form: any;
@@ -141,6 +143,7 @@
         to ensure that all proof that we approve is valid.
     </p>
     <p>Thank you for participating!</p>
+    <p><button on:click={() => blockApproval($token)}>Block Approval</button></p>
 {:else if data.status === "done"}
     <h2><b>Secret Santa</b> &mdash; Done!</h2>
     <p>

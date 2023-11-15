@@ -127,6 +127,7 @@ export type Rolesync = {
 export type SecretSantaUser = {
     user: string;
     status?: "none" | "locked-out" | "locked-sender" | "awaiting-approval" | "pool-free" | "pool-locked" | "limbo" | "done" | "banned";
+    locked?: boolean;
     partner?: string;
     time?: number;
     info?: string;

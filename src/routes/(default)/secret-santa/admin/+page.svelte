@@ -114,7 +114,13 @@
                     </button>
                 {/if}
                 {#if entry.status === "awaiting-approval"}
-                    <button on:click={() => op("Approving user and moving them to pool.", "approve", entry.user)}>approve</button>
+                    {#if entry.locked}
+                        <button on:click={() => op("Unblocking approval of this user, but not approving them immediately.", "unlock", entry.user)}>
+                            unlock
+                        </button>
+                    {:else}
+                        <button on:click={() => op("Approving user and moving them to pool.", "approve", entry.user)}>approve</button>
+                    {/if}
                     <button on:click={() => op("Denying user and permanently banning them.", "deny", entry.user)}>deny &amp; ban</button>
                 {/if}
                 {#if entry.status === "pool-free"}

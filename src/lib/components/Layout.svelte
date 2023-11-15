@@ -22,6 +22,7 @@
     import Menu from "$lib/components/Menu.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
     import { select } from "$lib/html-utils";
+    import { blockApproval } from "$lib/secret-santa";
     import { alerts, auditMessage, auditReason, auditRequired, darkMode, modals, token } from "$lib/stores";
     import { onMount } from "svelte";
     import A from "./A.svelte";
@@ -144,6 +145,9 @@
                                     <p>{@html messages[secretSantaUser.status ?? "none"]}</p>
                                     <div class="row gap-1">
                                         <A to="/secret-santa/form">Go to form</A>
+                                        {#if secretSantaUser.status === "limbo"}
+                                            <button on:click={() => blockApproval($token)}>Block Approval</button>
+                                        {/if}
                                         <button on:click={() => ((secretSantaUser = undefined), dismissReminder())}>Close</button>
                                     </div>
                                 </Callout>
