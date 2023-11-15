@@ -10,6 +10,9 @@
 
     export let form: any;
     let data = $page.data as unknown as SecretSantaUser & { error?: string; agreed?: boolean; partnerInfo?: string };
+
+    let remaining = Math.floor(((data.time ?? 0) - Date.now()) / 1000);
+    setInterval(() => (remaining = Math.floor(((data.time ?? 0) - Date.now()) / 1000)), 1000);
 </script>
 
 {#if form?.success}
@@ -70,7 +73,15 @@
                 there was some issue along the way, please contact support and we can manually unlock you.
             </p>
         {:else}
-            <p>You are locked in and have until <b><Timestamp ms mode="time" timestamp={data.time ?? 0} /></b>.</p>
+            <p>
+                You are locked in and have
+                <b>
+                    {remaining >= 60
+                        ? `${Math.floor(remaining / 60)}:${(remaining % 60).toString().padStart(2, "0")}`
+                        : `${remaining} second${remaining === 1 ? "" : "s"}`}
+                </b>
+                (until <b><Timestamp ms mode="time" timestamp={data.time ?? 0} /></b>).
+            </p>
         {/if}
     </Callout>
     <br />
