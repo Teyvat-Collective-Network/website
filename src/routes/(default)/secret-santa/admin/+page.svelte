@@ -60,6 +60,8 @@
         await api($token, `DELETE /secret-santa/admin/admins/${id}`).catch(alert);
         await load();
     }
+
+    let filter: string = "all";
 </script>
 
 <h2>Secret Santa Admin Panel</h2>
@@ -79,7 +81,18 @@
         <p><button on:click={addAdmin}><Icon icon="add" /></button></p>
     {/if}
     <h3><b>Pool size:</b> {entries.filter((x) => x.status === "pool-free").length}</h3>
-    {#each entries.sort((x, y) => (x.status === "awaiting-approval" ? 0 : 1) - (y.status === "awaiting-approval" ? 0 : 1)) as entry}
+    <p class="row gap-1">
+        <b>Filter Status</b>
+        <select bind:value={filter}>
+            <option value="all">All</option>
+            {#each Object.entries(statuses) as [key, value]}
+                <option value={key}>{value}</option>
+            {/each}
+        </select>
+    </p>
+    {#each entries
+        .filter((x) => filter === "all" || x.status === filter)
+        .sort((x, y) => (x.status === "awaiting-approval" ? 0 : 1) - (y.status === "awaiting-approval" ? 0 : 1)) as entry}
         <div class="panel" style={entry.status === "awaiting-approval" ? "outline: 2px solid rgb(var(--text-accent))" : ""}>
             <h4 class="short"><UserId id={entry.user} /> &mdash; <code>{entry.user}</code></h4>
             <p><b>Status:</b> <code>{statuses[entry.status ?? "none"]}</code></p>
