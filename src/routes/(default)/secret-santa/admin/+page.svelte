@@ -18,6 +18,8 @@
     import Icon from "$lib/components/Icon.svelte";
     import Loading from "$lib/components/Loading.svelte";
     import Mention from "$lib/components/Mention.svelte";
+    import Modal from "$lib/components/Modal.svelte";
+    import Textarea from "$lib/components/Textarea.svelte";
     import Timestamp from "$lib/components/Timestamp.svelte";
     import UserId from "$lib/components/UserId.svelte";
     import UserMention from "$lib/components/UserMention.svelte";
@@ -61,7 +63,23 @@
         await load();
     }
 
+    async function save() {
+        if (!editing) return;
+        if (!info) return;
+
+        try {
+            await api($token, `PUT /secret-santa/admin/edit-info/${editing}`, { info });
+            editing = "";
+            await load();
+        } catch (error) {
+            alert(error);
+        }
+    }
+
     let filter: string = "all";
+
+    let editing: string;
+    let info: string;
 </script>
 
 <h2>Secret Santa Admin Panel</h2>
@@ -150,7 +168,17 @@
                 {#if entry.status === "banned"}
                     <button on:click={() => op("Resetting user's status to none.", "unban", entry.user)}>unban</button>
                 {/if}
+                <button on:click={() => ((editing = entry.user), (info = entry.info ?? ""))}>edit information</button>
             </div>
         </div>
     {/each}
 </Loading>
+
+<Modal open={!!editing} on:close={() => (editing = "")}>
+    <p>
+        <b>Important:</b> Only edit user information if you need to fix errors or have communicated issues with the user and discussed revisions! Closing this modal
+        will reset the input field.
+    </p>
+    <Textarea class="bg-2" rows={8} bind:value={info} />
+    <button on:click={save}>save</button>
+</Modal>
