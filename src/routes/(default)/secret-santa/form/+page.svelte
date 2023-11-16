@@ -2,7 +2,9 @@
     import { page } from "$app/stores";
     import A from "$lib/components/A.svelte";
     import Callout from "$lib/components/Callout.svelte";
+    import Image from "$lib/components/Image.svelte";
     import LoggedInAs from "$lib/components/LoggedInAs.svelte";
+    import Modal from "$lib/components/Modal.svelte";
     import Textarea from "$lib/components/Textarea.svelte";
     import Timestamp from "$lib/components/Timestamp.svelte";
     import UserMention from "$lib/components/UserMention.svelte";
@@ -47,14 +49,80 @@
         <p>If you encounter any issues or have any questions, <A to="/contact" external>let us know</A> and we'll sort it out for you.</p>
         <br />
         <hr />
-        <br />
         <h4>Your Info</h4>
         <p>
-            Put down your info here. Please provide a link to your wishlist on some platform such as Amazon, Steam, etc. as well as any other information for
-            your gift-giver. No NSFW allowed. You will not be able to edit this once you've started the workflow.
+            Put down your info here. Please provide a link to an Amazon wishlist as well as any other information for your gift-giver. No NSFW allowed. You will
+            not be able to edit this once you've started the workflow.
         </p>
-        <p>We're setting a <b>USD$20</b> limit. Please link a wishlist with at least a few items with at least one under USD$10.</p>
-        <Textarea name="info" value={data.info ?? ""} required maxlength={1024} />
+        <p>We're setting a <b>USD$20</b> limit. Please link a wishlist with at least three items, with at least one under USD$10.</p>
+        <p>
+            <b>You must use Amazon.</b> To ensure consistency and for logistical reasons, we're sticking to one platform. If you submit invalid information, we'll
+            reach out to you to sort things out and update your information.
+        </p>
+        <Modal button>
+            <span slot="button">Detailed Instructions</span>
+            <h3>Instructions</h3>
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 10px">
+                <b>1.</b>
+                <div>Log in to <A to="https://amazon.com" external>Amazon</A>.</div>
+                <b>2.</b>
+                <div>In <b>Account &amp; Lists</b>, select <b>Wish List</b>.</div>
+                <span />
+                <Image src="https://i.imgur.com/9T1MQz9.png" width={250} />
+                <b>3.</b>
+                <div>Create a list.</div>
+                <b>4.</b>
+                <div>Give your list a name.</div>
+                <span />
+                <Image src="https://i.imgur.com/bncxkEK.png" width={250} />
+                <b>5.</b>
+                <div>From the wishlist, go to <b>More</b>.</div>
+                <b>6.</b>
+                <div>Select <b>Manage list</b>.</div>
+                <span />
+                <Image src="https://i.imgur.com/cjUOb8w.png" width={250} />
+                <b>7.</b>
+                <div>Set the privacy to <b>Public</b> or <b>Shared</b>.</div>
+                <b>8.</b>
+                <div>Put your Discord name in the recipient field.</div>
+                <span />
+                <Image src="https://i.imgur.com/kCrNNHg.png" width={250} />
+                <b>9.</b>
+                <div>
+                    Select the address for your gift to be shipped to. If this address includes your real name, change it to your Discord name. Then, click
+                    <b>Save Changes</b>.
+                </div>
+                <span />
+                <Image src="https://i.imgur.com/BusBidv.png" width={250} />
+                <b>10.</b>
+                <div>
+                    Add items to your wishlist by selecting your wishlist under <b>Add to List</b>. Choose 3 or more items that cost no more than <b>USD$20</b>
+                    (including shipping). Select one item that is <b>USD$10</b> or less. All items need to be <b>Shipped by Amazon</b>. Items must be
+                    age-appropriate for everyone. We suggest Genshin keychains, posters, plushies, stickets, or other merch!
+                </div>
+                <span />
+                <Image src="https://i.imgur.com/Wm4tGxQ.png" width={250} />
+                <b>11.</b>
+                <div>Head back to your wishlist and click <b>Send list to others</b>.</div>
+                <b>12.</b>
+                <div>Make sure the list is <b>View only</b>.</div>
+                <b>13.</b>
+                <div>Copy the link and put it in the info field, along with any other information you want the person giving you a gift to see!</div>
+                <span />
+                <Image src="https://i.imgur.com/VOGsJkW.png" width={250} />
+            </div>
+            <p>
+                <b>Important:</b> The person sending you a gift will <b>not</b> see your shipping address or real name.
+            </p>
+        </Modal>
+        <br />
+        <Textarea
+            name="info"
+            value={data.info ?? ""}
+            required
+            maxlength={1024}
+            placeholder="Provide an Amazon wishlist and any other information you want to include."
+        />
         <label>
             <input type="checkbox" class="bg-3" required checked={!!data.agreed} />
             I confirm that I have read the provided information and will fulfill my gift or accept the stated penalties.
@@ -98,10 +166,13 @@
                 {@html data.partnerInfo}
             </div>
             <p><b>We're setting a USD$20 limit.</b> Please try your best not to gift over this limit for fairness.</p>
+            <h4>Instructions</h4>
+            <p>To buy an item from an Amazon wishlist, open the wishlist and add an item to the cart and choose the registry address to ship to.</p>
+            <Image src="https://i.imgur.com/nAOHvhv.png" width={250} />
         {/if}
         <p>
-            Once you've given them a gift, please upload your proof to an image hosting service (such as <A to="https://imgur.com" external>Imgur</A>) or
-            somewhere like Google Drive and link it below. Make sure it's publicly visible.
+            Once you've given them a gift, please upload your receipt to an image hosting service (such as <A to="https://imgur.com" external>Imgur</A>) or
+            somewhere like Google Drive and link it below. Make sure it's publicly visible. Make sure you block out any personally identifying information.
         </p>
         <Textarea name="proof" value="" required />
         <label>

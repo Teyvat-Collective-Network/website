@@ -28,7 +28,7 @@
 </div>
 
 {#if button}
-    <button on:click={() => (open = true)}>
+    <button type="button" on:click={() => (open = true)}>
         <slot name="button" />
     </button>
 {/if}

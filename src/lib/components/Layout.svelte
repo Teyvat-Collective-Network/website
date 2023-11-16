@@ -134,7 +134,7 @@
             <Navbar />
             <div id="slot">
                 {#if !hideSecretSantaMessage}
-                    {#if secretSantaUser}
+                    {#if secretSantaUser && (secretSantaUser.status !== "none" || secretSantaUser.info)}
                         <svelte:component
                             this={secretSantaUser.status === "done" || secretSantaUser.status === "banned" ? OneTimeMessage : Div}
                             id="secret-santa-reminder"

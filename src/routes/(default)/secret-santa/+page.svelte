@@ -18,8 +18,8 @@
     their gift once they open it or at the end.
 </p>
 <p>
-    Of course, we can't do this, so we've adapted the idea into a virtual event where you'll be able to fulfill someone else's wishlist through an online
-    platform like Amazon or Steam in exchange for a similar gift!
+    Of course, we can't do this, so we've adapted the idea into a virtual event where you'll be able to fulfill someone else's wishlist through Amazon in
+    exchange for a similar gift!
 </p>
 <h3>How will this work?</h3>
 <p>
