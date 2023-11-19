@@ -26,7 +26,7 @@
         <Linkable e="h3" id="adding-the-bot">Adding the bot</Linkable>
         <p>
             First, invite the bot using <A
-                to="https://discord.com/api/oauth2/authorize?client_id=905370006362140702&permissions=137976212544&scope=applications.commands%20bot"
+                to="https://discord.com/api/oauth2/authorize?client_id=1145438790907871322&permissions=137976212480&scope=bot%20applications.commands"
                 external>this link</A
             >.
         </p>
