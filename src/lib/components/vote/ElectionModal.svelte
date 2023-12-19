@@ -103,7 +103,7 @@
             {/if}
         {/each}
     </div>
-    {#if $user?.id ?? 0 in candidates}
+    {#if ($user?.id ?? 0) in candidates}
         <p class="text-2">You're a candidate in this election, but your vote will automatically be recorded as abstaining for yourself.</p>
     {:else}
         <br />
