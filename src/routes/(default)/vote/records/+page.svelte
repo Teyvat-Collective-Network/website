@@ -15,7 +15,7 @@
     const key = (id: string) => {
         let val = 0;
 
-        for (const poll of records.polls) {
+        for (const poll of reversed) {
             const voted = map[poll.id][id];
 
             if (voted === true) val = 0.8 * val;
@@ -50,10 +50,10 @@
                     title={poll.mode === "proposal" || poll.mode === "selection"
                         ? poll.question
                         : poll.mode === "induction"
-                        ? `Induct ${poll.server}?`
-                        : poll.mode === "election"
-                        ? `Please vote in the Wave ${poll.wave} Election.`
-                        : "?"}>{poll.id}</th
+                          ? `Induct ${poll.server}?`
+                          : poll.mode === "election"
+                            ? `Please vote in the Wave ${poll.wave} Election.`
+                            : "?"}>{poll.id}</th
                 >
             {/each}
         </tr>
