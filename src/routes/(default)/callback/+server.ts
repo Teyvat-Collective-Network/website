@@ -19,7 +19,7 @@ export const GET: RequestHandler = async ({ cookies, fetch, url }) => {
         }),
     });
 
-    if (!t_req.ok) return new Response("Invalid code.", { status: 401 });
+    if (!t_req.ok) return new Response(`Invalid code:\n\n${JSON.stringify(await t_req.json(), undefined, 4)}`, { status: 401 });
 
     const tokens = await t_req.json();
     if (!tokens) return new Response("Invalid code.", { status: 401 });
