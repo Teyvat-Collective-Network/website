@@ -128,8 +128,10 @@
                                             {#if id}<UserMention {id} />{:else}<Mention type="anon">Anonymous</Mention>{/if} &mdash;
                                             <code>{method} {path}</code>
                                         </p>
-                                        <b>Token (public component):</b>
-                                        <pre class="hscroll"><code>{token.slice(0, 16)}...{token.slice(-16)}</code></pre>
+                                        {#if token}
+                                            <b>Token (public component):</b>
+                                            <pre class="hscroll"><code>{token.slice(0, 16)}...{token.slice(-16)}</code></pre>
+                                        {/if}
                                         <b>Request Body:</b>
                                         <pre><code>{JSON.stringify(body, undefined, 4)}</code></pre>
                                     </Modal>
