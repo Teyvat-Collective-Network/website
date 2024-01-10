@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    const names = { api: "All API Calls", rolesync: "Rolesync" } as const;
+    const names = { api: "All API Calls", rolesync: "Rolesync", global: "Global Chat" } as const;
     const groups = Object.keys(names) as (keyof typeof names)[];
 </script>
 
@@ -45,6 +45,7 @@
                 setSubscribed("data", true);
                 setSubscribed("rolesync", true);
                 setSubscribed("api", true);
+                setSubscribed("global", true);
                 done = true;
             } else if (entry[0] === "error") alert(entry[1]);
             else categories[entry[0]] = [[Date.now(), ...entry.slice(1)], ...(categories[entry[0]] ?? [])];
@@ -64,7 +65,7 @@
     }
 
     let viewing: keyof typeof names = groups[0];
-    viewing = "rolesync";
+    viewing = "api";
 
     let max = 100,
         tempMax = 100;
@@ -170,6 +171,11 @@
                                 {#if add.length > 0}Add: <code>{add.join(" ")}</code>{/if}
                                 {#if remove.length > 0}Remove: <code>{remove.join(" ")}</code>{/if}
                             </td>
+                        {:else if type === "global"}
+                            {@const [action, summary, details] = entry}
+                            <td>{action}</td>
+                            <td>{@html summary}</td>
+                            <td>{@html details}</td>
                         {:else}
                             <td>
                                 <pre><code>{JSON.stringify(entry, undefined, 4)}</code></pre>
