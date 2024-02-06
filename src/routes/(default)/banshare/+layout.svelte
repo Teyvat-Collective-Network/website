@@ -6,7 +6,7 @@
 </script>
 
 {#if $user}
-    {#if $user?.council || Object.values($user?.guilds ?? {}).some((x) => x.roles.includes("banshares"))}
+    {#if $user?.council || Object.values($user?.guilds ?? {}).some((x) => x.staff)}
         <slot />
     {:else}
         <div class="container">

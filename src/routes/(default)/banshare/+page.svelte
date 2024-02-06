@@ -101,7 +101,7 @@
         <h5>Server</h5>
         <p>Identify the server from which you are submitting this banshare.</p>
         <select name="server" class="bg-1" required value={form?.server}>
-            {#each Object.entries($user?.guilds ?? {}).filter(([, { owner, advisor, staff, roles }]) => owner || advisor || (staff && roles.includes("banshares"))) as [id]}
+            {#each Object.entries($user?.guilds ?? {}).filter(([, { owner, advisor, staff, roles }]) => owner || advisor || staff) as [id]}
                 <option value={id}>{#await api($token, `GET /guilds/${id}`)}{id}{:then { name }}{name}{/await}</option>
             {/each}
         </select>
