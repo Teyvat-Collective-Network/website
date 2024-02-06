@@ -307,7 +307,25 @@
         </li>
         <li>A minor vote may be conducted to reject a server without observation.</li>
         <li>A major vote may be conducted to halt observation and immediately reject a server.</li>
-        <li>Once observation has finished, a report will be published by the observer.</li>
+        <li>
+            Once observation has finished, a report will be published by the observer.
+            <ul>
+                <li>The report must be given to the server's owner for review.</li>
+                <li>The owner must be given at two weeks by default, with extensions permitted as needed.</li>
+                <li>
+                    If the owner does not respond within the provided time frame, the server's application may be automatically forfeited. The server is removed
+                    without penalty.
+                </li>
+                <li>
+                    If the owner and observer come to a deadlock regarding the content of the report, the observer team will resolve the issue and note any
+                    places where the owner did not approve the report.
+                </li>
+                <li>
+                    If the owner forfeits their application, the observer team will decide whether the report is published, partially published, or kept for
+                    private records based on what amount of information is the most beneficial to the council to publicize.
+                </li>
+            </ul>
+        </li>
         <li>A minimum of 24 hours, extended as needed for discussion, must be given before a vote may begin.</li>
         <li>A minor vote will determine the outcome of the induction process.</li>
         <li>
