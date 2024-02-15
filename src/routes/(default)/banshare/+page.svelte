@@ -41,6 +41,7 @@
 
 <form class="container" method="post" on:submit={() => (finished = true)}>
     <h1>Submit Banshare</h1>
+    <p>First time submitting a banshare? Make sure to read the <A to="/info/banshares#submitting" external>banshare submission guide</A> first.</p>
     {#if form?.error}
         <Callout style="red">
             <p>{@html form.error}</p>
