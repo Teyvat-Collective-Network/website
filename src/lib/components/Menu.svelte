@@ -96,7 +96,7 @@
 
         <a href="/" class="t1"><Icon icon="home" /> Home</a>
         <a href="/about" class="t1"><Icon icon="info" /> About Us</a>
-        <a href="/partners" class="t1"><Icon icon="handshake" /> Partners</a>
+        <a href="/members" class="t1"><Icon icon="handshake" /> Partners</a>
         <a href="/join" class="t1"><Icon icon="meeting_room" /> Join</a>
         <a href="/info/constitution" class="t1"><Icon icon="account_balance" /> Constitution</a>
         <a href="/calendar" class="t1"><Icon icon="calendar_month" /> Calendar</a>

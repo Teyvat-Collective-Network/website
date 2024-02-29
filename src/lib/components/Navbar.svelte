@@ -6,7 +6,7 @@
     <div id="links">
         <a class="text-1" href="/">Home</a>
         <a class="text-1" href="/about">About</a>
-        <a class="text-1" href="/partners">Partners</a>
+        <a class="text-1" href="/members">Partners</a>
         <a id="join" class="accent-button text-1" href="/join">Apply Now</a>
     </div>
 </div>

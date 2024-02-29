@@ -23,7 +23,7 @@
         <div class="panel">
             <ITitle e="h3" icon="business">Individual Servers</ITitle>
             <p>These are the individual servers of the TCN, each a mains server dedicated to a specific character.</p>
-            <p>Find a list of TCN servers <A to="/partners">here</A>.</p>
+            <p>Find a list of TCN servers <A to="/members">here</A>.</p>
             <hr />
 
             <ITitle e="h3" icon="hub">The Hub</ITitle>
