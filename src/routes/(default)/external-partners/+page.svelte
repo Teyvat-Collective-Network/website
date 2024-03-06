@@ -36,6 +36,17 @@
             <LinkButton to="https://discord.gg/genshinimpacttavern" external>Join</LinkButton>
         </div>
     </div>
+    <div class="external panel row no-wrap gap-4">
+        <img src="https://daedalusbot.xyz/favicon.ico" alt="Daedalus Icon" width="192" height="192" />
+        <div>
+            <h3>Daedalus</h3>
+            <p>
+                The TCN is partnered with Daedalus, a general-purpose Discord bot that offers a high-quality server management experience. TCN servers get free
+                access to the custom client feature. Check out its website below for more information!
+            </p>
+            <LinkButton to="https://daedalusbot.xyz" external>Website</LinkButton>
+        </div>
+    </div>
 </div>
 
 <style lang="scss">

@@ -89,7 +89,7 @@
         <li>It must be visible to the general public of the server.</li>
         <li>
             In addition to TCN servers, it must contain the TCN website URL, the TCN Hub invite and description, the Genshin Wizard website URL and description,
-            and the Genshin Impact Tavern invite and description.
+            the Genshin Impact Tavern invite and description, and the Daedalus dashboard URL and description.
         </li>
     </ul>
     <h4>Network Events</h4>

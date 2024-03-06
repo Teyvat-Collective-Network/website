@@ -56,6 +56,9 @@
                     >https://discord.gg/genshinimpacttavern</A
                 >).
             </li>
+            <li>
+                <b>Daedalus:</b> The description for Daedalus and its dashboard link (<A to="https://daedalusbot.xyz" external>https://daedalusbot.xyz</A>).
+            </li>
         </ul>
         <p>
             You do not need to include all of these verbatim, but here is our recommendation for the descriptions. Your description is expected to convey the
@@ -115,6 +118,18 @@ A network of high-quality Genshin Impact character-mains style servers that focu
                 <pre
                     id="desc-tavern">The TCN is partnered with [Genshin Impact Tavern](https://discord.gg/genshinimpacttavern), a multifaceted Discord Community Server hosting a custom bot designed to emulate an "RPG-like" experience. This includes the earning of Mora (Server digital currency), a Vision, farming for weapons and upgrades with continuously expanding systems related to each. Mora can be redeemed to make use of several server functions, including redemption for Official Merchandise. Genshin Impact Tavern is also the proud host of the Cat's Tail Gathering TCG Tournament! _Genshin Impact Tavern is an officially endorsed server._</pre>
                 <button class="row" on:click={() => copy("desc-tavern")}><Icon icon="content_copy" /> Copy</button>
+            </Show>
+            <hr />
+            <ITitle e="h4" icon="change_history">Daedalus</ITitle>
+            <p>
+                The TCN is partnered with Daedalus, a general-purpose Discord bot that offers a high-quality server management experience. TCN servers get free
+                access to the custom client feature. Check out <A to="https://daedalusbot.xyz">its website</A> for more information!
+            </p>
+            <button class="row" on:click={() => (open.daedalus = !open.daedalus)}><Icon icon="markdown" /> {open.daedalus ? "Hide" : "Show"} Markdown</button>
+            <Show when={open.daedalus}>
+                <pre
+                    id="desc-daedalus">The TCN is partnered with Daedalus, a general-purpose Discord bot that offers a high-quality server management experience. TCN servers get free access to the custom client feature. Check out [its website](https://daedalusbot.xyz) for more information!</pre>
+                <button class="row" on:click={() => copy("desc-daedalus")}><Icon icon="content_copy" /> Copy</button>
             </Show>
         </div>
         <Linkable e="h2" id="autosync">Autosync</Linkable>
