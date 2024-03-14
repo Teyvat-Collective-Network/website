@@ -106,17 +106,14 @@ A network of high-quality Genshin Impact character-mains style servers that focu
             <hr />
             <ITitle e="h4" icon="sports_bar">Genshin Impact Tavern</ITitle>
             <p>
-                The TCN is partnered with <A to="https://discord.gg/genshinimpacttavern">Genshin Impact Tavern</A>, a multifaceted Discord Community Server
-                hosting a custom bot designed to emulate an "RPG-like" experience. This includes the earning of Mora (Server digital currency), a Vision,
-                farming for weapons and upgrades with continuously expanding systems related to each. Mora can be redeemed to make use of several server
-                functions, including redemption for Official Merchandise. Genshin Impact Tavern is also the proud host of the Cat's Tail Gathering TCG
-                Tournament!
-                <i>Genshin Impact Tavern is an officially endorsed server.</i>
+                The TCN is partnered with <A to="https://discord.gg/genshinimpacttavern">Genshin Impact Tavern</A>, a multifaceted Discord Community Server for
+                Genshin Impact! Check out their RPG-like experience through which you can redeem official merch, their Cat's Tail Gathering TCG tournament, and
+                more!
             </p>
             <button class="row" on:click={() => (open.tavern = !open.tavern)}><Icon icon="markdown" /> {open.tavern ? "Hide" : "Show"} Markdown</button>
             <Show when={open.tavern}>
                 <pre
-                    id="desc-tavern">The TCN is partnered with [Genshin Impact Tavern](https://discord.gg/genshinimpacttavern), a multifaceted Discord Community Server hosting a custom bot designed to emulate an "RPG-like" experience. This includes the earning of Mora (Server digital currency), a Vision, farming for weapons and upgrades with continuously expanding systems related to each. Mora can be redeemed to make use of several server functions, including redemption for Official Merchandise. Genshin Impact Tavern is also the proud host of the Cat's Tail Gathering TCG Tournament! _Genshin Impact Tavern is an officially endorsed server._</pre>
+                    id="desc-tavern">The TCN is partnered with [Genshin Impact Tavern](https://discord.gg/genshinimpacttavern), a multifaceted Discord Community Server for Genshin Impact! Check out their RPG-like experience through which you can redeem official merch, their Cat's Tail Gathering TCG tournament, and more!</pre>
                 <button class="row" on:click={() => copy("desc-tavern")}><Icon icon="content_copy" /> Copy</button>
             </Show>
             <hr />
